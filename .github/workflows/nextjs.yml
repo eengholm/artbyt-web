@@ -80,8 +80,8 @@ jobs:
         run: npx --no-install next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        env:
-          ARTIFACT_NAME: out
+        with:
+          path: ./.nex
 
   # Deployment job
   deploy:
