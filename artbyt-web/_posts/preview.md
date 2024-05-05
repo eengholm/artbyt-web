@@ -4,8 +4,8 @@ excerpt: "Med fantasifulla designer tog jag en idé om ett brädspel till en hel
 coverImage: "/assets/blog/preview/fantasy-logo.jpg"
 date: "2020-03-16T05:35:07.322Z"
 author:
-  name: Joe Haddad
-  picture: "/assets/blog/authors/joe.jpeg"
+  name: Tim Bylander
+  picture: "/assets/blog/authors/tim.jpg"
 ogImage:
   url: "/assets/blog/preview/fantasy-logo.jpg"
 ---
