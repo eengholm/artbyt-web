@@ -1,13 +1,13 @@
 ---
 title: "Otroligt brädspel"
 excerpt: "Med fantasifulla designer tog jag en idé om ett brädspel till en helt ny nivå."
-coverImage: "/assets/blog/preview/cover.jpg"
+coverImage: "/assets/blog/preview/fantasy-logo.jpg"
 date: "2020-03-16T05:35:07.322Z"
 author:
   name: Joe Haddad
   picture: "/assets/blog/authors/joe.jpeg"
 ogImage:
-  url: "/assets/blog/preview/cover.jpg"
+  url: "/assets/blog/preview/fantasy-logo.jpg"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.

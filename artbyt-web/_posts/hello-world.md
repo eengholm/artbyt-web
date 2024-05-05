@@ -1,7 +1,7 @@
 ---
 title: "Jethwear - A/W 24"
 excerpt: "Skapade höstkollektionen för skoterklädesmärket Jethwear."
-coverImage: "/assets/blog/hello-world/cover.jpg"
+coverImage: "/assets/blog/hello-world/LogoJethwear.jpg"
 date: "2020-03-16T05:35:07.322Z"
 author:
   name: Tim Neutkens
