@@ -71,10 +71,8 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-      - name: Change directory
-        run: cd artbyt-web
       - name: Install dependencies
-        run: npm ci
+        run: cd artbyt-web npm ci
       - name: Build with Next.js
         run: npx --no-install next build
       - name: Upload artifact
