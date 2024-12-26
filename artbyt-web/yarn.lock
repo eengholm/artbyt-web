@@ -1017,10 +1017,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-"kysely@^0.24.2 || ^0.25.0 || ^0.26.0 || ^0.27.0":
-  version "0.27.4"
-  resolved "https://registry.npmjs.org/kysely/-/kysely-0.27.4.tgz"
-  integrity sha512-dyNKv2KRvYOQPLCAOCjjQuCk4YFd33BvGdf/o5bC7FiW+BB6snA81Zt+2wT9QDFzKqxKa5rrOmvlK/anehCcgA==
+"kysely@^0.24.2 || ^0.25.0 || ^0.26.0 || ^0.27.0", kysely@^0.27.5:
+  version "0.27.5"
+  resolved "https://registry.npmjs.org/kysely/-/kysely-0.27.5.tgz"
+  integrity sha512-s7hZHcQeSNKpzCkHRm8yA+0JPLjncSWnjb+2TIElwS2JAqYr+Kv3Ess+9KFfJS0C1xcQ1i9NkNHpWwCYpHMWsA==
 
 lilconfig@^2.1.0:
   version "2.1.0"
