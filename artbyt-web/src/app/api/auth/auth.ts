@@ -1,7 +1,7 @@
 import { createKysely } from "@vercel/postgres-kysely";
 import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { Database } from "../admin/upload/route";
+import { Database } from "../admin/post-assignment/route";
 import { compare, hash } from "bcrypt";
 
 const db = createKysely<Database>();

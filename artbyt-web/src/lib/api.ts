@@ -1,6 +1,6 @@
-import { Assignment } from "@/assignment/assignment";
-import { AssignmentTable } from "@/assignment/assignment.table";
-import { ImageTable } from "@/image/image.table";
+import { Assignment } from "@/interfaces/assignment";
+import { AssignmentTable } from "@/app/database/tables/assignment.table";
+import { ImageTable } from "@/app/database/tables/image.table";
 import { Post } from "@/interfaces/post";
 import { createKysely } from "@vercel/postgres-kysely";
 import fs from "fs";

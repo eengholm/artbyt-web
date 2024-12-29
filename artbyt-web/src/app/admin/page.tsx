@@ -31,8 +31,6 @@ export default function Page() {
 
 
         const formData = new FormData(event.currentTarget);
-        console.log('input', formData);
-
 
         if (!inputFileRef.current?.files) {
           throw new Error("No file selected");
@@ -104,7 +102,7 @@ export default function Page() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
                       <span>Ladda upp en bild</span>
-                      <input id="file-upload" ref={inputFileRef} name="file-upload" type="file" className="sr-only" />
+                      <input id="file-upload" ref={inputFileRef} name="file-upload" type="file" accept="image/*" className="sr-only" />
                     </label>
                   </div>
                   <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF upp till 10MB</p>

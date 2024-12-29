@@ -1,19 +1,7 @@
+import { db } from '@/app/database/database';
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
-import { createKysely } from "@vercel/postgres-kysely";
-import { AssignmentTable } from '@/assignment/assignment.table';
-import { ImageTable } from '@/image/image.table';
-import { UserTable } from '@/user/user.table';
 
-
-export interface Database {
-  assignments: AssignmentTable;
-  images: ImageTable
-  users: UserTable;
-}
-
-
-const db = createKysely<Database>();
 
 export async function POST(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
@@ -37,28 +25,24 @@ export async function POST(request: Request): Promise<NextResponse> {
     access: 'public',
   });
 
-  const image = await db
-  .insertInto('images')
-  .values({
-    filename: filename,
-    url: blob.url
-  })
-  .returningAll()
-  .executeTakeFirstOrThrow()
-
-  console.log('image', image)
-
   const assignement = await db
   .insertInto('assignments')
   .values({
     title: title?.valueOf().toString(),
-    description: description?.valueOf.toString(),
-    image_id: image.id,
+    description: description?.valueOf().toString(),
   })
   .returningAll()
   .executeTakeFirstOrThrow()
 
-  console.log('assignment', assignement)
+  const image = await db
+  .insertInto('images')
+  .values({
+    filename: filename,
+    url: blob.url,
+    assignment_id: assignement.id,
+  })
+  .returningAll()
+  .executeTakeFirstOrThrow()
 
 
 

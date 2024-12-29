@@ -1,9 +1,9 @@
-import { Image } from "../image/image";
+import { Image } from "./image";
 
 export interface Assignment {
-    id: string
+    id: number
     createdAt: Date
     title: string | null
     description: string | null
-    image: Image | null
+    images: Image[]
   }
