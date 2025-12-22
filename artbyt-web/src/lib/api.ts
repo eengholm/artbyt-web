@@ -1,115 +1,86 @@
 import { Assignment } from "@/interfaces/assignment";
-import { Image } from "@/interfaces/image";
-import { AssignmentTable } from "@/app/database/tables/assignment.table";
-import { ImageTable } from "@/app/database/tables/image.table";
 import { Post } from "@/interfaces/post";
-import { createKysely } from "@vercel/postgres-kysely";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
-import { jsonArrayFrom } from 'kysely/helpers/postgres'
 
-const postsDirectory = join(process.cwd(), "_posts");
+const assignmentsDirectory = join(process.cwd(), "_assignments");
+const contentDirectory = join(process.cwd(), "_content");
 
-interface Database {
-  assignments: AssignmentTable;
-  images: ImageTable
+// Homepage settings
+export function getHomepageSettings() {
+  const fullPath = join(contentDirectory, "homepage.md");
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data } = matter(fileContents);
+  return data;
 }
 
-interface FlattenedAssignment {
-  image_id: number | null;
-  id: number;
-  created_at: Date;
-  title: string | null;
-  description: string | null;
-  filename: string | null;
-  url: string | null;
+// Assignment functions (handles both posts and assignments)
+export function getAssignmentSlugs() {
+  return fs.readdirSync(assignmentsDirectory);
 }
 
-
-const db = createKysely<Database>();
-
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
-}
-
-export function getPostBySlug(slug: string) {
+export function getAssignmentBySlug(slug: string): Assignment {
   const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
+  const fullPath = join(assignmentsDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  return { ...data, slug: realSlug, content } as Post;
+  // Extract ID from slug (last part after final dash, or use hash of slug)
+  const id =
+    parseInt(realSlug.split("-").pop() || "0") || Math.abs(hashCode(realSlug));
+
+  return {
+    id,
+    slug: realSlug,
+    createdAt: new Date(data.date),
+    title: data.title,
+    description: content,
+    excerpt: data.excerpt,
+    content,
+    coverImage: data.coverImage,
+    images: (data.images || []).map((img: string, idx: number) => ({
+      id: idx,
+      url: img,
+      fileName: img.split("/").pop(),
+    })),
+    author: data.author,
+  };
 }
 
-export function getAllPosts(): Post[] {
-  const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
+function hashCode(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+  return hash;
 }
 
-export async function getAllAssignments(limit?: number): Promise<Assignment[]> {
+export function getAllAssignments(limit?: number): Assignment[] {
+  const slugs = getAssignmentSlugs();
+  const assignments = slugs
+    .map((slug) => getAssignmentBySlug(slug))
+    .sort((a1, a2) => (a1.createdAt > a2.createdAt ? -1 : 1));
 
-  
-    if(limit !== undefined && limit > 0){
-        const assignements = await db.selectFrom('assignments')
-        .limit(limit)
-        .select((eb) => [
-          'assignments.id',
-          'assignments.created_at as createdAt',
-          'assignments.title',
-          'assignments.description',
-            jsonArrayFrom(
-              eb.selectFrom('images')
-                .select(['images.id', 'images.url', 'images.filename as fileName'])
-                .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
-            ])
-            .execute() as Assignment[];
+  if (limit !== undefined && limit > 0) {
+    return assignments.slice(0, limit);
+  }
 
-        return assignements;
-    }
-    else{
-        const assignements = await db.selectFrom('assignments')
-        .select((eb) => [
-          'assignments.id',
-          'assignments.created_at as createdAt',
-          'assignments.title',
-          'assignments.description',
-            jsonArrayFrom(
-              eb.selectFrom('images')
-                .select(['images.id', 'images.url', 'images.filename as fileName'])
-                .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
-            ]).execute() as Assignment[];
-
-        return assignements;
-    }
-
+  return assignments;
 }
 
-export async function getAssignmentById(id: number): Promise<Assignment> {
-  const assignment = await db.selectFrom('assignments')
-    .where('id', '=', id)
-    .select((eb) => [
-      'assignments.id',
-      'assignments.created_at as createdAt',
-      'assignments.title',
-      'assignments.description',
-      jsonArrayFrom(
-        eb.selectFrom('images')
-          .select(['images.id', 'images.url', 'images.filename as fileName'])
-          .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
-    ]).execute() as Assignment[];
+export function getAssignmentById(id: number): Assignment {
+  const allAssignments = getAllAssignments();
+  const assignment = allAssignments.find((a) => a.id === id);
 
-    const as = assignment[0];
-    console.log(as);
-  return as;
+  if (!assignment) {
+    throw new Error(`Assignment with id ${id} not found`);
+  }
+
+  return assignment;
 }
 
-export async function GetAllImages(): Promise<Image[]> {
-  const images = await db.selectFrom('images').select(['id', 'url', 'filename as fileName']).execute() as Image[];
-  console.log(images);
-  return images;
-}
+// Alias for backwards compatibility
+export const getAllPosts = getAllAssignments;

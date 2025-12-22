@@ -2,32 +2,40 @@ import Container from "@/app/_components/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
 import Avatar from "../avatar";
 
-export function Footer() {
+interface FooterProps {
+  authorName?: string;
+  authorPicture?: string;
+  tagline?: string;
+  copyright?: string;
+  instagramUrl?: string;
+  linkedinUrl?: string;
+}
+
+export function Footer({
+  authorName = "Tim Bylander",
+  authorPicture = "/assets/blog/authors/tim.jpg",
+  tagline = "Design by Tim Bylander. För alla dina designbehov.",
+  copyright = "Tim Bylander. All rights reserved.",
+  instagramUrl = "https://www.instagram.com/artbyt_official",
+  linkedinUrl = "https://www.linkedin.com/in/your_linkedin_username",
+}: FooterProps = {}) {
   return (
     <footer className="border-t border-neutral-200">
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
-        <div className="flex-1 lg:pl-4 lg:w-1/2">
-          <Avatar
-            name={"Tim Bylander"}
-            picture={"/assets/blog/authors/tim.jpg"}
-          />
-       
+          <div className="flex-1 lg:pl-4 lg:w-1/2">
+            <Avatar name={authorName} picture={authorPicture} />
+
+            <p className="mt-4 text-lg">{tagline}</p>
             <p className="mt-4 text-lg">
-              Design by Tim Bylander. För alla dina designbehov.
+              © {new Date().getFullYear()} {copyright}
             </p>
-            <p className="mt-4 text-lg">
-              © {new Date().getFullYear()} Tim Bylander. All rights reserved.
-            </p>
-            </div>
+          </div>
           <div
             id="social-links"
             className="flex flex-col lg:flex-row justify-end items-end lg:pl-4 lg:w-1/2"
           >
-            <a
-              href="https://www.instagram.com/artbyt_official"
-              className="mx-3 font-bold hover:underline"
-            >
+            <a href={instagramUrl} className="mx-3 font-bold hover:underline">
               <span className="[&>svg]:h-5 [&>svg]:w-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -38,10 +46,7 @@ export function Footer() {
                 </svg>
               </span>
             </a>
-            <a
-              href="https://www.linkedin.com/in/your_linkedin_username"
-              className="mx-3 font-bold hover:underline"
-            >
+            <a href={linkedinUrl} className="mx-3 font-bold hover:underline">
               <span className="[&>svg]:h-5 [&>svg]:w-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

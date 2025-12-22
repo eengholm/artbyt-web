@@ -4,14 +4,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-import { getSession } from "./api/auth/auth";
-import Providers from "./providers";
 import { Menu } from "./_components/layout/menu";
+import { getHomepageSettings } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL("http://localhost:3000"),
   title: `ArtByT - Din lokala designstudio`,
   description: `För alla dina designbehov.`,
   openGraph: {
@@ -19,13 +18,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
-  
+  const homepage = getHomepageSettings();
   return (
     <html lang="en">
       <head>
@@ -62,13 +60,11 @@ export default async function RootLayout({
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
       <body className={inter.className}>
-      <Providers session={session}>
-      <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-        <Menu/>
-        <div className="min-h-screen">{children}</div>
-        <Footer />
-      </div>
-      </Providers>
+        <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+          <Menu />
+          <div className="min-h-screen">{children}</div>
+          <Footer {...homepage.footer} />
+        </div>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllPosts, getAssignmentById } from "@/lib/api";
+import { getAllAssignments, getAssignmentById } from "@/lib/api";
 import { CMS_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Alert from "@/app/_components/alert";
@@ -11,15 +11,15 @@ import { PostHeader } from "@/app/_components/post-header";
 import { IdentificationIcon } from "@heroicons/react/24/outline";
 
 export default async function Assignment({ params }: Params) {
-  console.log("Params: ", params)
-  const id = parseInt(params.slug);
-  console.log("Id: ", id)
-  const assignment = await getAssignmentById(id);
+  const resolvedParams = await params;
+  console.log("Params: ", resolvedParams);
+  const id = parseInt(resolvedParams.slug);
+  console.log("Id: ", id);
+  const assignment = getAssignmentById(id);
 
   if (!assignment) {
     return notFound();
   }
-
 
   return (
     <div className="py-24 sm:py-32">
@@ -31,7 +31,7 @@ export default async function Assignment({ params }: Params) {
           />
         </article>
       </Container>
-      </div>
+    </div>
   );
 }
 
@@ -42,8 +42,9 @@ type Params = {
 };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const id = parseInt(params.slug);
-  const assignment = await getAssignmentById(id);
+  const resolvedParams = await params;
+  const id = parseInt(resolvedParams.slug);
+  const assignment = getAssignmentById(id);
 
   if (!assignment) {
     return notFound();
@@ -61,9 +62,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const assignments = getAllAssignments();
 
-  return posts.map((post) => ({
-    slug: post.slug,
+  return assignments.map((assignment) => ({
+    slug: assignment.id.toString(),
   }));
 }
