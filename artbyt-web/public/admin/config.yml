@@ -2,6 +2,7 @@ backend:
   name: github
   repo: eengholm/artbyt-web
   branch: main
+  base_url: https://artbyt-web.vercel.app
 
 # Enable local development mode (for Git operations with decap-server)
 # local_backend: true
