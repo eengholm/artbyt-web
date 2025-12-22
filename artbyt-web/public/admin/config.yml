@@ -2,8 +2,11 @@ backend:
   name: github
   repo: eengholm/artbyt-web
   branch: main
+  base_url: https://artbyt-web.vercel.app  # Replace with your Vercel URL
+  auth_endpoint: /api/auth
 
-# local_backend: true
+# Enable local development mode (for Git operations with decap-server)
+local_backend: true
 
 media_folder: "public/assets/assignments"
 public_folder: "/assets/assignments"
