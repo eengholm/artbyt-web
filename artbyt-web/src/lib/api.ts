@@ -1,4 +1,5 @@
 import { Assignment } from "@/interfaces/assignment";
+import { Image } from "@/interfaces/image";
 import { AssignmentTable } from "@/app/database/tables/assignment.table";
 import { ImageTable } from "@/app/database/tables/image.table";
 import { Post } from "@/interfaces/post";
@@ -6,6 +7,7 @@ import { createKysely } from "@vercel/postgres-kysely";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
+import { jsonArrayFrom } from 'kysely/helpers/postgres'
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -15,9 +17,8 @@ interface Database {
 }
 
 interface FlattenedAssignment {
-  image_id: string | null;
-  id: string;
-  user_id: string;
+  image_id: number | null;
+  id: number;
   created_at: Date;
   title: string | null;
   description: string | null;
@@ -50,13 +51,65 @@ export function getAllPosts(): Post[] {
   return posts;
 }
 
-export async function getAllAssignments(): Promise<FlattenedAssignment[]> {
-  const assignments = await db
-  .selectFrom('assignments')
-  .innerJoinLateral('images', 'image_id', 'id')
-  .selectAll()
-  .execute() as FlattenedAssignment[];
+export async function getAllAssignments(limit?: number): Promise<Assignment[]> {
 
-  return assignments;
+  
+    if(limit !== undefined && limit > 0){
+        const assignements = await db.selectFrom('assignments')
+        .limit(limit)
+        .select((eb) => [
+          'assignments.id',
+          'assignments.created_at as createdAt',
+          'assignments.title',
+          'assignments.description',
+            jsonArrayFrom(
+              eb.selectFrom('images')
+                .select(['images.id', 'images.url', 'images.filename as fileName'])
+                .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
+            ])
+            .execute() as Assignment[];
 
+        return assignements;
+    }
+    else{
+        const assignements = await db.selectFrom('assignments')
+        .select((eb) => [
+          'assignments.id',
+          'assignments.created_at as createdAt',
+          'assignments.title',
+          'assignments.description',
+            jsonArrayFrom(
+              eb.selectFrom('images')
+                .select(['images.id', 'images.url', 'images.filename as fileName'])
+                .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
+            ]).execute() as Assignment[];
+
+        return assignements;
+    }
+
+}
+
+export async function getAssignmentById(id: number): Promise<Assignment> {
+  const assignment = await db.selectFrom('assignments')
+    .where('id', '=', id)
+    .select((eb) => [
+      'assignments.id',
+      'assignments.created_at as createdAt',
+      'assignments.title',
+      'assignments.description',
+      jsonArrayFrom(
+        eb.selectFrom('images')
+          .select(['images.id', 'images.url', 'images.filename as fileName'])
+          .whereRef('images.assignment_id', '=', 'assignments.id')).as('images')
+    ]).execute() as Assignment[];
+
+    const as = assignment[0];
+    console.log(as);
+  return as;
+}
+
+export async function GetAllImages(): Promise<Image[]> {
+  const images = await db.selectFrom('images').select(['id', 'url', 'filename as fileName']).execute() as Image[];
+  console.log(images);
+  return images;
 }

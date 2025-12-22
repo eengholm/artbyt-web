@@ -1,10 +1,10 @@
 import Container from "@/app/_components/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
-import Avatar from "./avatar";
+import Avatar from "../avatar";
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-50 border-t border-neutral-200">
+    <footer className="border-t border-neutral-200">
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
         <div className="flex-1 lg:pl-4 lg:w-1/2">

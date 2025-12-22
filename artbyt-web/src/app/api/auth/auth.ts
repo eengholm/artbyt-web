@@ -1,10 +1,9 @@
 import { createKysely } from "@vercel/postgres-kysely";
 import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { Database } from "../admin/post-assignment/route";
 import { compare, hash } from "bcrypt";
+import { db } from "@/app/database/database";
 
-const db = createKysely<Database>();
 const authOptions: AuthOptions = {
     // Configure one or more authentication providers
   providers: [

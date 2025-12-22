@@ -1,4 +1,4 @@
-import Footer from "@/app/_components/footer";
+import Footer from "@/app/_components/layout/footer";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { getSession } from "./api/auth/auth";
 import Providers from "./providers";
+import { Menu } from "./_components/layout/menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,6 +64,7 @@ export default async function RootLayout({
       <body className={inter.className}>
       <Providers session={session}>
       <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+        <Menu/>
         <div className="min-h-screen">{children}</div>
         <Footer />
       </div>
