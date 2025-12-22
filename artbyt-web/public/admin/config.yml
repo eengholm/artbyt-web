@@ -4,6 +4,7 @@ backend:
   branch: main
   base_url: https://github.com/login/oauth/authorize
   client_id: Ov23lig1465oPPMvInSH
+  auth_endpoint: /
 
 # Enable local development mode (for Git operations with decap-server)
 # local_backend: true
