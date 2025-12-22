@@ -27,7 +27,9 @@ export default async function Assignment({ params }: Params) {
         <article className="mb-32">
           <PostHeader
             title={assignment.title!}
-            coverImage={assignment.images[0].url!}
+            coverImage={
+              assignment.images[0]?.url || assignment.coverImage || ""
+            }
           />
         </article>
       </Container>
@@ -56,7 +58,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title,
     openGraph: {
       title,
-      images: [assignment.images[0].url!],
+      images: [assignment.images[0]?.url || assignment.coverImage || ""],
     },
   };
 }
