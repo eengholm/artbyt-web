@@ -3,7 +3,7 @@ backend:
   repo: eengholm/artbyt-web
   branch: main
 
-local_backend: true
+# local_backend: true
 
 media_folder: "public/assets/assignments"
 public_folder: "/assets/assignments"
