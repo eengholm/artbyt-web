@@ -13,7 +13,10 @@ export default function Index() {
     ? getAssignmentBySlug(homepage.featuredAssignment)
     : allPosts[0]; // Fallback to first assignment if none selected
   
-  const morePosts = allPosts.slice(0, 3); // Show first 3 assignments
+  // Get selected assignments for More Stories, or fallback to first 3
+  const morePosts = homepage.moreStories && homepage.moreStories.length > 0
+    ? homepage.moreStories.map((slug: string) => getAssignmentBySlug(slug))
+    : allPosts.slice(0, 3);
 
   return (
     <main>

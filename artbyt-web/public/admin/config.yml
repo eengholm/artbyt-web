@@ -34,6 +34,19 @@ collections:
             value_field: "{{slug}}"
             display_fields: ["title"]
             hint: "Select an assignment to feature on the homepage"
+          - label: "More Stories"
+            name: "moreStories"
+            widget: "list"
+            field:
+              label: "Assignment"
+              name: "assignment"
+              widget: "relation"
+              collection: "assignments"
+              search_fields: ["title"]
+              value_field: "{{slug}}"
+              display_fields: ["title"]
+            hint: "Select assignments to display in the More Stories section"
+            required: false
 
   - name: "footer"
     label: "Footer Settings"
