@@ -1,6 +1,6 @@
 ---
 authorName: Tim Bylander
-authorPicture: /assets/blog/authors/tim.jpg
+authorPicture: /assets/portfolio/authors/tim.jpg
 tagline: Design by Tim Bylander. För alla dina designbehov.
 copyright: Tim Bylander. All rights reserved.
 instagramUrl: https://www.instagram.com/artbyt_official

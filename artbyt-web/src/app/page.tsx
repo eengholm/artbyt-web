@@ -1,27 +1,27 @@
 import Container from "@/app/_components/container";
-import { HeroPost } from "@/app/_components/hero-post";
+import { FeaturedAssignment } from "@/app/_components/featured-assignment";
 import { Intro } from "@/app/_components/intro";
-import { MoreStories } from "@/app/_components/more-stories";
+import { MoreAssignments } from "@/app/_components/more-assignments";
 import {
-  getAllPosts,
+  getAllAssignments,
   getHomepageSettings,
   getAssignmentBySlug,
 } from "@/lib/api";
 
 export default function Index() {
   const homepage = getHomepageSettings();
-  const allPosts = getAllPosts();
+  const allAssignments = getAllAssignments();
 
   // Get the featured assignment
   const featuredAssignment = homepage.featuredAssignment
     ? getAssignmentBySlug(homepage.featuredAssignment)
-    : allPosts[0]; // Fallback to first assignment if none selected
+    : allAssignments[0]; // Fallback to first assignment if none selected
 
-  // Get selected assignments for More Stories, or fallback to first 3
-  const morePosts =
+  // Get selected assignments for More Assignments, or fallback to first 3
+  const moreAssignments =
     homepage.moreStories && homepage.moreStories.length > 0
       ? homepage.moreStories.map((slug: string) => getAssignmentBySlug(slug))
-      : allPosts.slice(0, 3);
+      : allAssignments.slice(0, 3);
 
   return (
     <main>
@@ -30,20 +30,15 @@ export default function Index() {
           title={homepage.intro?.title}
           subtitle={homepage.intro?.subtitle}
         />
-        <HeroPost
+        <FeaturedAssignment
           title={featuredAssignment.title || ""}
           coverImage={featuredAssignment.coverImage || ""}
-          date={featuredAssignment.createdAt.toISOString()}
-          author={
-            featuredAssignment.author || {
-              name: "Tim Bylander",
-              picture: "/assets/blog/authors/tim.jpg",
-            }
-          }
           slug={featuredAssignment.slug}
           excerpt={featuredAssignment.excerpt || ""}
         />
-        {morePosts.length > 0 && <MoreStories posts={morePosts as any} />}
+        {moreAssignments.length > 0 && (
+          <MoreAssignments assignments={moreAssignments as any} />
+        )}
       </Container>
     </main>
   );

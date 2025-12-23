@@ -3,44 +3,7 @@ import Image from "next/image";
 
 export default function Assignments() {
   const assignments = getAllAssignments();
-  // const assignments = [
-  //     {
-  //         id: 1,
-  //         title: 'Assignment 1',
-  //         description: 'Description of assignment 1',
-  //         images: [
-  //             {
-  //             id: 1,
-  //             url: 'https://xg0qbi2elgvfgpac.public.blob.vercel-storage.com/fantasy-logo-7H5h9miU8Wx4bnmfkofOZQr7HqQ6rP.jpg',
-  //             fileName: 'placeholder.jpg'
-  //             }
-  //         ]
-  //         },
-  //         {
-  //         id: 2,
-  //         title: 'Assignment 2',
-  //         description: 'Description of assignment 2',
-  //         images: [
-  //             {
-  //             id: 2,
-  //             url: 'https://xg0qbi2elgvfgpac.public.blob.vercel-storage.com/fantasy-logo-7H5h9miU8Wx4bnmfkofOZQr7HqQ6rP.jpg',
-  //             fileName: 'placeholder.jpg'
-  //             }
-  //         ]
-  //         },
-  //         {
-  //         id: 3,
-  //         title: 'Assignment 3',
-  //         description: 'Description of assignment 3',
-  //         images: [
-  //             {
-  //             id: 3,
-  //             url: 'https://xg0qbi2elgvfgpac.public.blob.vercel-storage.com/fantasy-logo-7H5h9miU8Wx4bnmfkofOZQr7HqQ6rP.jpg',
-  //             fileName: 'placeholder.jpg'
-  //             }
-  //         ]
-  //     }
-  // ]
+
   return (
     <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -61,8 +24,12 @@ export default function Assignments() {
                   height={300}
                   className="w-max h-auto"
                   sizes="(max-width: 300px) 100vw, (max-width: 400px) 50vw, 33vw"
-                  src={assignment.images[0]?.url!}
-                  alt={assignment.images[0]?.fileName!}
+                  src={
+                    assignment.images[0]?.url ||
+                    assignment.coverImage ||
+                    "/placeholder.jpg"
+                  }
+                  alt={assignment.title || "Assignment image"}
                 />
               </div>
               <div className="group relative">
@@ -73,7 +40,7 @@ export default function Assignments() {
                   </a>
                 </h3>
                 <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
-                  {assignment.description}
+                  {assignment.description || assignment.excerpt}
                 </p>
               </div>
             </article>

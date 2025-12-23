@@ -1,20 +1,13 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllAssignments, getAssignmentById } from "@/lib/api";
-import { CMS_NAME } from "@/lib/constants";
-import markdownToHtml from "@/lib/markdownToHtml";
-import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
-import { PostBody } from "@/app/_components/post-body";
-import { PostHeader } from "@/app/_components/post-header";
-import { IdentificationIcon } from "@heroicons/react/24/outline";
+import { AssignmentHeader } from "@/app/_components/assignment-header";
+import { AssignmentBody } from "@/app/_components/assignment-body";
 
 export default async function Assignment({ params }: Params) {
   const resolvedParams = await params;
-  console.log("Params: ", resolvedParams);
   const id = parseInt(resolvedParams.slug);
-  console.log("Id: ", id);
   const assignment = getAssignmentById(id);
 
   if (!assignment) {
@@ -25,12 +18,13 @@ export default async function Assignment({ params }: Params) {
     <div className="py-24 sm:py-32">
       <Container>
         <article className="mb-32">
-          <PostHeader
+          <AssignmentHeader
             title={assignment.title!}
             coverImage={
-              assignment.images[0]?.url || assignment.coverImage || ""
+              assignment.coverImage || assignment.images[0]?.url || ""
             }
           />
+          <AssignmentBody content={assignment.content || ""} />
         </article>
       </Container>
     </div>

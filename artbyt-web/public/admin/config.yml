@@ -56,23 +56,50 @@ collections:
         file: "artbyt-web/_content/footer.md"
         fields:
           - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
-          - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/blog/authors/tim.jpg" }
+          - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
           - { label: "Tagline", name: "tagline", widget: "text", default: "Design by Tim Bylander. För alla dina designbehov." }
           - { label: "Copyright Text", name: "copyright", widget: "string", default: "Tim Bylander. All rights reserved." }
           - { label: "Instagram URL", name: "instagramUrl", widget: "string", default: "https://www.instagram.com/artbyt_official" }
           - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", default: "https://www.linkedin.com/in/your_linkedin_username" }
   
+  - name: "portfolio"
+    label: "Portfolio Gallery"
+    files:
+      - label: "Portfolio Images"
+        name: "portfolio"
+        file: "artbyt-web/_content/portfolio.md"
+        fields:
+          - label: "Gallery Images"
+            name: "images"
+            widget: "list"
+            fields:
+              - { label: "Image", name: "url", widget: "image" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Assignment", name: "assignment", widget: "relation", collection: "assignments", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+              - { label: "Size", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
+  
   - name: "assignments"
     label: "Assignments"
     folder: "artbyt-web/_assignments"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Description/Content", name: "body", widget: "markdown" }
       - { label: "Cover Image", name: "coverImage", widget: "image" }
       - { label: "Gallery Images", name: "images", widget: "list", required: false }
-      - { label: "Author Name", name: "author.name", widget: "string", default: "Tim Bylander", required: false }
-      - { label: "Author Picture", name: "author.picture", widget: "image", default: "/assets/blog/authors/tim.jpg", required: false }
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - name: "general"
+        label: "General Settings"
+        file: "content/settings/general.md"
+        fields:
+          - name: "logo"
+            label: "Site Logo"
+            widget: "image"
+          - name: "siteName"
+            label: "Site Name"
+            widget: "string"

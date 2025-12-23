@@ -13,7 +13,7 @@ interface FooterProps {
 
 export function Footer({
   authorName = "Tim Bylander",
-  authorPicture = "/assets/blog/authors/tim.jpg",
+  authorPicture = "/assets/portfolio/authors/tim.jpg",
   tagline = "Design by Tim Bylander. För alla dina designbehov.",
   copyright = "Tim Bylander. All rights reserved.",
   instagramUrl = "https://www.instagram.com/artbyt_official",
@@ -24,7 +24,7 @@ export function Footer({
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
           <div className="flex-1 lg:pl-4 lg:w-1/2">
-            <Avatar name={authorName} picture={authorPicture} />
+            <Avatar name={authorName} picture={authorPicture || null} />
 
             <p className="mt-4 text-lg">{tagline}</p>
             <p className="mt-4 text-lg">
@@ -33,7 +33,7 @@ export function Footer({
           </div>
           <div
             id="social-links"
-            className="flex flex-col lg:flex-row justify-end items-end lg:pl-4 lg:w-1/2"
+            className="flex flex-row justify-center lg:justify-end items-center lg:items-end lg:pl-4 lg:w-1/2 mt-8 lg:mt-0"
           >
             <a href={instagramUrl} className="mx-3 font-bold hover:underline">
               <span className="[&>svg]:h-5 [&>svg]:w-5">

@@ -2,9 +2,8 @@
 intro:
   title: "ArtByT"
   subtitle: "Din lokala designstudio"
-featuredAssignment: "hello-world"
+featuredAssignment: "jethwear-aw-24"
 moreStories:
-  - "dynamic-routing"
-  - "preview"
-  - "2024-12-29-dfgfdhgf"
+  - "tim-gor-fina-grejer"
+  - "otroligt-bradspel"
 ---

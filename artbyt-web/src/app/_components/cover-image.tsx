@@ -4,11 +4,20 @@ import Image from "next/image";
 
 type Props = {
   title: string;
-  src: string;
+  src: string | null;
   slug?: string;
 };
 
 const CoverImage = ({ title, src, slug }: Props) => {
+  // Return placeholder if no image
+  if (!src) {
+    return (
+      <div className="bg-neutral-200 w-full h-[630px] flex items-center justify-center">
+        <span className="text-neutral-400">No image</span>
+      </div>
+    );
+  }
+
   const image = (
     <Image
       src={src}
@@ -23,7 +32,7 @@ const CoverImage = ({ title, src, slug }: Props) => {
   return (
     <div className="sm:mx-0">
       {slug ? (
-        <Link href={`/posts/${slug}`} aria-label={title}>
+        <Link href={`/assignments/${slug}`} aria-label={title}>
           {image}
         </Link>
       ) : (
