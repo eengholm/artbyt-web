@@ -7,8 +7,7 @@ import { AssignmentBody } from "@/app/_components/assignment-body";
 import { AssignmentGallery } from "@/app/_components/assignment-gallery";
 
 export default async function Assignment({ params }: Params) {
-  const resolvedParams = await params;
-  const assignment = getAssignmentBySlug(resolvedParams.slug);
+  const assignment = getAssignmentBySlug(params.slug);
 
   if (!assignment) {
     return notFound();
