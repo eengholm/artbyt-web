@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllAssignments, getAssignmentById } from "@/lib/api";
+import { getAllAssignments, getAssignmentBySlug } from "@/lib/api";
 import Container from "@/app/_components/container";
 import { AssignmentHeader } from "@/app/_components/assignment-header";
 import { AssignmentBody } from "@/app/_components/assignment-body";
@@ -8,8 +8,7 @@ import { AssignmentGallery } from "@/app/_components/assignment-gallery";
 
 export default async function Assignment({ params }: Params) {
   const resolvedParams = await params;
-  const id = parseInt(resolvedParams.slug);
-  const assignment = getAssignmentById(id);
+  const assignment = getAssignmentBySlug(resolvedParams.slug);
 
   if (!assignment) {
     return notFound();
@@ -41,8 +40,7 @@ type Params = {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const resolvedParams = await params;
-  const id = parseInt(resolvedParams.slug);
-  const assignment = getAssignmentById(id);
+  const assignment = getAssignmentBySlug(resolvedParams.slug);
 
   if (!assignment) {
     return notFound();
@@ -63,6 +61,6 @@ export async function generateStaticParams() {
   const assignments = getAllAssignments();
 
   return assignments.map((assignment) => ({
-    slug: assignment.id.toString(),
+    slug: assignment.slug,
   }));
 }
