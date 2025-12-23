@@ -37,16 +37,20 @@ collections:
               - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/blog/authors/tim.jpg" }
               - { label: "Date", name: "date", widget: "datetime" }
               - { label: "Link Slug", name: "slug", widget: "string", hint: "Assignment slug to link to" }
-          - label: "Footer"
-            name: "footer"
-            widget: "object"
-            fields:
-              - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
-              - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/blog/authors/tim.jpg" }
-              - { label: "Tagline", name: "tagline", widget: "text", default: "Design by Tim Bylander. För alla dina designbehov." }
-              - { label: "Copyright Text", name: "copyright", widget: "string", default: "Tim Bylander. All rights reserved." }
-              - { label: "Instagram URL", name: "instagramUrl", widget: "string", default: "https://www.instagram.com/artbyt_official" }
-              - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", default: "https://www.linkedin.com/in/your_linkedin_username" }
+
+  - name: "footer"
+    label: "Footer Settings"
+    files:
+      - label: "Footer"
+        name: "footer"
+        file: "artbyt-web/_content/footer.md"
+        fields:
+          - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
+          - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/blog/authors/tim.jpg" }
+          - { label: "Tagline", name: "tagline", widget: "text", default: "Design by Tim Bylander. För alla dina designbehov." }
+          - { label: "Copyright Text", name: "copyright", widget: "string", default: "Tim Bylander. All rights reserved." }
+          - { label: "Instagram URL", name: "instagramUrl", widget: "string", default: "https://www.instagram.com/artbyt_official" }
+          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", default: "https://www.linkedin.com/in/your_linkedin_username" }
   
   - name: "assignments"
     label: "Assignments"

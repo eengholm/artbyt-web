@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import { Menu } from "./_components/layout/menu";
-import { getHomepageSettings } from "@/lib/api";
+import { getFooterSettings } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const homepage = getHomepageSettings();
+  const footer = getFooterSettings();
   return (
     <html lang="en">
       <head>
@@ -63,7 +63,7 @@ export default function RootLayout({
         <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
           <Menu />
           <div className="min-h-screen">{children}</div>
-          <Footer {...homepage.footer} />
+          <Footer {...footer} />
         </div>
       </body>
     </html>

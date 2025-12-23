@@ -15,6 +15,14 @@ export function getHomepageSettings() {
   return data;
 }
 
+// Footer settings
+export function getFooterSettings() {
+  const fullPath = join(contentDirectory, "footer.md");
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data } = matter(fileContents);
+  return data;
+}
+
 // Assignment functions (handles both posts and assignments)
 export function getAssignmentSlugs() {
   return fs.readdirSync(assignmentsDirectory);
