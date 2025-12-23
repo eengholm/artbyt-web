@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import { Menu } from "./_components/layout/menu";
-import { getFooterSettings } from "@/lib/api";
+import { getFooterSettings, getGeneralSettings } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const footer = getFooterSettings();
+  const settings = getGeneralSettings();
+  const faviconUrl = settings.logo || "/favicon/favicon.ico";
+
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href={faviconUrl} />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -50,7 +54,7 @@ export default function RootLayout({
           href="/favicon/safari-pinned-tab.svg"
           color="#000000"
         />
-        <link rel="shortcut icon" href="../public/favicon/favicon.ico" />
+        <link rel="shortcut icon" href={faviconUrl} />
         <meta name="msapplication-TileColor" content="#000000" />
         <meta
           name="msapplication-config"
