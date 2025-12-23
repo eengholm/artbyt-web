@@ -1,9 +1,9 @@
 ---
 intro:
-  title: "ArtByT"
-  subtitle: "Din lokala designstudio"
-featuredAssignment: "jethwear-aw-24"
+  title: ArtByT
+  subtitle: Din lokala designstudio
+featuredAssignment: tim-gor-fina-grejer
 moreStories:
-  - "tim-gor-fina-grejer"
-  - "otroligt-bradspel"
+  - tim-gor-fina-grejer
+  - otroligt-bradspel
 ---
