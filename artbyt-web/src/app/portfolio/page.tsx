@@ -1,5 +1,17 @@
 import PortfolioGallery from "./portfolio-gallery";
 import { getPortfolioSettings } from "@/lib/api";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description:
+    "Utforska mina designprojekt och kreativa arbeten. Från branding till grafisk design.",
+  openGraph: {
+    title: "Portfolio - Tim Bylander",
+    description: "Utforska mina designprojekt och kreativa arbeten.",
+    type: "website",
+  },
+};
 
 type PortfolioImage = {
   url: string;

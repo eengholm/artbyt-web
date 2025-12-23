@@ -10,15 +10,17 @@ export interface Author {
 }
 
 export interface Assignment {
-  id: number;
   slug: string;
-  createdAt: Date;
-  title: string | null;
-  description: string | null;
-  excerpt?: string;
+  title: string;
+  date: string;
+  coverImage: string;
+  excerpt: string;
+  ogImage: {
+    url: string;
+  };
   content: string;
-  coverImage: string | null;
+  id?: number;
+  description?: string;
+  images?: Array<{ url: string }>;
   coverImagePosition?: string;
-  images: Image[];
-  author?: Author;
 }

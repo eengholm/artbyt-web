@@ -33,13 +33,14 @@ export default function Index() {
           title={homepage.intro?.title}
           subtitle={homepage.intro?.subtitle}
         />
-        <FeaturedAssignment
-          title={featuredAssignment.title || ""}
-          coverImage={featuredAssignment.coverImage || ""}
-          slug={featuredAssignment.slug}
-          excerpt={featuredAssignment.excerpt || ""}
-          objectPosition={featuredAssignment.coverImagePosition}
-        />
+        {featuredAssignment && (
+          <FeaturedAssignment
+            title={featuredAssignment.title || ""}
+            coverImage={featuredAssignment.coverImage || ""}
+            slug={featuredAssignment.slug}
+            excerpt={featuredAssignment.excerpt || ""}
+          />
+        )}
         {moreAssignments.length > 0 && (
           <MoreAssignments assignments={moreAssignments as any} />
         )}

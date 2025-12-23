@@ -91,17 +91,15 @@ collections:
   
   - name: "assignments"
     label: "Assignments"
-    folder: "artbyt-web/_assignments"
+    folder: "_assignments"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
-      - { label: "Description/Content", name: "body", widget: "markdown" }
+      - { label: "Date", name: "date", widget: "datetime", required: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Cover Image", name: "coverImage", widget: "image" }
-      - { label: "Cover Image Position", name: "coverImagePosition", widget: "select", options: ["top", "center", "bottom"], default: "center", required: false, hint: "Controls where the image is cropped from" }
-      - { label: "Gallery Images", name: "images", widget: "list", required: false }
-
+      - { label: "Body", name: "body", widget: "markdown" }
+  
   - name: "settings"
     label: "Settings"
     files:
@@ -112,6 +110,7 @@ collections:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Site Name", name: "siteName", widget: "string", required: false }
           - { label: "Site Description", name: "description", widget: "text" }
+          - { label: "SEO Keywords", name: "keywords", widget: "list", required: false }
           - { label: "Logo", name: "logo", widget: "image", required: false }
           - { label: "Contact Email", name: "contactEmail", widget: "string" }
           - { label: "Phone Number", name: "phoneNumber", widget: "string", required: false }

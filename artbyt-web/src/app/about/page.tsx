@@ -1,7 +1,24 @@
+import { Metadata } from "next";
 import { getAboutSettings, getGeneralSettings } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Container from "@/app/_components/container";
 import Image from "next/image";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutData = getAboutSettings();
+  const settings = getGeneralSettings();
+
+  return {
+    title: aboutData.title || "Om Mig",
+    description: aboutData.content?.substring(0, 160) || settings.description,
+    openGraph: {
+      title: aboutData.title || "Om Mig",
+      description: aboutData.content?.substring(0, 160),
+      images: aboutData.image ? [aboutData.image] : [],
+      type: "profile",
+    },
+  };
+}
 
 export default async function About() {
   const aboutData = getAboutSettings();

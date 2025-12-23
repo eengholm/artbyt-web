@@ -1,5 +1,4 @@
 import { Assignment } from "@/interfaces/assignment";
-import { Post } from "@/interfaces/post";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
@@ -66,55 +65,51 @@ export function getAssignmentSlugs() {
   return fs.readdirSync(assignmentsDirectory);
 }
 
-export function getAssignmentBySlug(slug: string): Assignment {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(assignmentsDirectory, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+export function getAssignmentBySlug(slug: string): Assignment | null {
+  try {
+    const realSlug = slug.replace(/\.md$/, "");
+    const fullPath = join(assignmentsDirectory, `${realSlug}.md`);
 
-  // Extract ID from slug (last part after final dash, or use hash of slug)
-  const id =
-    parseInt(realSlug.split("-").pop() || "0") || Math.abs(hashCode(realSlug));
+    // Check if file exists
+    if (!fs.existsSync(fullPath)) {
+      return null;
+    }
 
-  return {
-    id,
-    slug: realSlug,
-    createdAt: new Date(data.date),
-    title: data.title,
-    description: content,
-    excerpt: data.excerpt,
-    content,
-    coverImage: data.coverImage,
-    coverImagePosition: data.coverImagePosition,
-    images: (data.images || []).map((img: string, idx: number) => ({
-      id: idx,
-      url: img,
-      fileName: img.split("/").pop(),
-    })),
-    author: data.author,
-  };
-}
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data, content } = matter(fileContents);
 
-function hashCode(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
+    return {
+      slug: realSlug,
+      title: data.title || "",
+      date: data.date || "",
+      coverImage: data.coverImage || "",
+      excerpt: data.excerpt || "",
+      ogImage: {
+        url: data.ogImage || data.coverImage || "",
+      },
+      content,
+      id: data.id, // Add id from frontmatter
+      description: data.description || "",
+      images: data.images || [],
+      coverImagePosition: data.coverImagePosition || "center",
+    };
+  } catch (error) {
+    console.error(`Error loading assignment ${slug}:`, error);
+    return null;
   }
-  return hash;
 }
 
-export function getAllAssignments(limit?: number): Assignment[] {
+export function getAllAssignments(): Assignment[] {
   const slugs = getAssignmentSlugs();
   const assignments = slugs
     .map((slug) => getAssignmentBySlug(slug))
-    .sort((a1, a2) => (a1.createdAt > a2.createdAt ? -1 : 1));
-
-  if (limit !== undefined && limit > 0) {
-    return assignments.slice(0, limit);
-  }
-
+    .filter((assignment): assignment is Assignment => assignment !== null)
+    .sort((a, b) => {
+      if (a.date && b.date) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+      return 0;
+    });
   return assignments;
 }
 
