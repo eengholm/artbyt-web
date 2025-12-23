@@ -2,11 +2,17 @@ import Container from "@/app/_components/container";
 import { HeroPost } from "@/app/_components/hero-post";
 import { Intro } from "@/app/_components/intro";
 import { MoreStories } from "@/app/_components/more-stories";
-import { getAllPosts, getHomepageSettings } from "@/lib/api";
+import { getAllPosts, getHomepageSettings, getAssignmentBySlug } from "@/lib/api";
 
 export default function Index() {
   const homepage = getHomepageSettings();
   const allPosts = getAllPosts();
+  
+  // Get the featured assignment
+  const featuredAssignment = homepage.featuredAssignment 
+    ? getAssignmentBySlug(homepage.featuredAssignment)
+    : allPosts[0]; // Fallback to first assignment if none selected
+  
   const morePosts = allPosts.slice(0, 3); // Show first 3 assignments
 
   return (
@@ -17,16 +23,16 @@ export default function Index() {
           subtitle={homepage.intro?.subtitle}
         />
         <HeroPost
-          title={homepage.hero?.title || ""}
-          coverImage={homepage.hero?.coverImage || ""}
-          date={homepage.hero?.date || new Date().toISOString()}
-          author={{
-            name: homepage.hero?.authorName || "Tim Bylander",
-            picture:
-              homepage.hero?.authorPicture || "/assets/blog/authors/tim.jpg",
+          title={featuredAssignment.title || ""}
+          coverImage={featuredAssignment.coverImage || ""}
+          date={featuredAssignment.createdAt.toISOString()}
+          author={featuredAssignment.author || {
+            name: "Tim Bylander",
+            picture: "/assets/blog/authors/tim.jpg",
           }}
-          slug={homepage.hero?.slug || ""}
-          excerpt={homepage.hero?.excerpt || ""}
+          slug={featuredAssignment.slug}
+          excerpt={featuredAssignment.excerpt || ""}
+        />
         />
         {morePosts.length > 0 && <MoreStories posts={morePosts as any} />}
       </Container>

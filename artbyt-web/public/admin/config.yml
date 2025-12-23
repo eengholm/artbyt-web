@@ -26,17 +26,14 @@ collections:
             fields:
               - { label: "Title", name: "title", widget: "string", default: "ArtByT" }
               - { label: "Subtitle", name: "subtitle", widget: "text", default: "Din lokala designstudio" }
-          - label: "Hero Post"
-            name: "hero"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Excerpt", name: "excerpt", widget: "text" }
-              - { label: "Cover Image", name: "coverImage", widget: "image" }
-              - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
-              - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/blog/authors/tim.jpg" }
-              - { label: "Date", name: "date", widget: "datetime" }
-              - { label: "Link Slug", name: "slug", widget: "string", hint: "Assignment slug to link to" }
+          - label: "Featured Assignment"
+            name: "featuredAssignment"
+            widget: "relation"
+            collection: "assignments"
+            search_fields: ["title"]
+            value_field: "{{slug}}"
+            display_fields: ["title"]
+            hint: "Select an assignment to feature on the homepage"
 
   - name: "footer"
     label: "Footer Settings"
