@@ -4,11 +4,12 @@ backend:
   branch: main
   base_url: http://localhost:3000  # Use localhost for local testing
   auth_endpoint: /api/auth
+  base_path: artbyt-web  # Project is in artbyt-web folder in the repo
 
 # Enable local development mode (for Git operations with decap-server)
 # local_backend: true  # Commented out to test OAuth locally
 
-media_folder: "public/assets/assignments"
+media_folder: "artbyt-web/public/assets/assignments"
 public_folder: "/assets/assignments"
 
 collections:
@@ -17,7 +18,7 @@ collections:
     files:
       - label: "Homepage"
         name: "homepage"
-        file: "_content/homepage.md"
+        file: "artbyt-web/_content/homepage.md"
         fields:
           - label: "Intro Section"
             name: "intro"
@@ -49,7 +50,7 @@ collections:
   
   - name: "assignments"
     label: "Assignments"
-    folder: "_assignments"
+    folder: "artbyt-web/_assignments"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
