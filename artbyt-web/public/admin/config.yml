@@ -95,11 +95,7 @@ collections:
     files:
       - name: "general"
         label: "General Settings"
-        file: "content/settings/general.md"
+        file: "artbyt-web/_content/settings/general.md"
         fields:
-          - name: "logo"
-            label: "Site Logo"
-            widget: "image"
-          - name: "siteName"
-            label: "Site Name"
-            widget: "string"
+          - { label: "Site Logo", name: "logo", widget: "image", default: "/assets/icons/artbyt-logo.png", hint: "Upload or select the site logo/icon" }
+          - { label: "Site Name", name: "siteName", widget: "string", default: "ArtByT" }

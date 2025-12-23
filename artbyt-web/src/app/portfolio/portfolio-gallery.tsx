@@ -75,12 +75,12 @@ export default function PortfolioGallery({ images }: Props) {
           onClick={() => setSelectedImage(null)}
         >
           <div
-            className="relative max-w-5xl max-h-[90vh] bg-white rounded-lg overflow-hidden"
+            className="relative max-w-6xl w-auto bg-gray-900 rounded-lg overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors shadow-lg"
               aria-label="Close modal"
             >
               <svg
@@ -98,11 +98,9 @@ export default function PortfolioGallery({ images }: Props) {
               </svg>
             </button>
 
-            <div className="relative w-full h-[70vh]">
-              <Image
-                fill
-                className="object-contain"
-                sizes="90vw"
+            <div className="relative bg-gray-900">
+              <img
+                className="max-w-full max-h-[80vh] w-auto h-auto"
                 src={selectedImage.url}
                 alt={selectedImage.title || "Portfolio image"}
               />

@@ -7,6 +7,14 @@ import { join } from "path";
 const assignmentsDirectory = join(process.cwd(), "_assignments");
 const contentDirectory = join(process.cwd(), "_content");
 
+// General settings
+export function getGeneralSettings() {
+  const fullPath = join(contentDirectory, "settings", "general.md");
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data } = matter(fileContents);
+  return data;
+}
+
 // Homepage settings
 export function getHomepageSettings() {
   const fullPath = join(contentDirectory, "homepage.md");

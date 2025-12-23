@@ -1,10 +1,14 @@
 module.exports = {
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: '**.vercel-storage.com',
-        },
-      ],
-    },
-  }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.vercel-storage.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
+};
