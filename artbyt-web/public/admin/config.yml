@@ -2,12 +2,11 @@ backend:
   name: github
   repo: eengholm/artbyt-web
   branch: main
-  base_url: https://github.com/login/oauth/authorize
-  client_id: Ov23lig1465oPPMvInSH
-  auth_endpoint: /
+  base_url: http://localhost:3000  # Use localhost for local testing
+  auth_endpoint: /api/auth
 
 # Enable local development mode (for Git operations with decap-server)
-# local_backend: true
+# local_backend: true  # Commented out to test OAuth locally
 
 media_folder: "public/assets/assignments"
 public_folder: "/assets/assignments"
