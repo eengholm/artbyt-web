@@ -110,6 +110,9 @@ collections:
         file: "_content/settings/general.md"
         fields:
           - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Site Name", name: "siteName", widget: "string", required: false }
           - { label: "Site Description", name: "description", widget: "text" }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
           - { label: "Contact Email", name: "contactEmail", widget: "string" }
+          - { label: "Phone Number", name: "phoneNumber", widget: "string", required: false }
           - { label: "From Email", name: "fromEmail", widget: "string" }

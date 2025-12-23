@@ -1,11 +1,11 @@
-import { getAboutSettings } from "@/lib/api";
+import { getAboutSettings, getGeneralSettings } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Container from "@/app/_components/container";
 import Image from "next/image";
-import ContactForm from "@/app/_components/contact-form";
 
 export default async function About() {
   const aboutData = getAboutSettings();
+  const settings = getGeneralSettings();
   const content = await markdownToHtml(aboutData.content || "");
 
   const socialLinks = [
@@ -84,12 +84,43 @@ export default async function About() {
             </div>
           </div>
 
-          {/* Contact Form */}
+          {/* Contact Information */}
           <div className="mt-16 border-t border-gray-200 pt-16">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8">
               Kontakta Mig
             </h2>
-            <ContactForm />
+            <div className="max-w-2xl">
+              <p className="text-lg text-gray-600 mb-6">
+                Har du ett projekt eller en idé du vill diskutera? Tveka inte
+                att höra av dig!
+              </p>
+              <div className="space-y-3">
+                <div>
+                  <span className="text-sm font-medium text-gray-500 block mb-1">
+                    E-post
+                  </span>
+                  <a
+                    href={`mailto:${settings.contactEmail}`}
+                    className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                  >
+                    {settings.contactEmail}
+                  </a>
+                </div>
+                {settings.phoneNumber && (
+                  <div>
+                    <span className="text-sm font-medium text-gray-500 block mb-1">
+                      Telefon
+                    </span>
+                    <a
+                      href={`tel:${settings.phoneNumber.replace(/\s/g, "")}`}
+                      className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                    >
+                      {settings.phoneNumber}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </Container>

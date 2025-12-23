@@ -9,6 +9,8 @@ interface FooterProps {
   copyright?: string;
   instagramUrl?: string;
   linkedinUrl?: string;
+  contactEmail?: string;
+  phoneNumber?: string;
 }
 
 export function Footer({
@@ -18,6 +20,8 @@ export function Footer({
   copyright = "Tim Bylander. All rights reserved.",
   instagramUrl = "https://www.instagram.com/artbyt_official",
   linkedinUrl = "https://www.linkedin.com/in/your_linkedin_username",
+  contactEmail = "",
+  phoneNumber = "",
 }: FooterProps = {}) {
   return (
     <footer className="border-t border-neutral-200">
@@ -27,6 +31,33 @@ export function Footer({
             <Avatar name={authorName} picture={authorPicture || null} />
 
             <p className="mt-4 text-lg">{tagline}</p>
+
+            {/* Contact Information */}
+            {(contactEmail || phoneNumber) && (
+              <div className="mt-4 space-y-2">
+                {contactEmail && (
+                  <p className="text-base">
+                    <a
+                      href={`mailto:${contactEmail}`}
+                      className="hover:underline"
+                    >
+                      {contactEmail}
+                    </a>
+                  </p>
+                )}
+                {phoneNumber && (
+                  <p className="text-base">
+                    <a
+                      href={`tel:${phoneNumber.replace(/\s/g, "")}`}
+                      className="hover:underline"
+                    >
+                      {phoneNumber}
+                    </a>
+                  </p>
+                )}
+              </div>
+            )}
+
             <p className="mt-4 text-lg">
               © {new Date().getFullYear()} {copyright}
             </p>

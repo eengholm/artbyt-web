@@ -18,7 +18,10 @@ export function getGeneralSettings() {
     title: data.title || "",
     description: data.description || "",
     contactEmail: data.contactEmail || "",
+    phoneNumber: data.phoneNumber || "",
     fromEmail: data.fromEmail || "",
+    logo: data.logo || "",
+    siteName: data.siteName || data.title || "",
   };
 }
 
