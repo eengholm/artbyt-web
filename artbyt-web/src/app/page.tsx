@@ -2,15 +2,18 @@ import Container from "@/app/_components/container";
 import { FeaturedAssignment } from "@/app/_components/featured-assignment";
 import { Intro } from "@/app/_components/intro";
 import { MoreAssignments } from "@/app/_components/more-assignments";
+import { PortfolioScroll } from "@/app/_components/portfolio-scroll";
 import {
   getAllAssignments,
   getHomepageSettings,
   getAssignmentBySlug,
+  getPortfolioSettings,
 } from "@/lib/api";
 
 export default function Index() {
   const homepage = getHomepageSettings();
   const allAssignments = getAllAssignments();
+  const portfolioData = getPortfolioSettings();
 
   // Get the featured assignment
   const featuredAssignment = homepage.featuredAssignment
@@ -39,6 +42,7 @@ export default function Index() {
         {moreAssignments.length > 0 && (
           <MoreAssignments assignments={moreAssignments as any} />
         )}
+        <PortfolioScroll images={portfolioData.images || []} />
       </Container>
     </main>
   );

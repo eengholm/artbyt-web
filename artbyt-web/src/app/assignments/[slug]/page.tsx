@@ -4,6 +4,7 @@ import { getAllAssignments, getAssignmentById } from "@/lib/api";
 import Container from "@/app/_components/container";
 import { AssignmentHeader } from "@/app/_components/assignment-header";
 import { AssignmentBody } from "@/app/_components/assignment-body";
+import { AssignmentGallery } from "@/app/_components/assignment-gallery";
 
 export default async function Assignment({ params }: Params) {
   const resolvedParams = await params;
@@ -25,6 +26,7 @@ export default async function Assignment({ params }: Params) {
             }
           />
           <AssignmentBody content={assignment.content || ""} />
+          <AssignmentGallery images={assignment.images} />
         </article>
       </Container>
     </div>
