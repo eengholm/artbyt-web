@@ -2,6 +2,10 @@
 title: "Tim gör fina grejer"
 excerpt: "Ett kreativt designprojekt som utforskar gränsen mellan funktion och form."
 coverImage: "/assets/portfolio/dynamic-routing/hero.jpg"
+images:
+  - /assets/portfolio/dynamic-routing/hero.jpg
+  - /assets/portfolio/dynamic-routing/cover.jpg
+  - /assets/portfolio/hello-world/cover.jpg
 ---
 
 Detta projekt representerar min filosofi om design – att varje detalj spelar roll. Genom att kombinera minimalistiska principer med funktionell design skapade jag en serie produkter som är både estetiskt tilltalande och praktiska.

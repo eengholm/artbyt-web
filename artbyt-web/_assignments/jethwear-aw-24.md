@@ -2,6 +2,10 @@
 title: "Jethwear - A/W 24"
 excerpt: "Skapade höstkollektionen för skoterklädesmärket Jethwear."
 coverImage: "/assets/portfolio/hello-world/LogoJethwear.jpg"
+images:
+  - /assets/portfolio/hello-world/LogoJethwear.jpg
+  - /assets/portfolio/hello-world/cover.jpg
+  - /assets/portfolio/preview/cover.jpg
 ---
 
 Jethwear är ett svenskt skoterklädesmärke som riktar sig till den moderna åkaren som värdesätter både stil och funktion. För höst/vinter-kollektionen 2024 fick jag förtroendet att designa en komplett kollektion som kombinerar tekniska prestanda med tidlös design.

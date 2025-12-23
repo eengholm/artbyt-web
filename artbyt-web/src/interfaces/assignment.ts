@@ -18,6 +18,7 @@ export interface Assignment {
   excerpt?: string;
   content: string;
   coverImage: string | null;
+  coverImagePosition?: string;
   images: Image[];
   author?: Author;
 }

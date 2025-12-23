@@ -19,6 +19,7 @@ export function MoreAssignments({ assignments }: Props) {
             coverImage={assignment.coverImage || ""}
             slug={assignment.slug}
             excerpt={assignment.excerpt || ""}
+            objectPosition={assignment.coverImagePosition}
           />
         ))}
       </div>

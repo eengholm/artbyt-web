@@ -6,13 +6,20 @@ import { join } from "path";
 
 const assignmentsDirectory = join(process.cwd(), "_assignments");
 const contentDirectory = join(process.cwd(), "_content");
+const settingsDirectory = join(contentDirectory, "settings");
 
 // General settings
 export function getGeneralSettings() {
-  const fullPath = join(contentDirectory, "settings", "general.md");
+  const fullPath = join(settingsDirectory, "general.md");
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data } = matter(fileContents);
-  return data;
+
+  return {
+    title: data.title || "",
+    description: data.description || "",
+    contactEmail: data.contactEmail || "",
+    fromEmail: data.fromEmail || "",
+  };
 }
 
 // Homepage settings
@@ -39,6 +46,18 @@ export function getPortfolioSettings() {
   return data;
 }
 
+// About page settings
+export function getAboutSettings() {
+  const fullPath = join(contentDirectory, "about.md");
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data, content } = matter(fileContents);
+  return {
+    content,
+    title: data.title, // add your title source here
+    image: data.image, // add your image source here
+  };
+}
+
 // Assignment functions (handles both posts and assignments)
 export function getAssignmentSlugs() {
   return fs.readdirSync(assignmentsDirectory);
@@ -63,6 +82,7 @@ export function getAssignmentBySlug(slug: string): Assignment {
     excerpt: data.excerpt,
     content,
     coverImage: data.coverImage,
+    coverImagePosition: data.coverImagePosition,
     images: (data.images || []).map((img: string, idx: number) => ({
       id: idx,
       url: img,

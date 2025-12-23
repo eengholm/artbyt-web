@@ -62,6 +62,17 @@ collections:
           - { label: "Instagram URL", name: "instagramUrl", widget: "string", default: "https://www.instagram.com/artbyt_official" }
           - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", default: "https://www.linkedin.com/in/your_linkedin_username" }
   
+  - name: "about"
+    label: "About Page"
+    files:
+      - label: "About Me"
+        name: "about"
+        file: "artbyt-web/_content/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string", default: "Om Mig" }
+          - { label: "Image", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
+          - { label: "Content", name: "body", widget: "markdown", hint: "Write about yourself, your design philosophy, experience, etc." }
+  
   - name: "portfolio"
     label: "Portfolio Gallery"
     files:
@@ -88,6 +99,7 @@ collections:
       - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Description/Content", name: "body", widget: "markdown" }
       - { label: "Cover Image", name: "coverImage", widget: "image" }
+      - { label: "Cover Image Position", name: "coverImagePosition", widget: "select", options: ["top", "center", "bottom"], default: "center", required: false, hint: "Controls where the image is cropped from" }
       - { label: "Gallery Images", name: "images", widget: "list", required: false }
 
   - name: "settings"
@@ -95,7 +107,9 @@ collections:
     files:
       - name: "general"
         label: "General Settings"
-        file: "artbyt-web/_content/settings/general.md"
+        file: "_content/settings/general.md"
         fields:
-          - { label: "Site Logo", name: "logo", widget: "image", default: "/assets/icons/artbyt-logo.png", hint: "Upload or select the site logo/icon" }
-          - { label: "Site Name", name: "siteName", widget: "string", default: "ArtByT" }
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Site Description", name: "description", widget: "text" }
+          - { label: "Contact Email", name: "contactEmail", widget: "string" }
+          - { label: "From Email", name: "fromEmail", widget: "string" }

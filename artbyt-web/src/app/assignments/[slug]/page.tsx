@@ -1,17 +1,23 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllAssignments, getAssignmentBySlug } from "@/lib/api";
+import markdownToHtml from "@/lib/markdownToHtml";
 import Container from "@/app/_components/container";
 import { AssignmentHeader } from "@/app/_components/assignment-header";
 import { AssignmentBody } from "@/app/_components/assignment-body";
 import { AssignmentGallery } from "@/app/_components/assignment-gallery";
 
 export default async function Assignment({ params }: Params) {
-  const assignment = getAssignmentBySlug(params.slug);
+  const resolvedParams = await params;
+  const assignment = resolvedParams.slug
+    ? getAssignmentBySlug(resolvedParams.slug)
+    : null;
 
   if (!assignment) {
     return notFound();
   }
+
+  const content = await markdownToHtml(assignment.content || "");
 
   return (
     <div className="py-24 sm:py-32">
@@ -22,8 +28,9 @@ export default async function Assignment({ params }: Params) {
             coverImage={
               assignment.coverImage || assignment.images[0]?.url || ""
             }
+            objectPosition={assignment.coverImagePosition}
           />
-          <AssignmentBody content={assignment.content || ""} />
+          <AssignmentBody content={content} />
           <AssignmentGallery images={assignment.images} />
         </article>
       </Container>

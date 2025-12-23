@@ -8,6 +8,7 @@ const navigation = [
   { name: "Hem", href: "/" },
   { name: "Projekt", href: "assignments" },
   { name: "Portfolio", href: "portfolio" },
+  { name: "Om Mig", href: "about" },
   // { name: "Shop", href: "#" },
 ];
 

@@ -38,6 +38,7 @@ export default function Index() {
           coverImage={featuredAssignment.coverImage || ""}
           slug={featuredAssignment.slug}
           excerpt={featuredAssignment.excerpt || ""}
+          objectPosition={featuredAssignment.coverImagePosition}
         />
         {moreAssignments.length > 0 && (
           <MoreAssignments assignments={moreAssignments as any} />

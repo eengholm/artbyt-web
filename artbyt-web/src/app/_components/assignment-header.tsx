@@ -7,15 +7,20 @@ import { type Author } from "@/interfaces/author";
 type Props = {
   title: string;
   coverImage: string;
+  objectPosition?: string;
 };
 
-export function AssignmentHeader({ title, coverImage }: Props) {
+export function AssignmentHeader({ title, coverImage, objectPosition }: Props) {
   return (
     <>
       <AssignmentTitle>{title}</AssignmentTitle>
       <div className="hidden md:block md:mb-12"></div>
       <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage title={title} src={coverImage} />
+        <CoverImage
+          title={title}
+          src={coverImage}
+          objectPosition={objectPosition}
+        />
       </div>
       <div className="max-w-2xl mx-auto">
         <div className="block md:hidden mb-6"></div>
