@@ -4,6 +4,7 @@ intro:
   subtitle: Din lokala designstudio
 featuredAssignment: tim-gor-fina-grejer
 moreStories:
-  - tim-gor-fina-grejer
   - otroligt-bradspel
+  - jethwear-aw-24
+  - tim-gor-fina-grejer
 ---
