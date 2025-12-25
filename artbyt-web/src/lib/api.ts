@@ -100,6 +100,7 @@ export function getAboutSettings() {
       content: "",
       title: "",
       image: "",
+      imagePosition: "center",
     };
   }
 
@@ -108,6 +109,7 @@ export function getAboutSettings() {
     content,
     title: data.title,
     image: data.image,
+    imagePosition: data.imagePosition || "center",
   };
 }
 
