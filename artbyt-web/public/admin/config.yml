@@ -26,6 +26,19 @@ collections:
             fields:
               - { label: "Title", name: "title", widget: "string", default: "ArtByT" }
               - { label: "Subtitle", name: "subtitle", widget: "text", default: "Din lokala designstudio" }
+              - { label: "Description", name: "description", widget: "text", default: "Jag hjälper ditt företag att skapa en stark visuell identitet som sticker ut och engagerar din målgrupp." }
+              - label: "Primary Button"
+                name: "primaryButton"
+                widget: "object"
+                fields:
+                  - { label: "Text", name: "text", widget: "string", default: "Se mina projekt" }
+                  - { label: "Link", name: "link", widget: "string", default: "/assignments" }
+              - label: "Secondary Button"
+                name: "secondaryButton"
+                widget: "object"
+                fields:
+                  - { label: "Text", name: "text", widget: "string", default: "Läs mer om mig" }
+                  - { label: "Link", name: "link", widget: "string", default: "/about" }
           - label: "Featured Assignment"
             name: "featuredAssignment"
             widget: "relation"

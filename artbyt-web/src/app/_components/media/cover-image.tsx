@@ -26,7 +26,7 @@ const CoverImage = ({ title, src, slug, objectPosition = "center" }: Props) => {
       width={1200}
       height={675}
       className={cn("w-full rounded-lg object-cover aspect-[16/9]", {
-        "hover:opacity-90 transition-opacity duration-200": slug,
+        "group-hover:scale-105 transition-transform duration-500": slug,
       })}
       style={{ objectPosition }}
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

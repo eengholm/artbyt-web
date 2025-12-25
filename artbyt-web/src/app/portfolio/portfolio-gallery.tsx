@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Container from "@/app/_components/ui/container";
 
 type PortfolioImage = {
   url: string;
@@ -19,6 +20,35 @@ export default function PortfolioGallery({ images }: Props) {
   const [selectedImage, setSelectedImage] = useState<PortfolioImage | null>(
     null
   );
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
+  const imageRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers = imageRefs.current.map((ref, index) => {
+      if (!ref) return null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleImages((prev) => new Set(prev).add(index));
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "50px",
+        }
+      );
+
+      observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, [images]);
 
   const getSizeClasses = (size: string) => {
     switch (size) {
@@ -33,40 +63,53 @@ export default function PortfolioGallery({ images }: Props) {
 
   return (
     <>
-      <div className="py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Container>
+        <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-2xl lg:max-w-none">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-12">
+            <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
               Portfolio
             </h1>
+            <p className="mt-4 text-lg text-gray-600">
+              Utforska mina designprojekt och kreativa arbeten.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-              {images.map((image, idx) => (
-                <button
-                  key={`${image.url}-${idx}`}
-                  onClick={() => setSelectedImage(image)}
-                  className={`${getSizeClasses(
-                    image.size
-                  )} relative overflow-hidden rounded-lg group cursor-pointer hover:opacity-90 transition-opacity`}
-                >
-                  <Image
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    src={image.url}
-                    alt={image.title || "Portfolio image"}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-end p-4">
-                    <p className="text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      {image.title}
-                    </p>
-                  </div>
-                </button>
-              ))}
-            </div>
+          <div className="mx-auto mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px] border-t border-gray-200 pt-16 sm:mt-20 sm:pt-20 max-w-2xl lg:max-w-none">
+            {images.map((image, idx) => (
+              <button
+                key={`${image.url}-${idx}`}
+                ref={(el) => {
+                  imageRefs.current[idx] = el;
+                }}
+                onClick={() => setSelectedImage(image)}
+                className={`${getSizeClasses(
+                  image.size
+                )} relative overflow-hidden rounded-lg group cursor-pointer hover:opacity-90 transition-all duration-500 ${
+                  visibleImages.has(idx)
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+                style={{
+                  transitionDelay: `${(idx % 8) * 75}ms`,
+                }}
+              >
+                <Image
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  src={image.url}
+                  alt={image.title || "Portfolio image"}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-end p-4">
+                  <p className="text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    {image.title}
+                  </p>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Modal */}
       {selectedImage && (

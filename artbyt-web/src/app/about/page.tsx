@@ -60,91 +60,91 @@ export default async function About() {
   ];
 
   return (
-    <div className="py-24 sm:py-32">
-      <Container>
-        <div className="mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-12">
+    <Container>
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-16">
+          <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
             {aboutData.title || "Om Mig"}
           </h1>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
-            <div className="relative aspect-square rounded-lg overflow-hidden">
-              {aboutData.image && (
-                <Image
-                  src={aboutData.image}
-                  alt={aboutData.title || "About"}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-              )}
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <div
-                className="prose prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: content }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
+          <div className="relative aspect-square rounded-lg overflow-hidden">
+            {aboutData.image && (
+              <Image
+                src={aboutData.image}
+                alt={aboutData.title || "About"}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
               />
-
-              {/* Social Links */}
-              <div className="mt-8 flex gap-4">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-900 transition-colors"
-                    aria-label={link.name}
-                  >
-                    {link.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
 
-          {/* Contact Information */}
-          <div className="mt-16 border-t border-gray-200 pt-16">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8">
-              Kontakta Mig
-            </h2>
-            <div className="max-w-2xl">
-              <p className="text-lg text-gray-600 mb-6">
-                Har du ett projekt eller en idé du vill diskutera? Tveka inte
-                att höra av dig!
-              </p>
-              <div className="space-y-3">
-                <div>
-                  <span className="text-sm font-medium text-gray-500 block mb-1">
-                    E-post
-                  </span>
-                  <a
-                    href={`mailto:${settings.contactEmail}`}
-                    className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                  >
-                    {settings.contactEmail}
-                  </a>
-                </div>
-                {settings.phoneNumber && (
-                  <div>
-                    <span className="text-sm font-medium text-gray-500 block mb-1">
-                      Telefon
-                    </span>
-                    <a
-                      href={`tel:${settings.phoneNumber.replace(/\s/g, "")}`}
-                      className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                    >
-                      {settings.phoneNumber}
-                    </a>
-                  </div>
-                )}
-              </div>
+          <div className="flex flex-col justify-center">
+            <div
+              className="prose prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+
+            {/* Social Links */}
+            <div className="mt-8 flex gap-4">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label={link.name}
+                >
+                  {link.icon}
+                </a>
+              ))}
             </div>
           </div>
         </div>
-      </Container>
-    </div>
+
+        {/* Contact Information */}
+        <div className="mt-16 border-t border-gray-200 pt-16">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8">
+            Kontakta Mig
+          </h2>
+          <div className="max-w-2xl">
+            <p className="text-lg text-gray-600 mb-6">
+              Har du ett projekt eller en idé du vill diskutera? Tveka inte att
+              höra av dig!
+            </p>
+            <div className="space-y-3">
+              <div>
+                <span className="text-sm font-medium text-gray-500 block mb-1">
+                  E-post
+                </span>
+                <a
+                  href={`mailto:${settings.contactEmail}`}
+                  className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                >
+                  {settings.contactEmail}
+                </a>
+              </div>
+              {settings.phoneNumber && (
+                <div>
+                  <span className="text-sm font-medium text-gray-500 block mb-1">
+                    Telefon
+                  </span>
+                  <a
+                    href={`tel:${settings.phoneNumber.replace(/\s/g, "")}`}
+                    className="text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                  >
+                    {settings.phoneNumber}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
   );
 }

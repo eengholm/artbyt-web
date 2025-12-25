@@ -4,6 +4,7 @@ import { Intro } from "@/app/_components/layout/intro";
 import { MoreAssignments } from "@/app/_components/assignments/more-assignments";
 import { PortfolioScroll } from "@/app/_components/portfolio/portfolio-scroll";
 import { Testimonials } from "@/app/_components/shared/testimonials";
+import { ScrollReveal } from "@/app/_components/ui/scroll-reveal";
 import {
   getAllAssignments,
   getHomepageSettings,
@@ -48,20 +49,31 @@ export default function Index() {
         <Intro
           title={homepage.intro?.title}
           subtitle={homepage.intro?.subtitle}
+          description={homepage.intro?.description}
+          primaryButton={homepage.intro?.primaryButton}
+          secondaryButton={homepage.intro?.secondaryButton}
         />
         {featuredAssignment && (
-          <FeaturedAssignment
-            title={featuredAssignment.title || ""}
-            coverImage={featuredAssignment.coverImage || ""}
-            slug={featuredAssignment.slug}
-            excerpt={featuredAssignment.excerpt || ""}
-          />
+          <ScrollReveal>
+            <FeaturedAssignment
+              title={featuredAssignment.title || ""}
+              coverImage={featuredAssignment.coverImage || ""}
+              slug={featuredAssignment.slug}
+              excerpt={featuredAssignment.excerpt || ""}
+            />
+          </ScrollReveal>
         )}
         {moreAssignments.length > 0 && (
-          <MoreAssignments assignments={moreAssignments as any} />
+          <ScrollReveal delay={100}>
+            <MoreAssignments assignments={moreAssignments as any} />
+          </ScrollReveal>
         )}
-        <Testimonials testimonials={testimonials} />
-        <PortfolioScroll images={portfolioData.images || []} />
+        <ScrollReveal delay={200}>
+          <Testimonials testimonials={testimonials} />
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <PortfolioScroll images={portfolioData.images || []} />
+        </ScrollReveal>
       </Container>
     </main>
   );

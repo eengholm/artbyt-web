@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const navigation = [
   { name: "Hem", href: "/" },
@@ -17,11 +18,31 @@ type MenuProps = {
 
 export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isCollapsed = isScrolled && !isHovered;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header
+      className="fixed inset-x-0 top-0 z-50"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <nav
-        className="flex items-center justify-between p-6 lg:px-8"
+        className={`flex items-center justify-between transition-all duration-300 lg:px-8 ${
+          isCollapsed ? "p-3" : "p-6"
+        }`}
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -30,7 +51,9 @@ export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
             <Image
               height={80}
               width={80}
-              className="h-20 w-auto"
+              className={`w-auto transition-all duration-300 ${
+                isCollapsed ? "h-12" : "h-20"
+              }`}
               src={logo}
               alt="Design By Tim Bylander"
               priority
@@ -47,16 +70,30 @@ export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600 transition-colors"
-            >
-              {item.name}
-            </a>
-          ))}
+        <div
+          className={`hidden lg:flex lg:gap-x-12 transition-all duration-300 overflow-hidden ${
+            isCollapsed ? "max-w-0 opacity-0" : "max-w-full opacity-100"
+          }`}
+        >
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                className={`text-sm font-semibold leading-6 transition-colors relative whitespace-nowrap ${
+                  isActive
+                    ? "text-gray-900"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {item.name}
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gray-900" />
+                )}
+              </a>
+            );
+          })}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
       </nav>
@@ -90,16 +127,23 @@ export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {navigation.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 transition-colors ${
+                        isActive
+                          ? "text-gray-900 bg-gray-100"
+                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>

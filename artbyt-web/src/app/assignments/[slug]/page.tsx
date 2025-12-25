@@ -30,7 +30,6 @@ export default async function Assignment({
   return (
     <main>
       <Container>
-        <Header />
         <article className="mb-32">
           <AssignmentHeader
             title={assignment.title}
