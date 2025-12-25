@@ -4,6 +4,9 @@ import markdownToHtml from "@/lib/markdownToHtml";
 import Container from "@/app/_components/container";
 import Image from "next/image";
 
+// Revalidate every day
+export const revalidate = 86400;
+
 export async function generateMetadata(): Promise<Metadata> {
   const aboutData = getAboutSettings();
   const settings = getGeneralSettings();
@@ -73,6 +76,7 @@ export default async function About() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
               )}
             </div>

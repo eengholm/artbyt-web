@@ -9,6 +9,13 @@ export interface Author {
   picture: string;
 }
 
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role?: string;
+  company?: string;
+}
+
 export interface Assignment {
   slug: string;
   title: string;
@@ -23,4 +30,5 @@ export interface Assignment {
   description?: string;
   images?: Array<{ url: string }>;
   coverImagePosition?: string;
+  testimonial?: Testimonial;
 }

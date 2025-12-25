@@ -7,10 +7,37 @@ const assignmentsDirectory = join(process.cwd(), "_assignments");
 const contentDirectory = join(process.cwd(), "_content");
 const settingsDirectory = join(contentDirectory, "settings");
 
+// Helper function to safely read files
+function safeReadFile(path: string, errorContext: string) {
+  try {
+    if (!fs.existsSync(path)) {
+      console.error(`File not found: ${path}`);
+      return null;
+    }
+    return fs.readFileSync(path, "utf8");
+  } catch (error) {
+    console.error(`Error reading ${errorContext}:`, error);
+    return null;
+  }
+}
+
 // General settings
 export function getGeneralSettings() {
   const fullPath = join(settingsDirectory, "general.md");
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = safeReadFile(fullPath, "general settings");
+
+  if (!fileContents) {
+    return {
+      title: "",
+      description: "",
+      contactEmail: "",
+      phoneNumber: "",
+      fromEmail: "",
+      logo: "",
+      siteName: "",
+    };
+  }
+
   const { data } = matter(fileContents);
 
   return {
@@ -27,7 +54,12 @@ export function getGeneralSettings() {
 // Homepage settings
 export function getHomepageSettings() {
   const fullPath = join(contentDirectory, "homepage.md");
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = safeReadFile(fullPath, "homepage settings");
+
+  if (!fileContents) {
+    return {};
+  }
+
   const { data } = matter(fileContents);
   return data;
 }
@@ -35,7 +67,12 @@ export function getHomepageSettings() {
 // Footer settings
 export function getFooterSettings() {
   const fullPath = join(contentDirectory, "footer.md");
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = safeReadFile(fullPath, "footer settings");
+
+  if (!fileContents) {
+    return {};
+  }
+
   const { data } = matter(fileContents);
   return data;
 }
@@ -43,7 +80,12 @@ export function getFooterSettings() {
 // Portfolio settings
 export function getPortfolioSettings() {
   const fullPath = join(contentDirectory, "portfolio.md");
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = safeReadFile(fullPath, "portfolio settings");
+
+  if (!fileContents) {
+    return { images: [] };
+  }
+
   const { data } = matter(fileContents);
   return data;
 }
@@ -51,18 +93,36 @@ export function getPortfolioSettings() {
 // About page settings
 export function getAboutSettings() {
   const fullPath = join(contentDirectory, "about.md");
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = safeReadFile(fullPath, "about settings");
+
+  if (!fileContents) {
+    return {
+      content: "",
+      title: "",
+      image: "",
+    };
+  }
+
   const { data, content } = matter(fileContents);
   return {
     content,
-    title: data.title, // add your title source here
-    image: data.image, // add your image source here
+    title: data.title,
+    image: data.image,
   };
 }
 
-// Assignment functions (handles both posts and assignments)
+// Assignment functions
 export function getAssignmentSlugs() {
-  return fs.readdirSync(assignmentsDirectory);
+  try {
+    if (!fs.existsSync(assignmentsDirectory)) {
+      console.error("Assignments directory not found");
+      return [];
+    }
+    return fs.readdirSync(assignmentsDirectory);
+  } catch (error) {
+    console.error("Error reading assignments directory:", error);
+    return [];
+  }
 }
 
 export function getAssignmentBySlug(slug: string): Assignment | null {
@@ -70,7 +130,6 @@ export function getAssignmentBySlug(slug: string): Assignment | null {
     const realSlug = slug.replace(/\.md$/, "");
     const fullPath = join(assignmentsDirectory, `${realSlug}.md`);
 
-    // Check if file exists
     if (!fs.existsSync(fullPath)) {
       return null;
     }
@@ -88,15 +147,21 @@ export function getAssignmentBySlug(slug: string): Assignment | null {
         url: data.ogImage || data.coverImage || "",
       },
       content,
-      id: data.id, // Add id from frontmatter
+      id: data.id,
       description: data.description || "",
       images: data.images || [],
       coverImagePosition: data.coverImagePosition || "center",
+      testimonial: data.testimonial || undefined,
     };
   } catch (error) {
     console.error(`Error loading assignment ${slug}:`, error);
     return null;
   }
+}
+
+export function getAssignmentsWithTestimonials(): Assignment[] {
+  const allAssignments = getAllAssignments();
+  return allAssignments.filter((assignment) => assignment.testimonial);
 }
 
 export function getAllAssignments(): Assignment[] {
@@ -113,15 +178,10 @@ export function getAllAssignments(): Assignment[] {
   return assignments;
 }
 
-export function getAssignmentById(id: number): Assignment {
+export function getAssignmentById(id: number): Assignment | null {
   const allAssignments = getAllAssignments();
   const assignment = allAssignments.find((a) => a.id === id);
-
-  if (!assignment) {
-    throw new Error(`Assignment with id ${id} not found`);
-  }
-
-  return assignment;
+  return assignment || null;
 }
 
 // Alias for backwards compatibility

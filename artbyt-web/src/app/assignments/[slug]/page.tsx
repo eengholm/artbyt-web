@@ -3,39 +3,22 @@ import { notFound } from "next/navigation";
 import { getAssignmentBySlug, getAllAssignments } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
-import { AssignmentHeader } from "@/app/_components/assignment-header";
 import { AssignmentBody } from "@/app/_components/assignment-body";
+import { AssignmentHeader } from "@/app/_components/assignment-header";
+import { ImageGallery } from "@/app/_components/image-gallery";
+import { AssignmentTestimonial } from "@/app/_components/assignment-testimonial";
+import Header from "@/app/_components/header";
 
-type Params = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
+// Revalidate every day
+export const revalidate = 86400;
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export default async function Assignment({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const assignment = getAssignmentBySlug(slug);
 
-  if (!assignment) {
-    return {};
-  }
-
-  return {
-    title: assignment.title,
-    description: assignment.excerpt || assignment.content?.substring(0, 160),
-    openGraph: {
-      title: assignment.title,
-      description: assignment.excerpt,
-      images: assignment.coverImage ? [assignment.coverImage] : [],
-      type: "article",
-      publishedTime: assignment.date,
-    },
-  };
-}
-
-export default async function Assignment({ params }: Params) {
-  const { slug } = await params;
   const assignment = getAssignmentBySlug(slug);
 
   if (!assignment) {
@@ -52,12 +35,53 @@ export default async function Assignment({ params }: Params) {
           <AssignmentHeader
             title={assignment.title}
             coverImage={assignment.coverImage}
+            objectPosition={assignment.coverImagePosition}
           />
           <AssignmentBody content={content} />
+          {assignment.images && assignment.images.length > 0 && (
+            <ImageGallery images={assignment.images} title={assignment.title} />
+          )}
+          {assignment.testimonial && (
+            <AssignmentTestimonial testimonial={assignment.testimonial} />
+          )}
         </article>
       </Container>
     </main>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const assignment = getAssignmentBySlug(slug);
+
+  if (!assignment) {
+    return {
+      title: "Projekt hittades inte",
+    };
+  }
+
+  const title = `${assignment.title} | Artbyt`;
+
+  return {
+    title,
+    description: assignment.excerpt,
+    openGraph: {
+      title,
+      description: assignment.excerpt,
+      images: [assignment.ogImage.url],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: assignment.excerpt,
+      images: [assignment.ogImage.url],
+    },
+  };
 }
 
 export async function generateStaticParams() {

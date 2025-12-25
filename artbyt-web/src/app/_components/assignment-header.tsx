@@ -1,8 +1,4 @@
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateFormatter from "./date-formatter";
-import { AssignmentTitle } from "@/app/_components/assignment-title";
-import { type Author } from "@/interfaces/author";
+import Image from "next/image";
 
 type Props = {
   title: string;
@@ -10,21 +6,30 @@ type Props = {
   objectPosition?: string;
 };
 
-export function AssignmentHeader({ title, coverImage, objectPosition }: Props) {
+export function AssignmentHeader({
+  title,
+  coverImage,
+  objectPosition = "center",
+}: Props) {
   return (
-    <>
-      <AssignmentTitle>{title}</AssignmentTitle>
-      <div className="hidden md:block md:mb-12"></div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage
-          title={title}
-          src={coverImage}
-          objectPosition={objectPosition}
-        />
-      </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="block md:hidden mb-6"></div>
-      </div>
-    </>
+    <div className="mb-8 md:mb-16">
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+        {title}
+      </h1>
+      {coverImage && (
+        <div className="mb-8 md:mb-16 relative w-full aspect-[16/9]">
+          <Image
+            src={coverImage}
+            alt={title}
+            fill
+            className="rounded-lg object-cover"
+            style={{ objectPosition }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            priority
+            quality={90}
+          />
+        </div>
+      )}
+    </div>
   );
 }
