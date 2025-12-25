@@ -1,7 +1,9 @@
 import Image from "next/image";
 
 type Props = {
-  images: Array<{ url?: string; alt?: string }> | string[];
+  images:
+    | Array<{ url?: string; alt?: string; imagePosition?: string }>
+    | string[];
   title: string;
 };
 
@@ -11,6 +13,22 @@ export function ImageGallery({ images, title }: Props) {
   const imageArray = images.map((img) =>
     typeof img === "string" ? { url: img } : img
   );
+
+  const getObjectPosition = (position?: string) => {
+    if (!position) return "object-center";
+    const positionMap: Record<string, string> = {
+      top: "object-top",
+      bottom: "object-bottom",
+      left: "object-left",
+      right: "object-right",
+      center: "object-center",
+      "top left": "object-left-top",
+      "top right": "object-right-top",
+      "bottom left": "object-left-bottom",
+      "bottom right": "object-right-bottom",
+    };
+    return positionMap[position] || "object-center";
+  };
 
   return (
     <div className="my-12">
@@ -27,7 +45,9 @@ export function ImageGallery({ images, title }: Props) {
                 src={image.url}
                 alt={image.alt || `${title} - Bild ${index + 1}`}
                 fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
+                className={`object-cover hover:scale-105 transition-transform duration-300 ${getObjectPosition(
+                  image.imagePosition
+                )}`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 loading={index < 2 ? "eager" : "lazy"}
                 quality={85}

@@ -10,6 +10,7 @@ images:
     size: medium
   - url: /assets/portfolio/preview/fantasy-logo.jpg
     title: Fantasy Board Game
+    imagePosition: top
     assignment: otroligt-bradspel
     size: small
   - size: medium

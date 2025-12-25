@@ -28,6 +28,22 @@ export default async function About() {
   const settings = getGeneralSettings();
   const content = await markdownToHtml(aboutData.content || "");
 
+  const getObjectPosition = (position?: string) => {
+    if (!position) return "object-center";
+    const positionMap: Record<string, string> = {
+      top: "object-top",
+      bottom: "object-bottom",
+      left: "object-left",
+      right: "object-right",
+      center: "object-center",
+      "top left": "object-left-top",
+      "top right": "object-right-top",
+      "bottom left": "object-left-bottom",
+      "bottom right": "object-right-bottom",
+    };
+    return positionMap[position] || "object-center";
+  };
+
   const socialLinks = [
     {
       name: "Instagram",
@@ -75,7 +91,9 @@ export default async function About() {
                 src={aboutData.image}
                 alt={aboutData.title || "About"}
                 fill
-                className="object-cover"
+                className={`object-cover ${getObjectPosition(
+                  aboutData.imagePosition
+                )}`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />

@@ -10,6 +10,7 @@ type PortfolioImage = {
   assignment?: string;
   assignmentTitle?: string;
   size: "small" | "medium" | "large";
+  imagePosition?: string;
 };
 
 type Props = {
@@ -61,6 +62,22 @@ export default function PortfolioGallery({ images }: Props) {
     }
   };
 
+  const getObjectPosition = (position?: string) => {
+    if (!position) return "object-center";
+    const positionMap: Record<string, string> = {
+      top: "object-top",
+      bottom: "object-bottom",
+      left: "object-left",
+      right: "object-right",
+      center: "object-center",
+      "top left": "object-left-top",
+      "top right": "object-right-top",
+      "bottom left": "object-left-bottom",
+      "bottom right": "object-right-bottom",
+    };
+    return positionMap[position] || "object-center";
+  };
+
   return (
     <>
       <Container>
@@ -95,7 +112,9 @@ export default function PortfolioGallery({ images }: Props) {
               >
                 <Image
                   fill
-                  className="object-cover"
+                  className={`object-cover ${getObjectPosition(
+                    image.imagePosition
+                  )}`}
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   src={image.url}
                   alt={image.title || "Portfolio image"}

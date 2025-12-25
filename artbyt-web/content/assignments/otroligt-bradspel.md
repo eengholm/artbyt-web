@@ -4,9 +4,10 @@ excerpt: "Med fantasifulla designer tog jag en idé om ett brädspel till en hel
 coverImage: "/assets/portfolio/preview/fantasy-logo.jpg"
 coverImagePosition: "top"
 images:
-  - /assets/portfolio/preview/fantasy-logo.jpg
-  - /assets/portfolio/preview/cover.jpg
-  - /assets/portfolio/dynamic-routing/cover.jpg
+  - url: /assets/portfolio/preview/fantasy-logo.jpg
+    imagePosition: top
+  - url: /assets/portfolio/preview/cover.jpg
+  - url: /assets/portfolio/dynamic-routing/cover.jpg
 ---
 
 Detta brädspel är ett passionsprojekt där jag fick möjlighet att skapa en helt egen värld från grunden. Projektet omfattade allt från konceptutveckling och världsbyggande till design av spelbräde, kort, pjäser och förpackning.

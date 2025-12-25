@@ -84,6 +84,7 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string", default: "Om Mig" }
           - { label: "Image", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
+          - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
           - { label: "Content", name: "body", widget: "markdown", hint: "Write about yourself, your design philosophy, experience, etc." }
   
   - name: "portfolio"
@@ -99,6 +100,7 @@ collections:
             fields:
               - { label: "Image", name: "url", widget: "image" }
               - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
               - { label: "Assignment", name: "assignment", widget: "relation", collection: "assignments", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
               - { label: "Size", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
   
@@ -112,6 +114,13 @@ collections:
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Cover Image", name: "coverImage", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Gallery Images"
+        name: "gallery"
+        widget: "list"
+        fields:
+          - { label: "Image", name: "url", widget: "image" }
+          - { label: "Caption", name: "caption", widget: "string", required: false }
+          - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
   
   - name: "settings"
     label: "Settings"
