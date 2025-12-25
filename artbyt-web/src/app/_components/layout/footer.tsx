@@ -1,4 +1,3 @@
-import Container from "@/app/_components/ui/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
 import Avatar from "../ui/avatar";
 
@@ -25,8 +24,8 @@ export function Footer({
 }: FooterProps = {}) {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
-      <Container>
-        <div className="py-16 lg:py-20">
+      <div className="container mx-auto px-5 pt-16 lg:pt-20 pb-8 lg:pb-12">
+        <div>
           {/* Main footer content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* About section */}
@@ -132,7 +131,7 @@ export function Footer({
             </p>
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }
