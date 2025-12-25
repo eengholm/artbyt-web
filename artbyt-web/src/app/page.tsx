@@ -1,9 +1,9 @@
-import Container from "@/app/_components/container";
-import { FeaturedAssignment } from "@/app/_components/featured-assignment";
-import { Intro } from "@/app/_components/intro";
-import { MoreAssignments } from "@/app/_components/more-assignments";
-import { PortfolioScroll } from "@/app/_components/portfolio-scroll";
-import { Testimonials } from "@/app/_components/testimonials";
+import Container from "@/app/_components/ui/container";
+import { FeaturedAssignment } from "@/app/_components/assignments/featured-assignment";
+import { Intro } from "@/app/_components/layout/intro";
+import { MoreAssignments } from "@/app/_components/assignments/more-assignments";
+import { PortfolioScroll } from "@/app/_components/portfolio/portfolio-scroll";
+import { Testimonials } from "@/app/_components/shared/testimonials";
 import {
   getAllAssignments,
   getHomepageSettings,

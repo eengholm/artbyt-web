@@ -1,5 +1,5 @@
 import { getAllAssignments } from "@/lib/api";
-import CoverImage from "@/app/_components/cover-image";
+import CoverImage from "@/app/_components/media/cover-image";
 
 export default function Assignments() {
   const assignments = getAllAssignments();

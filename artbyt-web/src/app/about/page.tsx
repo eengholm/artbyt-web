@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getAboutSettings, getGeneralSettings } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import Container from "@/app/_components/container";
+import Container from "@/app/_components/ui/container";
 import Image from "next/image";
 
 // Revalidate every day

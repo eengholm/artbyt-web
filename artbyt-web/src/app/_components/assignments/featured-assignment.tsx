@@ -1,4 +1,4 @@
-import CoverImage from "@/app/_components/cover-image";
+import CoverImage from "@/app/_components/media/cover-image";
 import Link from "next/link";
 
 type Props = {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "@/app/_components/layout/footer";
-import { PersonStructuredData } from "@/app/_components/structured-data";
+import { PersonStructuredData } from "@/app/_components/seo/structured-data";
 import { getGeneralSettings } from "@/lib/api";
 import { Menu } from "./_components/layout/menu";
 

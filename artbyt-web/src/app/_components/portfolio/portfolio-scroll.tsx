@@ -80,7 +80,7 @@ export function PortfolioScroll({ images }: Props) {
           href="/portfolio"
           className="text-lg hover:underline text-blue-600"
         >
-          View All →
+          Visa Alla →
         </Link>
       </div>
 

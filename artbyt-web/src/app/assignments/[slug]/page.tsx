@@ -2,12 +2,12 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAssignmentBySlug, getAllAssignments } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import Container from "@/app/_components/container";
-import { AssignmentBody } from "@/app/_components/assignment-body";
-import { AssignmentHeader } from "@/app/_components/assignment-header";
-import { ImageGallery } from "@/app/_components/image-gallery";
-import { AssignmentTestimonial } from "@/app/_components/assignment-testimonial";
-import Header from "@/app/_components/header";
+import Container from "@/app/_components/ui/container";
+import { AssignmentBody } from "@/app/_components/assignments/assignment-body";
+import { AssignmentHeader } from "@/app/_components/assignments/assignment-header";
+import { ImageGallery } from "@/app/_components/media/image-gallery";
+import { AssignmentTestimonial } from "@/app/_components/assignments/assignment-testimonial";
+import Header from "@/app/_components/layout/header";
 
 // Revalidate every day
 export const revalidate = 86400;

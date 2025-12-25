@@ -3,8 +3,8 @@ import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
 
-const assignmentsDirectory = join(process.cwd(), "_assignments");
-const contentDirectory = join(process.cwd(), "_content");
+const contentDirectory = join(process.cwd(), "content");
+const assignmentsDirectory = join(contentDirectory, "assignments");
 const settingsDirectory = join(contentDirectory, "settings");
 
 // Helper function to safely read files
@@ -53,7 +53,7 @@ export function getGeneralSettings() {
 
 // Homepage settings
 export function getHomepageSettings() {
-  const fullPath = join(contentDirectory, "homepage.md");
+  const fullPath = join(settingsDirectory, "homepage.md");
   const fileContents = safeReadFile(fullPath, "homepage settings");
 
   if (!fileContents) {
@@ -66,7 +66,7 @@ export function getHomepageSettings() {
 
 // Footer settings
 export function getFooterSettings() {
-  const fullPath = join(contentDirectory, "footer.md");
+  const fullPath = join(settingsDirectory, "footer.md");
   const fileContents = safeReadFile(fullPath, "footer settings");
 
   if (!fileContents) {
@@ -79,7 +79,7 @@ export function getFooterSettings() {
 
 // Portfolio settings
 export function getPortfolioSettings() {
-  const fullPath = join(contentDirectory, "portfolio.md");
+  const fullPath = join(settingsDirectory, "portfolio.md");
   const fileContents = safeReadFile(fullPath, "portfolio settings");
 
   if (!fileContents) {
@@ -92,7 +92,7 @@ export function getPortfolioSettings() {
 
 // About page settings
 export function getAboutSettings() {
-  const fullPath = join(contentDirectory, "about.md");
+  const fullPath = join(settingsDirectory, "about.md");
   const fileContents = safeReadFile(fullPath, "about settings");
 
   if (!fileContents) {

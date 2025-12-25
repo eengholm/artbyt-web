@@ -1,6 +1,6 @@
-import Container from "@/app/_components/container";
+import Container from "@/app/_components/ui/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
-import Avatar from "../avatar";
+import Avatar from "../ui/avatar";
 
 interface FooterProps {
   authorName?: string;
