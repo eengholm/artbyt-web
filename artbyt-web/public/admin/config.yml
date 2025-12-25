@@ -2,7 +2,7 @@ backend:
   name: github
   repo: eengholm/artbyt-web
   branch: main
-  base_url: http://localhost:3000  # Use localhost for local testing
+  base_url: https://artbyt-web.vercel.app/
   auth_endpoint: /api/auth
   base_path: artbyt-web  # Project is in artbyt-web folder in the repo
 
