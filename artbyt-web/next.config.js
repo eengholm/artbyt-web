@@ -18,12 +18,12 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Production optimizations
-  swcMinify: true,
-  // Optimize fonts
-  optimizeFonts: true,
   // React strict mode for better development
   reactStrictMode: true,
+  // Set turbopack root to silence warning
+  turbopack: {
+    root: "C:/Projects/Tim/artbyt-web/artbyt-web",
+  },
   // Remove unused code
   modularizeImports: {
     "@heroicons/react/24/outline": {
