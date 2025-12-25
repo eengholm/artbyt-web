@@ -18,7 +18,7 @@ collections:
     files:
       - label: "Homepage"
         name: "homepage"
-        file: "artbyt-web/_content/homepage.md"
+        file: "artbyt-web/content/settings/homepage.md"
         fields:
           - label: "Intro Section"
             name: "intro"
@@ -66,7 +66,7 @@ collections:
     files:
       - label: "Footer"
         name: "footer"
-        file: "artbyt-web/_content/footer.md"
+        file: "artbyt-web/content/settings/footer.md"
         fields:
           - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
           - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
@@ -80,7 +80,7 @@ collections:
     files:
       - label: "About Me"
         name: "about"
-        file: "artbyt-web/_content/about.md"
+        file: "artbyt-web/content/settings/about.md"
         fields:
           - { label: "Title", name: "title", widget: "string", default: "Om Mig" }
           - { label: "Image", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
@@ -91,7 +91,7 @@ collections:
     files:
       - label: "Portfolio Images"
         name: "portfolio"
-        file: "artbyt-web/_content/portfolio.md"
+        file: "artbyt-web/content/settings/portfolio.md"
         fields:
           - label: "Gallery Images"
             name: "images"
@@ -104,7 +104,7 @@ collections:
   
   - name: "assignments"
     label: "Assignments"
-    folder: "_assignments"
+    folder: "artbyt-web/content/assignments"
     create: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
@@ -118,7 +118,7 @@ collections:
     files:
       - name: "general"
         label: "General Settings"
-        file: "_content/settings/general.md"
+        file: "artbyt-web/content/settings/general.md"
         fields:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Site Name", name: "siteName", widget: "string", required: false }
