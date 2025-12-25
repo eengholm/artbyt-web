@@ -14,7 +14,7 @@ export function Testimonials({ testimonials }: Props) {
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section className="py-24 sm:py-32">
+    <section className="mb-24 md:mb-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-xl text-center animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">

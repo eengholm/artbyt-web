@@ -71,7 +71,7 @@ export function PortfolioScroll({ images }: Props) {
   const duplicatedImages = [...images, ...images];
 
   return (
-    <section className="mb-20 md:mb-32">
+    <section className="mb-24 md:mb-32">
       <div className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">

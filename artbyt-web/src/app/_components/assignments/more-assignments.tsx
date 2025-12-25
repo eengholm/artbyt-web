@@ -9,7 +9,7 @@ type Props = {
 
 export function MoreAssignments({ assignments }: Props) {
   return (
-    <section className="mb-20 md:mb-32">
+    <section className="mb-24 md:mb-32">
       <div className="mb-12 animate-fade-in">
         <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
           Fler Projekt

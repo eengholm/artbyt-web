@@ -17,7 +17,7 @@ export function FeaturedAssignment({
   objectPosition = "center",
 }: Props) {
   return (
-    <section className="mb-20 md:mb-32">
+    <section className="mb-24 md:mb-32">
       <div className="mb-8 md:mb-12 overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
         <CoverImage
           title={title}

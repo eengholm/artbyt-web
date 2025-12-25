@@ -29,7 +29,7 @@ export function Intro({
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
         ></div>
-        <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto max-w-4xl py-16 sm:py-24 lg:py-32">
           <div className="text-center">
             {/* Main heading - larger and more impactful */}
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl">
