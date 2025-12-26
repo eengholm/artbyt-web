@@ -6,28 +6,6 @@
     <meta name="robots" content="noindex" />
     <title>Content Manager</title>
     
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Configure Tailwind to match your project -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontSize: {
-              '5xl': '2.5rem',
-              '6xl': '2.75rem',
-              '7xl': '4.5rem',
-              '8xl': '6.25rem',
-            },
-            letterSpacing: {
-              tighter: '-.04em',
-            },
-          }
-        }
-      }
-    </script>
-    
     <!-- Custom styles for prose/markdown content -->
     <style>
       /* Prose styling for markdown content */
@@ -145,6 +123,10 @@
     
     <!-- Custom preview templates -->
     <script>
+      // Register styles for preview iframe - using specific CSS chunks
+      CMS.registerPreviewStyle("/_next/static/chunks/5d7eabfae8fd2f82.css", { raw: false });
+      CMS.registerPreviewStyle("/_next/static/chunks/b9fc0b61b038f907.css", { raw: false });
+      
       // Assignment Preview - matches live assignment page layout
       const AssignmentPreview = createClass({
         render: function() {
@@ -153,6 +135,9 @@
           const coverImage = entry.getIn(['data', 'coverImage']) || '';
           const coverImagePosition = entry.getIn(['data', 'coverImagePosition']) || 'center';
           const body = this.props.widgetFor('body');
+
+          // Convert relative paths to absolute URLs
+          const imageUrl = coverImage.startsWith('http') ? coverImage : `https://artbyt-web.vercel.app${coverImage}`;
 
           const positionMap = {
             'top': 'top',
@@ -174,7 +159,7 @@
                 h('h1', { className: 'text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left' }, title),
                 coverImage && h('div', { className: 'mb-8 md:mb-16 relative w-full overflow-hidden rounded-lg', style: { aspectRatio: '16/9' } },
                   h('img', {
-                    src: coverImage,
+                    src: imageUrl,
                     alt: title,
                     className: 'w-full h-full object-cover rounded-lg',
                     style: { objectPosition: objectPosition }
@@ -238,6 +223,9 @@
           const imagePosition = entry.getIn(['data', 'imagePosition']) || 'center';
           const body = this.props.widgetFor('body');
 
+          // Convert relative paths to absolute URLs
+          const imageUrl = image.startsWith('http') ? image : `https://artbyt-web.vercel.app${image}`;
+
           const positionMap = {
             'top': 'top',
             'bottom': 'bottom',
@@ -253,7 +241,7 @@
 
           return h('div', { className: 'mx-auto max-w-4xl px-6 py-8' },
             h('h1', { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-12' }, title),
-            h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
+            h('div', { classUrlName: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
               image && h('div', { className: 'relative rounded-lg overflow-hidden', style: { aspectRatio: '1/1' } },
                 h('img', {
                   src: image,
