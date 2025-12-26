@@ -181,6 +181,72 @@
 
       // Homepage Preview - matches live homepage with all sections
       const HomepagePreview = createClass({
+        getInitialState: function() {
+          return {
+            featuredData: null,
+            moreStoriesData: []
+          };
+        },
+        
+        componentDidMount: function() {
+          this.fetchAssignmentData();
+        },
+        
+        componentDidUpdate: function(prevProps) {
+          const prevFeatured = prevProps.entry.getIn(['data', 'featuredAssignment']);
+          const currFeatured = this.props.entry.getIn(['data', 'featuredAssignment']);
+          const prevStories = prevProps.entry.getIn(['data', 'moreStories']);
+          const currStories = this.props.entry.getIn(['data', 'moreStories']);
+          
+          if (prevFeatured !== currFeatured || prevStories !== currStories) {
+            this.fetchAssignmentData();
+          }
+        },
+        
+        fetchAssignmentData: function() {
+          const featuredSlug = this.props.entry.getIn(['data', 'featuredAssignment']);
+          const moreStories = this.props.entry.getIn(['data', 'moreStories']) || [];
+          
+          // Fetch featured assignment
+          if (featuredSlug) {
+            fetch(`/content/assignments/${featuredSlug}.md`)
+              .then(res => res.text())
+              .then(text => {
+                const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
+                const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
+                const excerptMatch = text.match(/excerpt:\s*["']?([^"'\n]+)["']?/);
+                this.setState({
+                  featuredData: {
+                    coverImage: match ? match[1] : '',
+                    title: titleMatch ? titleMatch[1] : featuredSlug,
+                    excerpt: excerptMatch ? excerptMatch[1] : ''
+                  }
+                });
+              })
+              .catch(() => this.setState({ featuredData: { coverImage: '', title: featuredSlug, excerpt: '' } }));
+          }
+          
+          // Fetch more stories
+          Promise.all(
+            moreStories.map(slug => 
+              fetch(`/content/assignments/${slug}.md`)
+                .then(res => res.text())
+                .then(text => {
+                  const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
+                  const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
+                  const excerptMatch = text.match(/excerpt:\s*["']?([^"'\n]+)["']?/);
+                  return {
+                    slug,
+                    coverImage: match ? match[1] : '',
+                    title: titleMatch ? titleMatch[1] : slug,
+                    excerpt: excerptMatch ? excerptMatch[1] : ''
+                  };
+                })
+                .catch(() => ({ slug, coverImage: '', title: slug, excerpt: '' }))
+            ).toArray()
+          ).then(data => this.setState({ moreStoriesData: data }));
+        },
+        
         render: function() {
           const entry = this.props.entry;
           const intro = entry.getIn(['data', 'intro']);
@@ -191,6 +257,8 @@
           const secondaryButton = intro?.get('secondaryButton');
           const featuredAssignment = entry.getIn(['data', 'featuredAssignment']) || '';
           const moreStories = entry.getIn(['data', 'moreStories']) || [];
+          
+          const { featuredData, moreStoriesData } = this.state;
 
           return h('div', {},
             // Intro Section
@@ -218,12 +286,18 @@
                 h('p', { className: 'text-lg text-gray-600' }, 'Ett urval av mitt senaste arbete')
               ),
               h('div', { className: 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow' },
-                h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
-                  h('p', { className: 'text-gray-500 text-sm' }, 'Bild för projekt')
+                featuredData && featuredData.coverImage ? h('div', { className: 'aspect-[16/9] overflow-hidden' },
+                  h('img', {
+                    src: `https://artbyt-web.vercel.app${featuredData.coverImage}`,
+                    alt: featuredData.title,
+                    className: 'w-full h-full object-cover'
+                  })
+                ) : h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
+                  h('p', { className: 'text-gray-500 text-sm' }, 'Laddar bild...')
                 ),
                 h('div', { className: 'p-6' },
-                  h('h3', { className: 'text-2xl font-bold mb-3' }, featuredAssignment),
-                  h('p', { className: 'text-gray-600 mb-4' }, 'Projektbeskrivning visas här när sidan publiceras'),
+                  h('h3', { className: 'text-2xl font-bold mb-3' }, featuredData ? featuredData.title : featuredAssignment),
+                  h('p', { className: 'text-gray-600 mb-4' }, featuredData && featuredData.excerpt ? featuredData.excerpt : 'Projektbeskrivning visas här när sidan publiceras'),
                   h('div', { className: 'inline-block text-gray-900 font-semibold hover:underline' }, 'Läs mer →')
                 )
               )
@@ -232,14 +306,21 @@
             moreStories.size > 0 && h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
               h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Fler projekt'),
               h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8' },
-                moreStories.map(function(slug) {
+                moreStories.map(function(slug, index) {
+                  const storyData = moreStoriesData[index];
                   return h('div', { className: 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow', key: slug },
-                    h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
-                      h('p', { className: 'text-gray-500 text-sm' }, 'Bild')
+                    storyData && storyData.coverImage ? h('div', { className: 'aspect-[16/9] overflow-hidden' },
+                      h('img', {
+                        src: `https://artbyt-web.vercel.app${storyData.coverImage}`,
+                        alt: storyData.title,
+                        className: 'w-full h-full object-cover'
+                      })
+                    ) : h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
+                      h('p', { className: 'text-gray-500 text-sm' }, 'Laddar...')
                     ),
                     h('div', { className: 'p-6' },
-                      h('h3', { className: 'text-xl font-bold mb-2' }, slug),
-                      h('p', { className: 'text-gray-600 text-sm' }, 'Projektbeskrivning'),
+                      h('h3', { className: 'text-xl font-bold mb-2' }, storyData ? storyData.title : slug),
+                      h('p', { className: 'text-gray-600 text-sm' }, storyData && storyData.excerpt ? storyData.excerpt : 'Projektbeskrivning'),
                       h('div', { className: 'mt-3 inline-block text-gray-900 font-semibold text-sm hover:underline' }, 'Läs mer →')
                     )
                   );
@@ -249,12 +330,33 @@
             // Testimonials placeholder
             h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
               h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Kundrecensioner'),
-              h('p', { className: 'text-gray-600 text-center' }, 'Recensioner från nöjda kunder')
+              h('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6' },
+                [1, 2, 3].map(function(i) {
+                  return h('div', { className: 'bg-white rounded-lg shadow-md p-6', key: i },
+                    h('div', { className: 'flex items-center mb-4' },
+                      h('div', { className: 'w-12 h-12 bg-gray-200 rounded-full mr-4' }),
+                      h('div', {},
+                        h('p', { className: 'font-semibold text-gray-900' }, 'Kundnamn'),
+                        h('p', { className: 'text-sm text-gray-600' }, 'Företag')
+                      )
+                    ),
+                    h('p', { className: 'text-gray-600 italic' }, '"Kundrecension från nöjda kunder visas här när sidan publiceras."')
+                  );
+                })
+              )
             ),
             // Portfolio Gallery placeholder
             h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
               h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Portfolio'),
-              h('p', { className: 'text-gray-600 text-center' }, 'Ett urval av mina bästa arbeten')
+              h('div', { className: 'grid grid-cols-2 md:grid-cols-4 gap-4' },
+                [1, 2, 3, 4, 5, 6, 7, 8].map(function(i) {
+                  return h('div', { className: 'aspect-square bg-gray-200 rounded-lg overflow-hidden hover:opacity-80 transition-opacity', key: i },
+                    h('div', { className: 'w-full h-full flex items-center justify-center' },
+                      h('p', { className: 'text-gray-500 text-sm' }, 'Bild')
+                    )
+                  );
+                })
+              )
             )
           );
         }
