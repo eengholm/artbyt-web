@@ -207,10 +207,10 @@
           const featuredSlug = this.props.entry.getIn(['data', 'featuredAssignment']);
           const moreStories = this.props.entry.getIn(['data', 'moreStories']) || [];
           
-          // Fetch featured assignment
+          // Fetch featured assignment from GitHub
           if (featuredSlug) {
-            fetch(`/content/assignments/${featuredSlug}.md`)
-              .then(res => res.text())
+            fetch(`https://raw.githubusercontent.com/eengholm/artbyt-web/main/artbyt-web/content/assignments/${featuredSlug}.md`)
+              .then(res => res.ok ? res.text() : Promise.reject())
               .then(text => {
                 const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
                 const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
@@ -226,11 +226,11 @@
               .catch(() => this.setState({ featuredData: { coverImage: '', title: featuredSlug, excerpt: '' } }));
           }
           
-          // Fetch more stories
+          // Fetch more stories from GitHub
           Promise.all(
             moreStories.map(slug => 
-              fetch(`/content/assignments/${slug}.md`)
-                .then(res => res.text())
+              fetch(`https://raw.githubusercontent.com/eengholm/artbyt-web/main/artbyt-web/content/assignments/${slug}.md`)
+                .then(res => res.ok ? res.text() : Promise.reject())
                 .then(text => {
                   const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
                   const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
