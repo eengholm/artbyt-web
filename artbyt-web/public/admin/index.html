@@ -11,7 +11,10 @@
     <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     
-    <!-- Custom preview templates -->
+    <!-- Load bundled React preview components -->
+    <script src="/admin/cms-preview.js"></script>
+    
+    <!-- Fallback: Custom preview templates if bundle not available -->
     <script>
       // Assignment Preview - matches live assignment page layout
       const AssignmentPreview = createClass({
