@@ -2,8 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "build": "npm run build:cms && next build",
-    "build:cms": "node scripts/build-cms.js",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
