@@ -13,12 +13,11 @@
     
     <!-- Custom preview templates -->
     <script>
-      // Assignment Preview
+      // Assignment Preview - matches live assignment page layout
       const AssignmentPreview = createClass({
         render: function() {
           const entry = this.props.entry;
           const title = entry.getIn(['data', 'title']) || 'Untitled';
-          const excerpt = entry.getIn(['data', 'excerpt']) || '';
           const coverImage = entry.getIn(['data', 'coverImage']) || '';
           const coverImagePosition = entry.getIn(['data', 'coverImagePosition']) || 'center';
           const body = this.props.widgetFor('body');
@@ -36,25 +35,34 @@
           };
           const objectPosition = positionMap[coverImagePosition] || 'center';
 
-          return h('div', { className: 'max-w-4xl mx-auto p-8' },
-            h('div', { className: 'mb-8' },
-              h('h1', { className: 'text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12' }, title),
-              coverImage && h('div', { className: 'mb-8 relative w-full overflow-hidden rounded-lg' },
-                h('img', {
-                  src: coverImage,
-                  alt: title,
-                  className: 'w-full object-cover',
-                  style: { aspectRatio: '16/9', objectPosition: objectPosition }
-                })
+          return h('div', { className: 'max-w-4xl mx-auto px-6 py-8' },
+            h('article', {},
+              // Header section
+              h('div', { className: 'mb-8 md:mb-16' },
+                h('h1', { className: 'text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left' }, title),
+                coverImage && h('div', { className: 'mb-8 md:mb-16 relative w-full overflow-hidden rounded-lg', style: { aspectRatio: '16/9' } },
+                  h('img', {
+                    src: coverImage,
+                    alt: title,
+                    className: 'w-full h-full object-cover rounded-lg',
+                    style: { objectPosition: objectPosition }
+                  })
+                )
               ),
-              excerpt && h('p', { className: 'text-xl text-gray-600 italic mb-8' }, excerpt)
-            ),
-            h('div', { className: 'prose prose-lg max-w-none' }, body)
+              // Body section
+              h('div', { 
+                className: 'prose prose-lg prose-slate max-w-none',
+                style: {
+                  fontSize: '1.125rem',
+                  lineHeight: '1.75rem'
+                }
+              }, body)
+            )
           );
         }
       });
 
-      // Homepage Preview
+      // Homepage Preview - matches live intro section exactly
       const HomepagePreview = createClass({
         render: function() {
           const entry = this.props.entry;
@@ -65,23 +73,31 @@
           const primaryButton = intro?.get('primaryButton');
           const secondaryButton = intro?.get('secondaryButton');
 
-          return h('div', { className: 'max-w-4xl mx-auto px-6 py-16 text-center' },
-            h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl' }, subtitle),
-            h('p', { className: 'mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl' }, title),
-            description && h('p', { className: 'mt-8 text-xl leading-relaxed text-gray-600 max-w-2xl mx-auto' }, description),
-            h('div', { className: 'mt-12 flex flex-col sm:flex-row items-center justify-center gap-4' },
-              primaryButton && h('div', { className: 'w-full sm:w-auto rounded-md bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm' },
-                primaryButton.get('text') || 'Primary Button'
-              ),
-              secondaryButton && h('div', { className: 'w-full sm:w-auto rounded-md border border-gray-900 px-8 py-3.5 text-base font-semibold text-gray-900' },
-                secondaryButton.get('text') || 'Secondary Button'
+          return h('div', { className: 'relative isolate px-6 lg:px-8' },
+            h('div', { className: 'mx-auto max-w-4xl py-16 sm:py-24 lg:py-32' },
+              h('div', { className: 'text-center' },
+                // Main heading
+                h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl' }, subtitle),
+                // Subheading
+                h('p', { className: 'mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl' }, title),
+                // Description
+                description && h('p', { className: 'mt-8 text-xl leading-relaxed text-gray-600 max-w-2xl mx-auto' }, description),
+                // Buttons
+                h('div', { className: 'mt-12 flex flex-col sm:flex-row items-center justify-center gap-4' },
+                  primaryButton && h('div', { className: 'w-full sm:w-auto rounded-md bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-gray-800 transition-colors cursor-pointer' },
+                    primaryButton.get('text') || 'Primary Button'
+                  ),
+                  secondaryButton && h('div', { className: 'w-full sm:w-auto rounded-md border border-gray-900 px-8 py-3.5 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors cursor-pointer' },
+                    secondaryButton.get('text') || 'Secondary Button'
+                  )
+                )
               )
             )
           );
         }
       });
 
-      // About Preview
+      // About Preview - matches live about page layout
       const AboutPreview = createClass({
         render: function() {
           const entry = this.props.entry;
@@ -103,18 +119,24 @@
           };
           const objectPosition = positionMap[imagePosition] || 'center';
 
-          return h('div', { className: 'max-w-4xl mx-auto p-8' },
-            h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 mb-12' }, title),
+          return h('div', { className: 'mx-auto max-w-4xl px-6 py-8' },
+            h('h1', { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-12' }, title),
             h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
-              image && h('div', { className: 'relative rounded-lg overflow-hidden' },
+              image && h('div', { className: 'relative rounded-lg overflow-hidden', style: { aspectRatio: '1/1' } },
                 h('img', {
                   src: image,
                   alt: title,
                   className: 'w-full h-full object-cover',
-                  style: { aspectRatio: '1/1', objectPosition: objectPosition }
+                  style: { objectPosition: objectPosition }
                 })
               ),
-              h('div', { className: 'flex flex-col justify-center prose prose-lg max-w-none' }, body)
+              h('div', { 
+                className: 'flex flex-col justify-center prose prose-lg prose-slate max-w-none',
+                style: {
+                  fontSize: '1.125rem',
+                  lineHeight: '1.75rem'
+                }
+              }, body)
             )
           );
         }
