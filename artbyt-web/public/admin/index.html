@@ -241,10 +241,10 @@
 
           return h('div', { className: 'mx-auto max-w-4xl px-6 py-8' },
             h('h1', { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-12' }, title),
-            h('div', { classUrlName: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
+            h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
               image && h('div', { className: 'relative rounded-lg overflow-hidden', style: { aspectRatio: '1/1' } },
                 h('img', {
-                  src: image,
+                  src: imageUrl,
                   alt: title,
                   className: 'w-full h-full object-cover',
                   style: { objectPosition: objectPosition }
