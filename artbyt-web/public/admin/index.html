@@ -5,9 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
+    <!-- Custom preview templates -->
+    <script>
+      // Assignment Preview
+      const AssignmentPreview = createClass({
+        render: function() {
+          const entry = this.props.entry;
+          const title = entry.getIn(['data', 'title']) || 'Untitled';
+          const excerpt = entry.getIn(['data', 'excerpt']) || '';
+          const coverImage = entry.getIn(['data', 'coverImage']) || '';
+          const coverImagePosition = entry.getIn(['data', 'coverImagePosition']) || 'center';
+          const body = this.props.widgetFor('body');
+
+          const positionMap = {
+            'top': 'top',
+            'bottom': 'bottom',
+            'left': 'left',
+            'right': 'right',
+            'center': 'center',
+            'top left': 'left top',
+            'top right': 'right top',
+            'bottom left': 'left bottom',
+            'bottom right': 'right bottom',
+          };
+          const objectPosition = positionMap[coverImagePosition] || 'center';
+
+          return h('div', { className: 'max-w-4xl mx-auto p-8' },
+            h('div', { className: 'mb-8' },
+              h('h1', { className: 'text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12' }, title),
+              coverImage && h('div', { className: 'mb-8 relative w-full overflow-hidden rounded-lg' },
+                h('img', {
+                  src: coverImage,
+                  alt: title,
+                  className: 'w-full object-cover',
+                  style: { aspectRatio: '16/9', objectPosition: objectPosition }
+                })
+              ),
+              excerpt && h('p', { className: 'text-xl text-gray-600 italic mb-8' }, excerpt)
+            ),
+            h('div', { className: 'prose prose-lg max-w-none' }, body)
+          );
+        }
+      });
+
+      // Homepage Preview
+      const HomepagePreview = createClass({
+        render: function() {
+          const entry = this.props.entry;
+          const intro = entry.getIn(['data', 'intro']);
+          const title = intro?.get('title') || 'ArtByT';
+          const subtitle = intro?.get('subtitle') || 'Din lokala designstudio';
+          const description = intro?.get('description') || '';
+          const primaryButton = intro?.get('primaryButton');
+          const secondaryButton = intro?.get('secondaryButton');
+
+          return h('div', { className: 'max-w-4xl mx-auto px-6 py-16 text-center' },
+            h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl' }, subtitle),
+            h('p', { className: 'mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl' }, title),
+            description && h('p', { className: 'mt-8 text-xl leading-relaxed text-gray-600 max-w-2xl mx-auto' }, description),
+            h('div', { className: 'mt-12 flex flex-col sm:flex-row items-center justify-center gap-4' },
+              primaryButton && h('div', { className: 'w-full sm:w-auto rounded-md bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm' },
+                primaryButton.get('text') || 'Primary Button'
+              ),
+              secondaryButton && h('div', { className: 'w-full sm:w-auto rounded-md border border-gray-900 px-8 py-3.5 text-base font-semibold text-gray-900' },
+                secondaryButton.get('text') || 'Secondary Button'
+              )
+            )
+          );
+        }
+      });
+
+      // About Preview
+      const AboutPreview = createClass({
+        render: function() {
+          const entry = this.props.entry;
+          const title = entry.getIn(['data', 'title']) || 'Om Mig';
+          const image = entry.getIn(['data', 'image']) || '';
+          const imagePosition = entry.getIn(['data', 'imagePosition']) || 'center';
+          const body = this.props.widgetFor('body');
+
+          const positionMap = {
+            'top': 'top',
+            'bottom': 'bottom',
+            'left': 'left',
+            'right': 'right',
+            'center': 'center',
+            'top left': 'left top',
+            'top right': 'right top',
+            'bottom left': 'left bottom',
+            'bottom right': 'right bottom',
+          };
+          const objectPosition = positionMap[imagePosition] || 'center';
+
+          return h('div', { className: 'max-w-4xl mx-auto p-8' },
+            h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 mb-12' }, title),
+            h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
+              image && h('div', { className: 'relative rounded-lg overflow-hidden' },
+                h('img', {
+                  src: image,
+                  alt: title,
+                  className: 'w-full h-full object-cover',
+                  style: { aspectRatio: '1/1', objectPosition: objectPosition }
+                })
+              ),
+              h('div', { className: 'flex flex-col justify-center prose prose-lg max-w-none' }, body)
+            )
+          );
+        }
+      });
+
+      // Register preview templates
+      CMS.registerPreviewTemplate('assignments', AssignmentPreview);
+      CMS.registerPreviewTemplate('homepage', HomepagePreview);
+      CMS.registerPreviewTemplate('about', AboutPreview);
+    </script>
   </body>
 </html>
