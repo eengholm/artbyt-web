@@ -3,6 +3,7 @@ title: "Otroligt brädspel"
 excerpt: "Med fantasifulla designer tog jag en idé om ett brädspel till en helt ny nivå."
 coverImage: "/assets/portfolio/preview/fantasy-logo.jpg"
 coverImagePosition: "top"
+category: "Illustration"
 images:
   - url: /assets/portfolio/preview/fantasy-logo.jpg
     imagePosition: top

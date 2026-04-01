@@ -31,4 +31,5 @@ export interface Assignment {
   images?: Array<{ url: string }>;
   coverImagePosition?: string;
   testimonial?: Testimonial;
+  category?: string;
 }

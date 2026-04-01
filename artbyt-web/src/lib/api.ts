@@ -154,6 +154,7 @@ export function getAssignmentBySlug(slug: string): Assignment | null {
       images: data.images || [],
       coverImagePosition: data.coverImagePosition || "center",
       testimonial: data.testimonial || undefined,
+      category: data.category || "",
     };
   } catch (error) {
     console.error(`Error loading assignment ${slug}:`, error);

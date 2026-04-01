@@ -1,71 +1,66 @@
 "use client";
 
 import { Assignment } from "@/interfaces/assignment";
-import { AssignmentPreview } from "./assignment-preview";
+import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   assignments: Assignment[];
 };
 
 export function MoreAssignments({ assignments }: Props) {
+  if (!assignments || assignments.length === 0) return null;
+
   return (
     <section className="mb-24 md:mb-32">
-      <div className="mb-12 animate-fade-in">
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-          Fler Projekt
+      {/* Section header */}
+      <div className="flex items-baseline justify-between mb-10 border-t border-gray-300 pt-8">
+        <h2 className="text-xl font-bold text-gray-900">
+          Assignments &amp; Experiments
         </h2>
-        <p className="mt-4 text-lg text-gray-600 max-w-2xl">
-          Upptäck fler exempel på mitt arbete och kreativa lösningar
-        </p>
+        <span className="text-xs uppercase tracking-widest text-gray-400">
+          Lab Notes
+        </span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 auto-rows-fr">
-        {assignments.map((assignment, index) => (
-          <div
+
+      {/* 4-column small card grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        {assignments.map((assignment) => (
+          <Link
             key={assignment.slug}
-            className="animate-fade-in-up"
-            style={{ animationDelay: `${index * 0.15}s` }}
+            href={`/assignments/${encodeURIComponent(assignment.slug)}`}
+            className="group block"
           >
-            <AssignmentPreview
-              title={assignment.title || ""}
-              coverImage={assignment.coverImage || ""}
-              slug={assignment.slug}
-              excerpt={assignment.excerpt || ""}
-              objectPosition={assignment.coverImagePosition}
-            />
-          </div>
+            {/* Small square image */}
+            <div className="aspect-square relative overflow-hidden mb-3">
+              {assignment.coverImage ? (
+                <Image
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 50vw, 25vw"
+                  src={assignment.coverImage}
+                  alt={assignment.title}
+                  style={{
+                    objectPosition: assignment.coverImagePosition || "center",
+                  }}
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200" />
+              )}
+            </div>
+
+            <h3 className="text-sm font-bold text-gray-900 group-hover:text-gray-600 transition-colors duration-200 mb-1 leading-snug">
+              {assignment.title}
+            </h3>
+            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
+              {assignment.excerpt}
+            </p>
+            <span className="mt-2 inline-block text-xs uppercase tracking-widest text-gray-400 group-hover:text-gray-900 transition-colors duration-200">
+              Read ›
+            </span>
+          </Link>
         ))}
       </div>
-
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out;
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
     </section>
   );
 }

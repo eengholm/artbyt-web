@@ -2,6 +2,7 @@
 title: "Tim gör fina grejer"
 excerpt: "Ett kreativt designprojekt som utforskar gränsen mellan funktion och form."
 coverImage: "/assets/portfolio/dynamic-routing/hero.jpg"
+category: "Design"
 images:
   - /assets/portfolio/dynamic-routing/hero.jpg
   - /assets/portfolio/dynamic-routing/cover.jpg

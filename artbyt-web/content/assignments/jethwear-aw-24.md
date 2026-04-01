@@ -2,6 +2,7 @@
 title: "Jethwear - A/W 24"
 excerpt: "Skapade höstkollektionen för skoterklädesmärket Jethwear."
 coverImage: "/assets/portfolio/hello-world/LogoJethwear.jpg"
+category: "Brand & Identity"
 testimonial:
   quote: "Tim delivered exceptional work that exceeded our expectations."
   author: "Jane Doe"

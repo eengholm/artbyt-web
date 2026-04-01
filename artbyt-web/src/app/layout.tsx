@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "@/app/_components/layout/footer";
 import { PersonStructuredData } from "@/app/_components/seo/structured-data";
-import { getGeneralSettings } from "@/lib/api";
+import { getGeneralSettings, getFooterSettings } from "@/lib/api";
 import { Menu } from "./_components/layout/menu";
 
 import "./globals.css";
@@ -77,6 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const settings = getGeneralSettings();
+  const footerSettings = getFooterSettings();
 
   return (
     <html lang="sv" className={inter.className}>
@@ -84,13 +85,16 @@ export default function RootLayout({
         <PersonStructuredData />
       </head>
       <body>
-        <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+        <div className="bg-[#f0ede8] min-h-screen">
           <Menu />
           <div className="min-h-screen">
             {children}
             <Footer
               contactEmail={settings.contactEmail}
               phoneNumber={settings.phoneNumber}
+              instagramUrl={footerSettings.instagramUrl}
+              linkedinUrl={footerSettings.linkedinUrl}
+              behanceUrl={footerSettings.behanceUrl}
             />
           </div>
         </div>
