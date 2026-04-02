@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 import { getProductBySlug } from "@/lib/api";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import { getStripe } from "@/lib/stripe";
 
 // Only allow slug characters to prevent path traversal
 const SAFE_SLUG = /^[a-z0-9-]+$/;
@@ -58,7 +57,7 @@ export async function POST(req: NextRequest) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,

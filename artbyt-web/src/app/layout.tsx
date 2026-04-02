@@ -12,13 +12,23 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+function resolveSiteUrl(): URL {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  if (raw) {
+    try {
+      return new URL(raw);
+    } catch {
+      // fall through to default if the env var is not a valid URL
+    }
+  }
+  return new URL("https://artbyt.se");
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = getGeneralSettings();
 
   return {
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://artbyt.se",
-    ),
+    metadataBase: resolveSiteUrl(),
     title: {
       default: settings.title,
       template: `%s | ${settings.siteName}`,
