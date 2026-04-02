@@ -19,7 +19,7 @@ export default function Assignments() {
             </div>
             {/* Inset image */}
             <div className="px-4 pt-3">
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
+              <div className="w-full">
                 <Image
                   src={(() => {
                     const first = assignment.images?.[0];
@@ -28,9 +28,10 @@ export default function Assignments() {
                     return assignment.coverImage || fallback || "";
                   })()}
                   alt={assignment.title}
-                  fill
-                  className="object-cover"
+                  width={0}
+                  height={0}
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-auto"
                 />
               </div>
             </div>
