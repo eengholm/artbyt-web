@@ -119,14 +119,14 @@ export async function generateMetadata({
     openGraph: {
       title,
       description: assignment.excerpt,
-      images: [assignment.ogImage.url],
+      images: assignment.ogImage.url ? [assignment.ogImage.url] : [],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: assignment.excerpt,
-      images: [assignment.ogImage.url],
+      images: assignment.ogImage.url ? [assignment.ogImage.url] : [],
     },
   };
 }
