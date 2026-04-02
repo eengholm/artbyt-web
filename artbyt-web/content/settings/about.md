@@ -1,6 +1,6 @@
 ---
 title: "Om Mig"
-image: "/assets/portfolio/authors/tim.jpg"
+image: "/assets/uploads/489372399_18459792754073373_772256678618014622_n.jpg"
 ---
 
 Hej! Jag är Tim Bylander, en passionerad designer med fokus på att skapa visuella upplevelser som kombinerar estetik med funktion.

@@ -18,14 +18,14 @@ export default function Error({
     <div className="py-24">
       <ErrorMessage
         title="Kunde inte ladda projektet"
-        message="Det gick inte att ladda detta projekt. Försök igen eller gå tillbaka till projektlistan."
+        message="Det gick inte att ladda detta projekt. F├╢rs├╢k igen eller g├Ñ tillbaka till projektlistan."
       />
       <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={reset}
           className="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700"
         >
-          Försök igen
+          F├╢rs├╢k igen
         </button>
         <a
           href="/assignments"

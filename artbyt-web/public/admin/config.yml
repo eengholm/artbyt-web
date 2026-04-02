@@ -9,8 +9,8 @@ backend:
 # Enable local development mode (for Git operations with decap-server)
 # local_backend: true  # Commented out to test OAuth locally
 
-media_folder: "artbyt-web/public/assets/assignments"
-public_folder: "/assets/assignments"
+media_folder: "artbyt-web/public/assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "homepage"
@@ -60,6 +60,14 @@ collections:
               display_fields: ["title"]
             hint: "Select assignments to display in the More Stories section"
             required: false
+          - label: "Slideshow Images"
+            name: "slides"
+            widget: "list"
+            hint: "Images shown in the home page slideshow. Pick from already-uploaded files or upload new ones."
+            required: false
+            fields:
+              - { label: "Image", name: "url", widget: "image" }
+              - { label: "Title", name: "title", widget: "string", required: false }
 
   - name: "footer"
     label: "Footer Settings"
@@ -121,6 +129,19 @@ collections:
           - { label: "Image", name: "url", widget: "image" }
           - { label: "Caption", name: "caption", widget: "string", required: false }
           - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
+
+  - name: "products"
+    label: "Products"
+    folder: "artbyt-web/content/products"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Price (SEK)", name: "price", widget: "number", value_type: "int", hint: "Display price in SEK. Actual charge is controlled by Stripe." }
+      - { label: "Stripe Price ID", name: "stripePriceId", widget: "string", hint: "e.g. price_1AbCdEfGhIjKlMnO" }
+      - { label: "Active", name: "active", widget: "boolean", default: true }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
   
   - name: "settings"
     label: "Settings"

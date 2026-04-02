@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Footer } from "@/app/_components/layout/footer";
+import { IBM_Plex_Mono } from "next/font/google";
 import { PersonStructuredData } from "@/app/_components/seo/structured-data";
 import { getGeneralSettings } from "@/lib/api";
-import { Menu } from "./_components/layout/menu";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = getGeneralSettings();
 
   return {
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://artbyt.se"
+      process.env.NEXT_PUBLIC_SITE_URL || "https://artbyt.se",
     ),
     title: {
       default: settings.title,
@@ -65,8 +68,20 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: settings.logo,
-      apple: settings.logo,
+      icon: [
+        {
+          url: "/favicon/favicon-16x16.png",
+          sizes: "16x16",
+          type: "image/png",
+        },
+        {
+          url: "/favicon/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png",
+        },
+      ],
+      apple: "/favicon/apple-touch-icon.png",
+      shortcut: "/favicon/favicon.ico",
     },
   };
 }
@@ -76,25 +91,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = getGeneralSettings();
-
   return (
-    <html lang="sv" className={inter.className}>
+    <html lang="sv" className={ibmPlexMono.variable}>
       <head>
         <PersonStructuredData />
       </head>
-      <body>
-        <div className="inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-          <Menu />
-          <div className="min-h-screen">
-            {children}
-            <Footer
-              contactEmail={settings.contactEmail}
-              phoneNumber={settings.phoneNumber}
-            />
-          </div>
-        </div>
-      </body>
+      <body className="bg-white">{children}</body>
     </html>
   );
 }
