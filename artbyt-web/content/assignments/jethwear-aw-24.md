@@ -1,24 +1,24 @@
 ---
 title: "Jethwear - A/W 24"
-excerpt: "Skapade höstkollektionen för skoterklädesmärket Jethwear."
-coverImage: "/assets/portfolio/hello-world/LogoJethwear.jpg"
+excerpt: "Grafisk profil och kampanjmaterial för skoterklädesmärket Jethwear."
+coverImage: "/assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg"
 testimonial:
-  quote: "Tim delivered exceptional work that exceeded our expectations."
-  author: "Jane Doe"
-  role: "Marketing Director"
-  company: "Company Name"
+  quote: "Tim förstod vår vision direkt och levererade ett resultat som vi är genuint stolta över."
+  author: "Erik Lindström"
+  role: "Grundare"
+  company: "Jethwear"
 images:
-  - /assets/portfolio/hello-world/LogoJethwear.jpg
-  - /assets/portfolio/hello-world/cover.jpg
-  - /assets/portfolio/preview/cover.jpg
+  - url: /assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg
+  - url: /assets/uploads/622800118_18302682280272447_8305554647472380592_n.jpg
+  - url: /assets/uploads/649221754_18122942962512292_6731438869871018058_n.jpg
 ---
 
-Jethwear är ett svenskt skoterklädesmärke som riktar sig till den moderna åkaren som värdesätter både stil och funktion. För höst/vinter-kollektionen 2024 fick jag förtroendet att designa en komplett kollektion som kombinerar tekniska prestanda med tidlös design.
+Jethwear är ett svenskt skoterklädesmärke riktat mot den moderna åkaren – någon som tar sporten på allvar men som inte vill kompromissa med stilen. Inför höst/vinter-säsongen 2024 anlitade de mig för att ta fram en grafisk identitet och ett visuellt koncept som känns lika hemma i fjällen som i stan.
 
-Kollektionen fokuserar på hållbarhet och flexibilitet. Varje plagg är noggrant utformat för att motstå svenska vinterförhållanden samtidigt som det behåller en ren, modern estetik. Färgpaletten sträcker sig från klassiska svarta och gråa toner till mer vågade accenter som återspeglar adrenalinet i sporten.
+Utgångspunkten var att hitta ett bildspråk som kombinerar råhet med precision. Logotyp, typografi och illustrationer togs fram parallellt för att säkerställa en sammanhållen känsla i allt från märklappar till digitala kanaler.
 
-## Designprocess
+## Illustrationer och grafisk form
 
-Arbetet började med omfattande research kring målgruppens behov. Genom intervjuer med erfarna åkare och analys av marknadstrender kunde jag identifiera viktiga funktioner som både sakliga och stilmässiga element. Resultatet blev en kollektion som inte bara ser bra ut utan också levererar i de mest krävande förhållandena.
+En central del av uppdraget var att skapa ett antal nyckelillustrationer som skulle bära varumärkets personlighet. Dessa används i allt från kollektionsmaterial och förpackningar till sociala medier och kampanjsidor.
 
-Från skisser till färdiga prototyper har varje steg i processen varit fokuserat på att skapa kläder som åkare faktiskt vill bära – både på och utanför skotern.
+Stilen är avsiktligt skarp och grafisk – inspirerad av skatekultur och klassisk streetwear, men med ett nordiskt lugn. Varje illustration är byggd kring tydliga linjer och begränsad färgpalett för att hålla sig läsbar oavsett om den är tryckt stort på en jacka eller litet på en etikett.

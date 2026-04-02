@@ -1,21 +1,19 @@
 ---
 title: "Otroligt brädspel"
-excerpt: "Med fantasifulla designer tog jag en idé om ett brädspel till en helt ny nivå."
-coverImage: "/assets/portfolio/preview/fantasy-logo.jpg"
-coverImagePosition: "top"
+excerpt: "Konceptutveckling, illustrationer och förpackningsdesign för ett egenutvecklat sällskapsspel."
+coverImage: "/assets/uploads/649130771_18135164398506677_6740057224209065587_n.jpg"
 images:
-  - url: /assets/portfolio/preview/fantasy-logo.jpg
-    imagePosition: top
-  - url: /assets/portfolio/preview/cover.jpg
-  - url: /assets/portfolio/dynamic-routing/cover.jpg
+  - url: /assets/uploads/649130771_18135164398506677_6740057224209065587_n.jpg
+  - url: /assets/uploads/649221754_18122942962512292_6731438869871018058_n.jpg
+  - url: /assets/assignments/95696046_3041236899230576_3114999504295870529_n.jpg
 ---
 
-Detta brädspel är ett passionsprojekt där jag fick möjlighet att skapa en helt egen värld från grunden. Projektet omfattade allt från konceptutveckling och världsbyggande till design av spelbräde, kort, pjäser och förpackning.
+Ett eget spelkoncept som gick från idé till färdig produkt under ett halvårs tid. Uppdraget spände över allt från namngivning och konceptutveckling till illustration, regelbok och förpackning – ett av de projekt där varje designbeslut faktiskt spelar roll för upplevelsen.
 
-Inspirationskällorna spände över klassisk fantasy, nordisk mytologi och modern illustrationskonst. Målet var att skapa en visuell upplevelse som är lika engagerande som spelmekaniken själv. Varje spelkomponent har designats för att berätta en del av spelets historia.
+Spelet är byggt kring ett enkelt men väl genomarbetat regelverk, och den grafiska identiteten fick växa fram parallellt med spelmekaniken. Resultatet är ett formspråk som förstärker stämningen utan att distrahera från det som händer runt spelbordet.
 
-## Visuell identitet
+## Illustration och förpackning
 
-Färgpaletten domineras av djupa, mättade toner som skapar en mystisk och äventyrlig atmosfär. Illustrationerna balanserar detaljrikedom med tydlighet – viktigt för att spelarna snabbt ska kunna identifiera olika element under spelets gång.
+Illustrationsarbetet var centralt. Varje kort och spelbricka bär ett eget litet motiv som är del av en större visuell berättelse. Stilen är avsiktligt enkel och grafisk – inspirerad av risografi och äldre tryckkultur – men med en modern skärpa.
 
-Typografin valdes för att förstärka fantasykänslan samtidigt som den förblir läsbar även i mindre storlekar på spelkorten. Resultatet är ett spelpaket som ser lika bra ut på hyllan som när det ligger uppslaget på spelbordet, och som inbjuder till upprepade spelomgångar genom sin visuella rikedom.
+Förpackningen designades för att fungera som ett objekt i sig: något man vill ställa framme snarare än stoppa undan. Begränsad färgpalett, tydlig typografi och en välvald illustration på framsidan gör att spelet kommunicerar sin personlighet redan innan man öppnat locket.

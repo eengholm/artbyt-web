@@ -1,19 +1,19 @@
 ---
-title: "Tim gör fina grejer"
-excerpt: "Ett kreativt designprojekt som utforskar gränsen mellan funktion och form."
-coverImage: "/assets/portfolio/dynamic-routing/hero.jpg"
+title: "Illustrationer & grafisk form"
+excerpt: "Ett urval fristående illustrationer och grafiska uppdrag från det senaste året."
+coverImage: "/assets/uploads/622800118_18302682280272447_8305554647472380592_n.jpg"
 images:
-  - /assets/portfolio/dynamic-routing/hero.jpg
-  - /assets/portfolio/dynamic-routing/cover.jpg
-  - /assets/portfolio/hello-world/cover.jpg
+  - url: /assets/uploads/622800118_18302682280272447_8305554647472380592_n.jpg
+  - url: /assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg
+  - url: /assets/assignments/95696046_3041236899230576_3114999504295870529_n.jpg
 ---
 
-Detta projekt representerar min filosofi om design – att varje detalj spelar roll. Genom att kombinera minimalistiska principer med funktionell design skapade jag en serie produkter som är både estetiskt tilltalande och praktiska.
+Ett samlat urval av illustrationer och grafiska uppdrag som inte riktigt passar in i ett enskilt projekt men som säger något om hur jag tänker kring form, linje och berättande. Några är gjorda på uppdrag, andra som rent eget utforskande – men alla delar samma utgångspunkt: att göra något som faktiskt är roligt att titta på.
 
-Fokus låg på att hitta balansen mellan enkelhet och karaktär. Varje element har valts med omsorg för att skapa en helhet som känns både tidlös och modern. Färgpaletten är medvetet begränsad för att låta formerna tala för sig själva.
+Illustration är för mig ett sätt att förenkla det komplexa. Det handlar om att hitta den rätta linjen – den som säger precis vad den behöver säga, ingen mer. Stilen rör sig mellan tajt grafisk form och något lite lösare och mer expressivt beroende på vad projektet kräver.
 
-## Tillvägagångssätt
+## Process och material
 
-Projektet började som en utforskning av hur design kan förenkla vardagen. Genom iterativa skisser och prototyper utvecklades konceptet till dess slutliga form. Resultatet är en samling designlösningar som bevisar att "fint" inte behöver vara komplicerat.
+De flesta illustrationer börjar i blyerts och avslutas digitalt, men övergången sker alltid på ett naturligt sätt – aldrig för att digitalt är lättare, utan för att det möjliggör precision i de lägen när precision faktiskt spelar roll.
 
-Varje beslut i processen gjordes med användarupplevelsen i åtanke. Målet var att skapa något som människor faktiskt vill använda och ha omkring sig – design som berikar snarare än bara fyller en funktion.
+Färg används sparsamt. En begränsad palett tvingar fram tydligare kompositionsbeslut och gör att varje ton faktiskt behöver motivera sin närvaro. Det resulterar i illustrationer som håller sig läsbara i alla format – från tryckt merch till liten profilbild.

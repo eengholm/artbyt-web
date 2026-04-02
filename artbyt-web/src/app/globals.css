@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+  font-family: var(--font-ibm-plex-mono), 'Courier New', monospace;
+  text-transform: uppercase;
+  font-weight: 100;
+}
+

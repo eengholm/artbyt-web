@@ -1,4 +1,5 @@
 import { Assignment } from "@/interfaces/assignment";
+import { Product } from "@/interfaces/product";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
@@ -6,6 +7,7 @@ import { join } from "path";
 const contentDirectory = join(process.cwd(), "content");
 const assignmentsDirectory = join(contentDirectory, "assignments");
 const settingsDirectory = join(contentDirectory, "settings");
+const productsDirectory = join(contentDirectory, "products");
 
 // Helper function to safely read files
 function safeReadFile(path: string, errorContext: string) {
@@ -188,3 +190,41 @@ export function getAssignmentById(id: number): Assignment | null {
 
 // Alias for backwards compatibility
 export const getAllPosts = getAllAssignments;
+
+// ─── Products ────────────────────────────────────────────────────────────────
+
+export function getProductBySlug(slug: string): Product | null {
+  try {
+    const realSlug = slug.replace(/\.md$/, "");
+    const fullPath = join(productsDirectory, `${realSlug}.md`);
+    if (!fs.existsSync(fullPath)) return null;
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data, content } = matter(fileContents);
+    return {
+      slug: realSlug,
+      title: data.title || "",
+      description: content || "",
+      excerpt: data.excerpt || "",
+      image: data.image || "",
+      price: Number(data.price) || 0,
+      stripePriceId: data.stripePriceId || "",
+      active: data.active !== false,
+    };
+  } catch (error) {
+    console.error(`Error loading product ${slug}:`, error);
+    return null;
+  }
+}
+
+export function getAllProducts(): Product[] {
+  try {
+    if (!fs.existsSync(productsDirectory)) return [];
+    return fs
+      .readdirSync(productsDirectory)
+      .map((slug) => getProductBySlug(slug))
+      .filter((p): p is Product => p !== null && p.active);
+  } catch (error) {
+    console.error("Error loading products:", error);
+    return [];
+  }
+}
