@@ -30,16 +30,14 @@ export default async function Assignment({
 
       {/* Cover image */}
       {assignment.coverImage && (
-        <div className="relative w-full aspect-[4/3] overflow-hidden mb-0">
+        <div className="w-full mb-0">
           <Image
             src={assignment.coverImage}
             alt={assignment.title}
-            fill
-            className="object-cover"
-            style={{
-              objectPosition: assignment.coverImagePosition || "center",
-            }}
+            width={0}
+            height={0}
             sizes="100vw"
+            className="w-full h-auto"
             priority
           />
         </div>
@@ -77,16 +75,14 @@ export default async function Assignment({
             const src = typeof img === "string" ? img : img.url;
             if (!src) return null;
             return (
-              <div
-                key={i}
-                className="relative w-full aspect-[4/3] overflow-hidden"
-              >
+              <div key={i} className="w-full">
                 <Image
                   src={src}
                   alt={`${assignment.title} — ${i + 1}`}
-                  fill
-                  className="object-cover"
+                  width={0}
+                  height={0}
                   sizes="100vw"
+                  className="w-full h-auto"
                 />
               </div>
             );
