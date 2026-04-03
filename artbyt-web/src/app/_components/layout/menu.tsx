@@ -77,11 +77,7 @@ export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div
-          className={`hidden lg:flex lg:gap-x-12 transition-all duration-300 overflow-hidden ${
-            isCollapsed ? "max-w-0 opacity-0" : "max-w-full opacity-100"
-          }`}
-        >
+        <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
