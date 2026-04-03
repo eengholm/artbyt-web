@@ -19,19 +19,15 @@ export default function Assignments() {
   const assignments = getAllAssignments();
 
   return (
-    <div className="px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-px gap-y-0 bg-gray-200">
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200">
         {assignments.map((assignment, idx) => (
           <article
             key={assignment.slug}
             className={`bg-white${assignments.length % 2 !== 0 && idx === assignments.length - 1 ? " md:col-span-2" : ""}`}
           >
-            {/* Inset top rule */}
-            <div className="px-4 pt-3">
-              <hr className="border-t border-gray-200" />
-            </div>
             {/* Inset image */}
-            <div className="px-4 pt-3">
+            <div className="px-4 pt-4">
               <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
                   src={(() => {
