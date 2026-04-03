@@ -46,9 +46,15 @@ export function SiteNav() {
 
   return (
     <nav
-      className={`fixed left-8 top-28 z-50 flex flex-col gap-0 transition-all duration-300 md:opacity-100 md:translate-x-0 ${
+      className={`fixed left-0 top-24 z-50 flex flex-col gap-0 transition-all duration-300 md:opacity-100 md:translate-x-0 pl-8 pr-12 py-4 bg-gradient-to-r from-white via-white/70 to-transparent ${
         hidden ? "-translate-x-24 opacity-0" : "translate-x-0 opacity-100"
       }`}
+      style={{
+        WebkitMaskImage:
+          "linear-gradient(to bottom, transparent, white 20%, white 80%, transparent)",
+        maskImage:
+          "linear-gradient(to bottom, transparent, white 20%, white 80%, transparent)",
+      }}
       aria-label="Site navigation"
     >
       {navItems.map(({ href, label }) => {

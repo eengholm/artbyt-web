@@ -77,21 +77,17 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
+    manifest: "/favicon/site.webmanifest",
     icons: {
       icon: [
+        { url: "/favicon.ico", sizes: "any" },
         {
-          url: "/favicon/favicon-16x16.png",
-          sizes: "16x16",
-          type: "image/png",
-        },
-        {
-          url: "/favicon/favicon-32x32.png",
-          sizes: "32x32",
+          url: "/assets/icons/artbyt-logo.png",
           type: "image/png",
         },
       ],
-      apple: "/favicon/apple-touch-icon.png",
-      shortcut: "/favicon/favicon.ico",
+      apple: "/assets/icons/artbyt-logo.png",
+      shortcut: "/favicon.ico",
     },
   };
 }

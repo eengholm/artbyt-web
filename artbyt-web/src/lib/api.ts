@@ -158,6 +158,7 @@ export function getAssignmentBySlug(slug: string): Assignment | null {
       content,
       id: data.id,
       description: data.description || "",
+      draft: data.draft === true,
       images: data.images || [],
       coverImagePosition: data.coverImagePosition || "center",
       coverImageFit: data.coverImageFit || "cover",
@@ -179,6 +180,7 @@ export function getAllAssignments(): Assignment[] {
   const assignments = slugs
     .map((slug) => getAssignmentBySlug(slug))
     .filter((assignment): assignment is Assignment => assignment !== null)
+    .filter((assignment) => !assignment.draft)
     .sort((a, b) => {
       if (a.date && b.date) {
         return new Date(b.date).getTime() - new Date(a.date).getTime();

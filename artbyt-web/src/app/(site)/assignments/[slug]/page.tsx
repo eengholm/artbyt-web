@@ -24,7 +24,7 @@ export default async function Assignment({
   const content = await markdownToHtml(assignment.content || "");
 
   return (
-    <main className="px-4">
+    <main>
       {/* Top rule */}
       <hr className="border-t border-gray-200 mb-3" />
 

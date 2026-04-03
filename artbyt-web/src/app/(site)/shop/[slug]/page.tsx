@@ -38,10 +38,10 @@ export default async function ProductPage({
   const descriptionHtml = await markdownToHtml(product.description || "");
 
   return (
-    <main className="px-4 pl-36">
-      <div className="flex items-center justify-between mb-6">
-        <hr className="flex-1 border-t border-gray-200" />
-        <div className="ml-4 shrink-0">
+    <main>
+      <div className="relative mb-6">
+        <hr className="border-t border-gray-200" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white pl-3">
           <CartLink />
         </div>
       </div>

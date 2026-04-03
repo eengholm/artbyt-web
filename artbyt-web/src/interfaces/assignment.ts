@@ -28,6 +28,7 @@ export interface Assignment {
   content: string;
   id?: number;
   description?: string;
+  draft?: boolean;
   images?: Array<{ url: string }>;
   coverImagePosition?: string;
   coverImageFit?: "cover" | "contain";

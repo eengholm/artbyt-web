@@ -25,7 +25,7 @@ export default function PortfolioGallery({ images }: Props) {
   return (
     <>
       {/* Desktop: two staggered columns. Mobile: single column list. */}
-      <div className="flex flex-col md:flex-row md:items-start md:gap-24 px-0 md:px-16 py-0 md:py-8 gap-4">
+      <div className="flex flex-col md:flex-row md:items-start md:gap-24 py-0 md:py-8 gap-4">
         {/* Left column */}
         <div className="flex flex-col gap-4 md:gap-24 flex-1">
           {leftImages.map((image, i) => (
@@ -40,7 +40,7 @@ export default function PortfolioGallery({ images }: Props) {
         </div>
 
         {/* Right column — offset down by half a card to sit between left images */}
-        <div className="flex flex-col gap-4 md:gap-24 flex-1 md:mt-[calc(50%*0.75+6rem)]">
+        <div className="flex flex-col gap-4 md:gap-24 flex-1 md:mt-[calc((50%-3rem)*0.375)]">
           {rightImages.map((image, i) => (
             <ImageCard
               key={image.url + i}

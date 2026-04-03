@@ -8,7 +8,7 @@ export default function SiteLayout({
 }) {
   return (
     <CartProvider>
-      <div className="min-h-screen bg-white pt-24 pb-8">
+      <div className="min-h-screen bg-white pt-24 pb-8 px-4 md:pl-36 md:pr-4">
         <SiteTitle />
         <SiteNav />
         {children}
