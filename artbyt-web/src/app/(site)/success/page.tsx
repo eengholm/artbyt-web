@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SuccessPage() {
   return (
-    <main className="px-4">
+    <main className="px-4 pl-28 md:pl-36 py-8">
       <hr className="border-t border-gray-200 mb-6" />
       <SuccessView />
       <h1 className="text-sm text-black mb-3">Tack för din beställning!</h1>
