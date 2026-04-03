@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navigation = [
-  { name: "Hem", href: "/" },
   { name: "Projekt", href: "/assignments" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Om Mig", href: "/about" },
@@ -18,20 +17,28 @@ type MenuProps = {
 
 export function Menu({ logo = "/assets/icons/artbyt-logo.png" }: MenuProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isCollapsedByScroll, setIsCollapsedByScroll] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsCollapsedByScroll(true);
+      } else if (currentScrollY < lastScrollY) {
+        setIsCollapsedByScroll(false);
+      }
+      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isCollapsed = isScrolled && !isHovered;
+  const isCollapsed = isCollapsedByScroll && !isHovered;
 
   return (
     <header
