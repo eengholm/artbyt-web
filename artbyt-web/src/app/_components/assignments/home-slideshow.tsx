@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { SiteTitle, SiteNav } from "@/app/_components/layout/site-nav";
 
@@ -16,6 +16,7 @@ type HomeSlideshowProps = {
 
 export function HomeSlideshow({ slides, siteName }: HomeSlideshowProps) {
   const [index, setIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   const prev = useCallback(() => {
     setIndex((i) => (i - 1 + slides.length) % slides.length);
@@ -38,6 +39,22 @@ export function HomeSlideshow({ slides, siteName }: HomeSlideshowProps) {
     [prev, next],
   );
 
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const delta = e.changedTouches[0].clientX - touchStartX.current;
+      if (Math.abs(delta) > 40) {
+        delta < 0 ? next() : prev();
+      }
+      touchStartX.current = null;
+    },
+    [prev, next],
+  );
+
   if (slides.length === 0) return null;
 
   const current = slides[index];
@@ -53,6 +70,8 @@ export function HomeSlideshow({ slides, siteName }: HomeSlideshowProps) {
       <div
         className="relative w-full flex-1 min-h-0 my-8 cursor-crosshair select-none overflow-hidden"
         onClick={handleImageClick}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{ cursor: "crosshair" }}
       >
         <Image

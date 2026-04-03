@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SuccessPage() {
   return (
-    <main>
+    <main className="flex flex-col items-center text-center pt-16">
       <hr className="border-t border-gray-200 mb-6" />
       <SuccessView />
       <h1 className="text-sm text-black mb-3">Tack för din beställning!</h1>
