@@ -79,15 +79,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     manifest: "/favicon/site.webmanifest",
     icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        {
-          url: "/assets/icons/artbyt-logo.png",
-          type: "image/png",
-        },
-      ],
       apple: "/assets/icons/artbyt-logo.png",
-      shortcut: "/favicon.ico",
     },
   };
 }
