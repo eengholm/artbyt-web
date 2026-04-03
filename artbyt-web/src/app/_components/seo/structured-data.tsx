@@ -5,10 +5,7 @@ export function PersonStructuredData() {
     name: "Tim Bylander",
     jobTitle: "Designer",
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://artbyt.se",
-    sameAs: [
-      "https://www.instagram.com/artbyt_official",
-      "https://www.linkedin.com/in/your_linkedin_username",
-    ],
+    sameAs: ["https://www.instagram.com/artbyt_official"],
     address: {
       "@type": "PostalAddress",
       addressCountry: "SE",
@@ -18,7 +15,12 @@ export function PersonStructuredData() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(structuredData).replace(
+          /<\/script>/gi,
+          "<\\/script>",
+        ),
+      }}
     />
   );
 }
@@ -53,7 +55,12 @@ export function PortfolioStructuredData({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(structuredData).replace(
+          /<\/script>/gi,
+          "<\\/script>",
+        ),
+      }}
     />
   );
 }

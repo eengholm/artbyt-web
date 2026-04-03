@@ -3,7 +3,7 @@ import { getProductBySlug } from "@/lib/api";
 import { getStripe } from "@/lib/stripe";
 
 // Only allow slug characters to prevent path traversal
-const SAFE_SLUG = /^[a-z0-9-]+$/;
+const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/;
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -17,6 +17,10 @@ export async function POST(req: NextRequest) {
 
   if (!Array.isArray(items) || items.length === 0) {
     return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
+  }
+
+  if (items.length > 20) {
+    return NextResponse.json({ error: "Too many items" }, { status: 400 });
   }
 
   // Validate each item before touching the filesystem
@@ -37,7 +41,7 @@ export async function POST(req: NextRequest) {
   // Build Stripe line_items using server-side content (never trust client price IDs)
   const lineItems: { price: string; quantity: number }[] = [];
   for (const { slug, quantity } of items) {
-    const product = getProductBySlug(slug);
+    const product = await getProductBySlug(slug);
     if (!product || !product.active) {
       return NextResponse.json(
         { error: `Product not found: ${slug}` },
@@ -59,6 +63,22 @@ export async function POST(req: NextRequest) {
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
+      shipping_address_collection: {
+        allowed_countries: ["SE", "NO", "DK", "FI", "DE", "NL", "GB", "US"],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: { amount: 4900, currency: "sek" },
+            display_name: "Standardfrakt",
+            delivery_estimate: {
+              minimum: { unit: "business_day", value: 3 },
+              maximum: { unit: "business_day", value: 7 },
+            },
+          },
+        },
+      ],
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/shop/cart`,
     });

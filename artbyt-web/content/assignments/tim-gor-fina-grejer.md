@@ -1,4 +1,5 @@
 ---
+coverImageFit: contain
 title: "Illustrationer & grafisk form"
 excerpt: "Ett urval fristående illustrationer och grafiska uppdrag från det senaste året."
 coverImage: "/assets/uploads/622800118_18302682280272447_8305554647472380592_n.jpg"

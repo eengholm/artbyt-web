@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const navItems = [
-  { href: "/", label: "Hem" },
   { href: "/assignments", label: "Projekt" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/shop", label: "Shop" },
   { href: "/about", label: "Om Mig" },
-  { href: "/shop", label: "Butik" },
 ];
 
 export function SiteTitle() {
@@ -25,9 +25,32 @@ export function SiteTitle() {
 
 export function SiteNav() {
   const pathname = usePathname();
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed left-8 top-28 z-50 flex flex-col gap-0">
+    <nav
+      className={`fixed left-8 top-28 z-50 flex flex-col gap-0 transition-all duration-300 md:opacity-100 md:translate-x-0 ${
+        hidden ? "-translate-x-24 opacity-0" : "translate-x-0 opacity-100"
+      }`}
+      aria-label="Site navigation"
+    >
       {navItems.map(({ href, label }) => {
         const isActive =
           href === "/"

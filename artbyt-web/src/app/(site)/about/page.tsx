@@ -15,12 +15,22 @@ export async function generateMetadata(): Promise<Metadata> {
   const aboutData = getAboutSettings();
   const settings = getGeneralSettings();
 
+  // Strip markdown syntax so it doesn't appear verbatim in search results
+  const plainDescription =
+    (aboutData.content || "")
+      .replace(/^#{1,6}\s+/gm, "")
+      .replace(/[*_`~]/g, "")
+      .replace(/^[-*+]\s+/gm, "")
+      .replace(/\n+/g, " ")
+      .trim()
+      .substring(0, 160) || settings.description;
+
   return {
     title: aboutData.title || "Om Mig",
-    description: aboutData.content?.substring(0, 160) || settings.description,
+    description: plainDescription,
     openGraph: {
       title: aboutData.title || "Om Mig",
-      description: aboutData.content?.substring(0, 160),
+      description: plainDescription,
       images: aboutData.image ? [aboutData.image] : [],
       type: "profile",
     },
@@ -53,21 +63,21 @@ export default async function About() {
       )}
 
       {/* Metadata row */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-8 py-4">
+      <div className="flex flex-row gap-8 py-4 items-start">
         <div className="md:w-1/2 md:shrink-0">
           <span className="text-sm text-black">
             {aboutData.title || "Om Mig"}
           </span>
         </div>
-        <div className="flex-1 min-w-0 md:text-right flex flex-col gap-1">
+        <div className="flex-1 min-w-0 text-right flex flex-col gap-1 items-end">
           {footerData.instagramUrl && (
             <a
               href={footerData.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-black hover:opacity-50 transition-opacity"
+              className="text-sm text-black hover:opacity-50 transition-opacity flex items-center gap-1"
             >
-              Instagram
+              Instagram <span aria-hidden="true">↗</span>
             </a>
           )}
           {footerData.linkedinUrl && (
@@ -75,9 +85,9 @@ export default async function About() {
               href={footerData.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-black hover:opacity-50 transition-opacity"
+              className="text-sm text-black hover:opacity-50 transition-opacity flex items-center gap-1"
             >
-              LinkedIn
+              LinkedIn <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>

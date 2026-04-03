@@ -1,16 +1,23 @@
 ---
 title: "Jethwear - A/W 24"
 excerpt: "Grafisk profil och kampanjmaterial för skoterklädesmärket Jethwear."
-coverImage: "/assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg"
+coverImage: "/assets/uploads/jethwear-hood-mountains-svart-1.jpg"
 testimonial:
-  quote: "Tim förstod vår vision direkt och levererade ett resultat som vi är genuint stolta över."
+  quote: "Tim förstådd vår vision direkt och levererade ett resultat som vi är genuint stolta över."
   author: "Erik Lindström"
   role: "Grundare"
   company: "Jethwear"
 images:
-  - url: /assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg
-  - url: /assets/uploads/622800118_18302682280272447_8305554647472380592_n.jpg
-  - url: /assets/uploads/649221754_18122942962512292_6731438869871018058_n.jpg
+  - url: "/assets/uploads/jethwear-hood-mountains-svart-1.jpg"
+  - url: "/assets/uploads/jethwear-hood-mountains-gron-1.jpg"
+  - url: "/assets/uploads/jethwear-hood-mountains-gron-2.jpg"
+  - url: "/assets/uploads/jethwear-crewneck-powder-raiders-1.jpg"
+  - url: "/assets/uploads/jethwear-tshirt-tame-the-wild-vit-1.jpg"
+  - url: "/assets/uploads/jethwear-hood-mountains-svart-2.jpg"
+  - url: "/assets/uploads/jethwear-crewneck-powder-raiders-2.jpg"
+  - url: "/assets/uploads/jethwear-tshirt-tame-the-wild-vit-2.jpg"
+  - url: "/assets/uploads/jethwear-hood-mountains-gron-3.jpg"
+  - url: "/assets/uploads/jethwear-cap-rooted-navy.jpg"
 ---
 
 Jethwear är ett svenskt skoterklädesmärke riktat mot den moderna åkaren – någon som tar sporten på allvar men som inte vill kompromissa med stilen. Inför höst/vinter-säsongen 2024 anlitade de mig för att ta fram en grafisk identitet och ett visuellt koncept som känns lika hemma i fjällen som i stan.

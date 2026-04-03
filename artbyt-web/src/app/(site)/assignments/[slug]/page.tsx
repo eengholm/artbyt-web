@@ -30,14 +30,13 @@ export default async function Assignment({
 
       {/* Cover image */}
       {assignment.coverImage && (
-        <div className="w-full mb-0">
+        <div className="relative w-full aspect-[16/9] overflow-hidden">
           <Image
             src={assignment.coverImage}
             alt={assignment.title}
-            width={0}
-            height={0}
+            fill
             sizes="100vw"
-            className="w-full h-auto"
+            className={`${assignment.coverImageFit === "contain" ? "object-contain" : "object-cover"} object-center`}
             priority
           />
         </div>
@@ -70,18 +69,18 @@ export default async function Assignment({
 
       {/* Image gallery */}
       {assignment.images && assignment.images.length > 0 && (
-        <div className="mt-12 grid grid-cols-1 gap-3">
+        <div className="mt-12 columns-2 gap-3">
           {assignment.images.map((img, i) => {
             const src = typeof img === "string" ? img : img.url;
             if (!src) return null;
             return (
-              <div key={i} className="w-full">
+              <div key={i} className="mb-3 break-inside-avoid">
                 <Image
                   src={src}
                   alt={`${assignment.title} — ${i + 1}`}
                   width={0}
                   height={0}
-                  sizes="100vw"
+                  sizes="50vw"
                   className="w-full h-auto"
                 />
               </div>

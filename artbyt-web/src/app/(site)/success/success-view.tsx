@@ -8,6 +8,9 @@ export default function SuccessView() {
   const { clearCart } = useCart();
 
   useEffect(() => {
+    try {
+      localStorage.removeItem("artbyt_cart");
+    } catch {}
     clearCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
