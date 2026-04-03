@@ -203,6 +203,7 @@ export const getAllPosts = getAllAssignments;
 
 const fetchStripeProducts = unstable_cache(
   async (): Promise<Product[]> => {
+    if (!process.env.STRIPE_SECRET_KEY) return [];
     const stripe = getStripe();
     const { data } = await stripe.products.list({
       active: true,

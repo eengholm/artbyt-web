@@ -1,6 +1,6 @@
 ---
 intro:
-  title: ArtByT
+  title: Tim Bylander Design
   subtitle: Din lokala designstudio
   description: Jag hjälper ditt företag att skapa en stark visuell identitet som sticker ut och engagerar din målgrupp.
   primaryButton:

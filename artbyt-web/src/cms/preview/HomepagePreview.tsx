@@ -7,7 +7,7 @@ const HomepagePreview: React.FC<PreviewTemplateComponentProps> = ({
   const data = entry.getIn(["data"]);
   const intro = data?.get("intro");
 
-  const title = intro?.get("title") || "ArtByT";
+  const title = intro?.get("title") || "Tim Bylander Design";
   const subtitle = intro?.get("subtitle") || "Din lokala designstudio";
   const description = intro?.get("description") || "";
   const primaryButton = intro?.get("primaryButton");

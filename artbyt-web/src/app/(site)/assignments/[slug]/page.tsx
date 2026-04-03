@@ -106,7 +106,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${assignment.title} | Artbyt`;
+  const title = `${assignment.title} | Tim Bylander`;
 
   return {
     title,

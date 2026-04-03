@@ -25,6 +25,9 @@ export default function Index() {
   const slides = homepageSlides.length > 0 ? homepageSlides : portfolioSlides;
 
   return (
-    <HomeSlideshow slides={slides} siteName={settings.siteName || "Artbyt"} />
+    <HomeSlideshow
+      slides={slides}
+      siteName={settings.siteName || "Tim Bylander Design"}
+    />
   );
 }

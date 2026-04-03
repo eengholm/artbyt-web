@@ -1,6 +1,6 @@
 ---
-title: "Artbyt - Design by Tim Bylander"
-siteName: "Artbyt"
+title: "Tim Bylander Design"
+siteName: "Tim Bylander Design"
 description: "Portfolio och designtjänster av Tim Bylander — grafisk design, varumärkesidentitet och illustration."
 logo: "/assets/icons/artbyt-logo.png"
 contactEmail: "your-email@example.com"
