@@ -116,10 +116,14 @@ collections:
     label: "Assignments"
     folder: "artbyt-web/content/assignments"
     create: true
+    slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly identifier, e.g. 'jethwear-aw-24'. Set once and don't change after publishing.", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "When enabled, this assignment is hidden from the site without deleting it." }
       - { label: "Date", name: "date", widget: "datetime", required: false }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Longer description shown on the assignment card. Falls back to excerpt if empty." }
       - { label: "Cover Image", name: "coverImage", widget: "image" }
       - { label: "Cover Image Fit", name: "coverImageFit", widget: "select", options: ["cover", "contain"], default: "cover", required: false, hint: "cover clips to fill the frame, contain shows the full image" }
       - { label: "Body", name: "body", widget: "markdown" }
@@ -139,7 +143,7 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Image", name: "image", widget: "image" }
-      - { label: "Price (SEK)", name: "price", widget: "number", value_type: "int", hint: "Display price in SEK. Actual charge is controlled by Stripe." }
+      - { label: "Price (SEK)", name: "price", widget: "number", value_type: "int", hint: "⚠️ Display only — shown on the product card. The actual charge is always controlled by the Stripe Price ID below." }
       - { label: "Stripe Price ID", name: "stripePriceId", widget: "string", hint: "e.g. price_1AbCdEfGhIjKlMnO" }
       - { label: "Active", name: "active", widget: "boolean", default: true }
       - { label: "Description", name: "body", widget: "markdown", required: false }
@@ -156,6 +160,6 @@ collections:
           - { label: "Site Description", name: "description", widget: "text" }
           - { label: "SEO Keywords", name: "keywords", widget: "list", required: false }
           - { label: "Logo", name: "logo", widget: "image", required: false }
-          - { label: "Contact Email", name: "contactEmail", widget: "string" }
+          - { label: "Contact Email", name: "contactEmail", widget: "string", hint: "Public contact email address.", pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', 'Must be a valid email address'] }
           - { label: "Phone Number", name: "phoneNumber", widget: "string", required: false }
           - { label: "From Email", name: "fromEmail", widget: "string" }

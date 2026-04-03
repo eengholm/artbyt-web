@@ -24,7 +24,7 @@ export default function Assignments() {
         {assignments.map((assignment, idx) => (
           <article
             key={assignment.slug}
-            className={`bg-white${assignments.length % 2 !== 0 && idx === assignments.length - 1 ? " md:col-span-2" : ""}`}
+            className={`bg-white flex flex-col${assignments.length % 2 !== 0 && idx === assignments.length - 1 ? " md:col-span-2" : ""}`}
           >
             {/* Inset image */}
             <div className="px-4 pt-4">
@@ -45,19 +45,19 @@ export default function Assignments() {
             </div>
 
             {/* Metadata row */}
-            <div className="flex gap-8 px-4 py-4">
+            <div className="flex gap-8 px-4 py-4 flex-1">
               <div className="w-1/2 shrink-0">
                 <span className="text-sm text-black">{assignment.title}</span>
               </div>
-              <div className="flex-1 min-w-0 text-right">
+              <div className="flex-1 min-w-0 text-right flex flex-col">
                 <p className="text-sm text-black leading-snug">
                   {assignment.description || assignment.excerpt}
                 </p>
                 <Link
                   href={`/assignments/${assignment.slug}`}
-                  className="inline-block mt-3 text-sm text-black hover:opacity-50 transition-opacity"
+                  className="mt-auto pt-3 text-sm text-black hover:opacity-50 transition-opacity"
                 >
-                  [View..]
+                  [Visa]
                 </Link>
               </div>
             </div>
