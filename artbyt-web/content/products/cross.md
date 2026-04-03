@@ -3,7 +3,7 @@ title: "Cross"
 excerpt: "En illustration av ett trästolpskors. Signerad print på premiumpapper."
 image: "/assets/uploads/649130771_18135164398506677_6740057224209065587_n.jpg"
 price: 299
-stripePriceId: "price_REPLACE_WITH_YOUR_STRIPE_PRICE_ID"
+stripePriceId: "price_1TI79lAmOkSCKchERw1v4OFk"
 active: true
 ---
 

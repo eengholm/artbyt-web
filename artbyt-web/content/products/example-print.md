@@ -3,7 +3,7 @@ title: "Bite Me"
 excerpt: "En digital illustration av en flugsvamp. Signerad print på premiumpapper."
 image: "/assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg"
 price: 299
-stripePriceId: "price_REPLACE_WITH_YOUR_STRIPE_PRICE_ID"
+stripePriceId: "price_1TI7ARAmOkSCKchEQcvI6pq0"
 active: true
 ---
 
