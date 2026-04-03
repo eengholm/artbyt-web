@@ -14,152 +14,92 @@ public_folder: "/assets/uploads"
 
 collections:
   - name: "homepage"
-    label: "Homepage Settings"
+    label: "Startsida"
     files:
-      - label: "Homepage"
+      - label: "Startsida"
         name: "homepage"
         file: "artbyt-web/content/settings/homepage.md"
         fields:
-          - label: "Intro Section"
-            name: "intro"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string", default: "ArtByT" }
-              - { label: "Subtitle", name: "subtitle", widget: "text", default: "Din lokala designstudio" }
-              - { label: "Description", name: "description", widget: "text", default: "Jag hjälper ditt företag att skapa en stark visuell identitet som sticker ut och engagerar din målgrupp." }
-              - label: "Primary Button"
-                name: "primaryButton"
-                widget: "object"
-                fields:
-                  - { label: "Text", name: "text", widget: "string", default: "Se mina projekt" }
-                  - { label: "Link", name: "link", widget: "string", default: "/assignments" }
-              - label: "Secondary Button"
-                name: "secondaryButton"
-                widget: "object"
-                fields:
-                  - { label: "Text", name: "text", widget: "string", default: "Läs mer om mig" }
-                  - { label: "Link", name: "link", widget: "string", default: "/about" }
-          - label: "Featured Assignment"
-            name: "featuredAssignment"
-            widget: "relation"
-            collection: "assignments"
-            search_fields: ["title"]
-            value_field: "{{slug}}"
-            display_fields: ["title"]
-            hint: "Select an assignment to feature on the homepage"
-          - label: "More Stories"
-            name: "moreStories"
-            widget: "list"
-            field:
-              label: "Assignment"
-              name: "assignment"
-              widget: "relation"
-              collection: "assignments"
-              search_fields: ["title"]
-              value_field: "{{slug}}"
-              display_fields: ["title"]
-            hint: "Select assignments to display in the More Stories section"
-            required: false
-          - label: "Slideshow Images"
+          - label: "Bildspel"
             name: "slides"
             widget: "list"
-            hint: "Images shown in the home page slideshow. Pick from already-uploaded files or upload new ones."
+            hint: "Bilder som visas i bildspelet på startsidan."
             required: false
             fields:
-              - { label: "Image", name: "url", widget: "image" }
-              - { label: "Title", name: "title", widget: "string", required: false }
+              - { label: "Bild", name: "url", widget: "image" }
+              - { label: "Titel", name: "title", widget: "string", required: false }
 
   - name: "footer"
-    label: "Footer Settings"
+    label: "Sociala länkar"
     files:
-      - label: "Footer"
+      - label: "Sociala länkar"
         name: "footer"
         file: "artbyt-web/content/settings/footer.md"
         fields:
-          - { label: "Author Name", name: "authorName", widget: "string", default: "Tim Bylander" }
-          - { label: "Author Picture", name: "authorPicture", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
-          - { label: "Tagline", name: "tagline", widget: "text", default: "Design by Tim Bylander. För alla dina designbehov." }
-          - { label: "Copyright Text", name: "copyright", widget: "string", default: "Tim Bylander. All rights reserved." }
-          - { label: "Instagram URL", name: "instagramUrl", widget: "string", default: "https://www.instagram.com/artbyt_official" }
-          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", default: "https://www.linkedin.com/in/your_linkedin_username" }
+          - { label: "Instagram URL", name: "instagramUrl", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", required: false }
   
   - name: "about"
-    label: "About Page"
+    label: "Om mig"
     files:
-      - label: "About Me"
+      - label: "Om mig"
         name: "about"
         file: "artbyt-web/content/settings/about.md"
         fields:
-          - { label: "Title", name: "title", widget: "string", default: "Om Mig" }
-          - { label: "Image", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
-          - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
-          - { label: "Content", name: "body", widget: "markdown", hint: "Write about yourself, your design philosophy, experience, etc." }
+          - { label: "Titel", name: "title", widget: "string", default: "Om Mig" }
+          - { label: "Bild", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
+          - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
+          - { label: "Innehåll", name: "body", widget: "markdown" }
   
   - name: "portfolio"
-    label: "Portfolio Gallery"
+    label: "Portfolio"
     files:
-      - label: "Portfolio Images"
+      - label: "Galleri"
         name: "portfolio"
         file: "artbyt-web/content/settings/portfolio.md"
         fields:
-          - label: "Gallery Images"
+          - label: "Bilder"
             name: "images"
             widget: "list"
             fields:
-              - { label: "Image", name: "url", widget: "image" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
-              - { label: "Assignment", name: "assignment", widget: "relation", collection: "assignments", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
-              - { label: "Size", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
+              - { label: "Bild", name: "url", widget: "image" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
+              - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "assignments", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+              - { label: "Storlek", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
   
   - name: "assignments"
-    label: "Assignments"
+    label: "Uppdrag"
     folder: "artbyt-web/content/assignments"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly identifier, e.g. 'jethwear-aw-24'. Set once and don't change after publishing.", required: false }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "When enabled, this assignment is hidden from the site without deleting it." }
-      - { label: "Date", name: "date", widget: "datetime", required: false }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Description", name: "description", widget: "text", required: false, hint: "Longer description shown on the assignment card. Falls back to excerpt if empty." }
-      - { label: "Cover Image", name: "coverImage", widget: "image" }
-      - { label: "Cover Image Fit", name: "coverImageFit", widget: "select", options: ["cover", "contain"], default: "cover", required: false, hint: "cover clips to fill the frame, contain shows the full image" }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - label: "Gallery Images"
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL-identifierare, t.ex. 'jethwear-aw-24'. Ändra inte efter publicering.", required: false }
+      - { label: "Utkast", name: "draft", widget: "boolean", default: false, hint: "Döljer uppdraget utan att ta bort det." }
+      - { label: "Datum", name: "date", widget: "datetime", required: false }
+      - { label: "Kort beskrivning", name: "excerpt", widget: "text" }
+      - { label: "Beskrivning", name: "description", widget: "text", required: false, hint: "Visas på uppdragskortet. Används istället för kort beskrivning om ifyllt." }
+      - { label: "Omslagsbild", name: "coverImage", widget: "image" }
+      - { label: "Bildpassning", name: "coverImageFit", widget: "select", options: ["cover", "contain"], default: "cover", required: false, hint: "cover beskär bilden, contain visar hela bilden" }
+      - { label: "Innehåll", name: "body", widget: "markdown" }
+      - label: "Galleribilder"
         name: "gallery"
         widget: "list"
         fields:
-          - { label: "Image", name: "url", widget: "image" }
-          - { label: "Caption", name: "caption", widget: "string", required: false }
-          - { label: "Image Position", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Control the focal point of the image" }
+          - { label: "Bild", name: "url", widget: "image" }
+          - { label: "Bildtext", name: "caption", widget: "string", required: false }
+          - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
 
-  - name: "products"
-    label: "Products"
-    folder: "artbyt-web/content/products"
-    create: true
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Price (SEK)", name: "price", widget: "number", value_type: "int", hint: "⚠️ Display only — shown on the product card. The actual charge is always controlled by the Stripe Price ID below." }
-      - { label: "Stripe Price ID", name: "stripePriceId", widget: "string", hint: "e.g. price_1AbCdEfGhIjKlMnO" }
-      - { label: "Active", name: "active", widget: "boolean", default: true }
-      - { label: "Description", name: "body", widget: "markdown", required: false }
-  
   - name: "settings"
-    label: "Settings"
+    label: "Inställningar"
     files:
       - name: "general"
-        label: "General Settings"
+        label: "Allmänt"
         file: "artbyt-web/content/settings/general.md"
         fields:
-          - { label: "Site Title", name: "title", widget: "string" }
-          - { label: "Site Name", name: "siteName", widget: "string", required: false }
-          - { label: "Site Description", name: "description", widget: "text" }
-          - { label: "SEO Keywords", name: "keywords", widget: "list", required: false }
-          - { label: "Logo", name: "logo", widget: "image", required: false }
-          - { label: "Contact Email", name: "contactEmail", widget: "string", hint: "Public contact email address.", pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', 'Must be a valid email address'] }
-          - { label: "Phone Number", name: "phoneNumber", widget: "string", required: false }
-          - { label: "From Email", name: "fromEmail", widget: "string" }
+          - { label: "Sidrubrik", name: "title", widget: "string" }
+          - { label: "Webbplatsnamn", name: "siteName", widget: "string", required: false }
+          - { label: "Beskrivning", name: "description", widget: "text" }
+          - { label: "Kontakt-e-post", name: "contactEmail", widget: "string", hint: "Visas på Om mig-sidan.", pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', 'Måste vara en giltig e-postadress'] }
+          - { label: "Telefonnummer", name: "phoneNumber", widget: "string", required: false }
