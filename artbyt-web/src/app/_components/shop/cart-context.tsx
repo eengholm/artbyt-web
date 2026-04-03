@@ -22,6 +22,7 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 const STORAGE_KEY = "artbyt_cart";
+const CART_VERSION = "2"; // bump this when product ID format changes
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -29,6 +30,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Hydrate from localStorage after mount
   useEffect(() => {
     try {
+      const version = localStorage.getItem(STORAGE_KEY + "_v");
+      if (version !== CART_VERSION) {
+        // Stale cart from a previous product system — discard it
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY + "_v", CART_VERSION);
+        return;
+      }
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) setItems(JSON.parse(stored));
     } catch {
@@ -75,7 +83,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems }}
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        totalItems,
+      }}
     >
       {children}
     </CartContext.Provider>

@@ -1,4 +1,5 @@
 ---
+coverImageFit: contain
 title: "Otroligt brädspel"
 excerpt: "Konceptutveckling, illustrationer och förpackningsdesign för ett egenutvecklat sällskapsspel."
 coverImage: "/assets/uploads/649130771_18135164398506677_6740057224209065587_n.jpg"

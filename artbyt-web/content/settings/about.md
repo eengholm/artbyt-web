@@ -1,23 +1,23 @@
 ---
-title: "Om Mig"
+title: "Om mig"
 image: "/assets/uploads/489372399_18459792754073373_772256678618014622_n.jpg"
 ---
 
-Hej! Jag är Tim Bylander, en passionerad designer med fokus på att skapa visuella upplevelser som kombinerar estetik med funktion.
+Hej! Jag heter Tim Bylander och är en designer med fokus på att skapa visuella upplevelser där estetik och funktion möts.
 
-## Min Designfilosofi
+## Designfilosofi
 
-Jag tror på att god design ska vara tillgänglig, tydlig och tidlös. Varje projekt är en möjlighet att lösa problem kreativt och skapa något som verkligen gör skillnad för användaren.
+Jag tror på design som är tillgänglig, tydlig och tidlös. Varje projekt är en möjlighet att lösa problem på ett kreativt sätt och skapa något som faktiskt gör skillnad.
 
 ## Bakgrund
 
-Med flera års erfarenhet inom grafisk design och visuell kommunikation har jag arbetat med allt från varumärkesidentitet till produktdesign. Min bredd gör att jag kan se projekt från olika perspektiv och leverera helhetsgrepp.
+Med flera års erfarenhet inom grafisk design och visuell kommunikation har jag arbetat med allt från varumärkesidentitet till illustration och förpackningsdesign. Den breda bakgrunden gör att jag kan angripa projekt från olika håll och leverera ett sammanhållet resultat.
 
-## Vad Jag Gör
+## Vad jag gör
 
 - Grafisk design & varumärkesidentitet
-- Produktdesign & förpackningar
+- Förpackningsdesign & produktdesign
+- Illustration & visuellt berättande
 - Digital design & webbupplevelser
-- Illustrationer & visuellt berättande
 
-Tveka inte att höra av dig om du har ett projekt i åtanke eller bara vill diskutera design!
+Tveka inte att höra av dig om du har ett projekt på gång eller bara vill prata design!

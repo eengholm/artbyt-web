@@ -6,15 +6,17 @@ export const metadata: Metadata = {
   title: "Varukorg",
 };
 
-export default function CartPage() {
+export default async function CartPage() {
   // Pass a lean product summary to the client component so it can
   // display titles and compute totals without a client-side API call.
-  const products = getAllProducts().map(({ slug, title, price, image }) => ({
-    slug,
-    title,
-    price,
-    image,
-  }));
+  const products = (await getAllProducts()).map(
+    ({ slug, title, price, image }) => ({
+      slug,
+      title,
+      price,
+      image,
+    }),
+  );
 
   return (
     <main className="px-4 pl-28 md:pl-36 md:px-8 py-8">

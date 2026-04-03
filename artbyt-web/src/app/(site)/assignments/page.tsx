@@ -1,6 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { getAllAssignments } from "@/lib/api";
+
+export const metadata: Metadata = {
+  title: "Projekt",
+  description:
+    "Utvalda projekt inom grafisk design, varumärkesidentitet och illustration av Tim Bylander.",
+  openGraph: {
+    title: "Projekt - Tim Bylander",
+    description:
+      "Utvalda projekt inom grafisk design, varumärkesidentitet och illustration.",
+    type: "website",
+  },
+};
 
 export default function Assignments() {
   const assignments = getAllAssignments();
@@ -19,7 +32,7 @@ export default function Assignments() {
             </div>
             {/* Inset image */}
             <div className="px-4 pt-3">
-              <div className="w-full">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
                   src={(() => {
                     const first = assignment.images?.[0];
@@ -28,10 +41,9 @@ export default function Assignments() {
                     return assignment.coverImage || fallback || "";
                   })()}
                   alt={assignment.title}
-                  width={0}
-                  height={0}
+                  fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="w-full h-auto"
+                  className={`${assignment.coverImageFit === "contain" ? "object-contain" : "object-cover"} object-center`}
                 />
               </div>
             </div>

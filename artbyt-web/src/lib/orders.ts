@@ -11,6 +11,10 @@ export async function saveOrder(
   const order = {
     id: session.id,
     customerEmail: session.customer_details?.email ?? null,
+    customerName: session.customer_details?.name ?? null,
+    shippingAddress:
+      session.collected_information?.shipping_details?.address ?? null,
+    shippingName: session.collected_information?.shipping_details?.name ?? null,
     amountTotal: session.amount_total,
     currency: session.currency,
     paymentStatus: session.payment_status,

@@ -30,5 +30,6 @@ export interface Assignment {
   description?: string;
   images?: Array<{ url: string }>;
   coverImagePosition?: string;
+  coverImageFit?: "cover" | "contain";
   testimonial?: Testimonial;
 }

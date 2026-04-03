@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600;
 
-export default function ShopPage() {
-  const products = getAllProducts();
+export default async function ShopPage() {
+  const products = await getAllProducts();
 
   return (
     <main className="px-4 pl-36">
