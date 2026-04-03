@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import type Stripe from "stripe";
 import { getProductBySlug } from "@/lib/api";
 import { getStripe } from "@/lib/stripe";
 
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Build Stripe line_items using server-side content (never trust client price IDs)
-  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+  const lineItems: { price: string; quantity: number }[] = [];
   for (const { slug, quantity } of items) {
     const product = getProductBySlug(slug);
     if (!product || !product.active) {
