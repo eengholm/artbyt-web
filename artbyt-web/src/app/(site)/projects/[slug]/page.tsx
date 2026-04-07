@@ -2,20 +2,20 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getAssignmentBySlug, getAllAssignments } from "@/lib/api";
+import { getProjectBySlug, getAllProjects } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import markdownStyles from "@/app/_components/shared/markdown-styles.module.css";
 
 // Revalidate every day
 export const revalidate = 86400;
 
-export default async function Assignment({
+export default async function Project({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const assignment = getAssignmentBySlug(slug);
+  const assignment = getProjectBySlug(slug);
 
   if (!assignment) {
     notFound();
@@ -52,7 +52,7 @@ export default async function Assignment({
             {assignment.description || assignment.excerpt}
           </p>
           <Link
-            href="/assignments"
+            href="/projects"
             className="inline-block mt-3 text-sm text-black hover:opacity-50 transition-opacity"
           >
             [← Alla projekt]
@@ -98,7 +98,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const assignment = getAssignmentBySlug(slug);
+  const assignment = getProjectBySlug(slug);
 
   if (!assignment) {
     return {
@@ -127,9 +127,9 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const assignments = getAllAssignments();
+  const projects = getAllProjects();
 
-  return assignments.map((assignment) => ({
-    slug: assignment.slug,
+  return projects.map((project) => ({
+    slug: project.slug,
   }));
 }

@@ -28,7 +28,7 @@ export default function Error({
           F├╢rs├╢k igen
         </button>
         <a
-          href="/assignments"
+          href="/projects"
           className="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200"
         >
           Alla projekt

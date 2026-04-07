@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { getAllAssignments } from "@/lib/api";
+import { getAllProjects } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Projekt",
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Assignments() {
-  const assignments = getAllAssignments();
+export default function Projects() {
+  const assignments = getAllProjects();
 
   return (
     <div>
@@ -54,7 +54,7 @@ export default function Assignments() {
                   {assignment.description || assignment.excerpt}
                 </p>
                 <Link
-                  href={`/assignments/${assignment.slug}`}
+                  href={`/projects/${assignment.slug}`}
                   className="mt-auto pt-3 text-sm text-black hover:opacity-50 transition-opacity"
                 >
                   [Visa]

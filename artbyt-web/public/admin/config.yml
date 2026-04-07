@@ -65,12 +65,12 @@ collections:
               - { label: "Bild", name: "url", widget: "image" }
               - { label: "Titel", name: "title", widget: "string" }
               - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
-              - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "assignments", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+              - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "projects", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
               - { label: "Storlek", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
   
-  - name: "assignments"
+  - name: "projects"
     label: "Uppdrag"
-    folder: "artbyt-web/content/assignments"
+    folder: "artbyt-web/content/projects"
     create: true
     slug: "{{slug}}"
     fields:

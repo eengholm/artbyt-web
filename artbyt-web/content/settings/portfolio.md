@@ -1,7 +1,7 @@
 ---
 images:
   - size: medium
-    url: /assets/assignments/95696046_3041236899230576_3114999504295870529_n.jpg
+    url: /assets/projects/95696046_3041236899230576_3114999504295870529_n.jpg
     title: Branch
   - url: /assets/uploads/622662749_18255525745291773_3519632188679973068_n.jpg
     title: Bite Me

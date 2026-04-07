@@ -8,7 +8,7 @@ import { unstable_cache } from "next/cache";
 import { getStripe } from "@/lib/stripe";
 
 const contentDirectory = join(process.cwd(), "content");
-const assignmentsDirectory = join(contentDirectory, "assignments");
+const projectsDirectory = join(contentDirectory, "projects");
 const settingsDirectory = join(contentDirectory, "settings");
 
 // Helper function to safely read files
@@ -117,27 +117,27 @@ export function getAboutSettings() {
   };
 }
 
-// Assignment functions
-export function getAssignmentSlugs() {
+// Project functions
+export function getProjectSlugs() {
   try {
-    if (!fs.existsSync(assignmentsDirectory)) {
-      console.error("Assignments directory not found");
+    if (!fs.existsSync(projectsDirectory)) {
+      console.error("Projects directory not found");
       return [];
     }
-    return fs.readdirSync(assignmentsDirectory);
+    return fs.readdirSync(projectsDirectory);
   } catch (error) {
-    console.error("Error reading assignments directory:", error);
+    console.error("Error reading projects directory:", error);
     return [];
   }
 }
 
 const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/;
 
-export function getAssignmentBySlug(slug: string): Assignment | null {
+export function getProjectBySlug(slug: string): Assignment | null {
   try {
     const realSlug = slug.replace(/\.md$/, "");
     if (!SAFE_SLUG.test(realSlug)) return null;
-    const fullPath = join(assignmentsDirectory, `${realSlug}.md`);
+    const fullPath = join(projectsDirectory, `${realSlug}.md`);
 
     if (!fs.existsSync(fullPath)) {
       return null;
@@ -165,39 +165,25 @@ export function getAssignmentBySlug(slug: string): Assignment | null {
       testimonial: data.testimonial || undefined,
     };
   } catch (error) {
-    console.error(`Error loading assignment ${slug}:`, error);
+    console.error(`Error loading project ${slug}:`, error);
     return null;
   }
 }
 
-export function getAssignmentsWithTestimonials(): Assignment[] {
-  const allAssignments = getAllAssignments();
-  return allAssignments.filter((assignment) => assignment.testimonial);
-}
-
-export function getAllAssignments(): Assignment[] {
-  const slugs = getAssignmentSlugs();
-  const assignments = slugs
-    .map((slug) => getAssignmentBySlug(slug))
-    .filter((assignment): assignment is Assignment => assignment !== null)
-    .filter((assignment) => !assignment.draft)
+export function getAllProjects(): Assignment[] {
+  const slugs = getProjectSlugs();
+  const projects = slugs
+    .map((slug) => getProjectBySlug(slug))
+    .filter((project): project is Assignment => project !== null)
+    .filter((project) => !project.draft)
     .sort((a, b) => {
       if (a.date && b.date) {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
       return 0;
     });
-  return assignments;
+  return projects;
 }
-
-export function getAssignmentById(id: number): Assignment | null {
-  const allAssignments = getAllAssignments();
-  const assignment = allAssignments.find((a) => a.id === id);
-  return assignment || null;
-}
-
-// Alias for backwards compatibility
-export const getAllPosts = getAllAssignments;
 
 // ─── Products (fetched from Stripe) ──────────────────────────────────────────
 

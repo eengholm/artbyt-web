@@ -1,14 +1,3 @@
-export interface Image {
-  id: number;
-  url: string | null;
-  fileName: string | null;
-}
-
-export interface Author {
-  name: string;
-  picture: string;
-}
-
 export interface Testimonial {
   quote: string;
   author: string;

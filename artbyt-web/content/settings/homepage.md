@@ -5,7 +5,7 @@ intro:
   description: Jag hjälper ditt företag att skapa en stark visuell identitet som sticker ut och engagerar din målgrupp.
   primaryButton:
     text: Se mina projekt
-    link: /assignments
+    link: /projects
   secondaryButton:
     text: Läs mer om mig
     link: /about

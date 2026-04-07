@@ -1,4 +1,4 @@
-import { HomeSlideshow } from "@/app/_components/assignments/home-slideshow";
+import { HomeSlideshow } from "@/app/_components/projects/home-slideshow";
 import {
   getGeneralSettings,
   getHomepageSettings,

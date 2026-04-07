@@ -1,14 +1,14 @@
 import { MetadataRoute } from "next";
-import { getAllAssignments, getAllProducts } from "@/lib/api";
+import { getAllProjects, getAllProducts } from "@/lib/api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://artbyt.se";
-  const assignments = getAllAssignments();
+  const projects = getAllProjects();
   const products = await getAllProducts();
 
-  const assignmentUrls = assignments.map((assignment) => ({
-    url: `${baseUrl}/assignments/${assignment.slug}`,
-    lastModified: assignment.date ? new Date(assignment.date) : new Date(),
+  const projectUrls = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: project.date ? new Date(project.date) : new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/assignments`,
+      url: `${baseUrl}/projects`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    ...assignmentUrls,
+    ...projectUrls,
     ...productUrls,
   ];
 }
