@@ -19,10 +19,12 @@ export default async function CartPage() {
   );
 
   return (
-    <main className="px-4 pl-28 md:pl-36 md:px-8 py-8">
-      <hr className="border-t border-gray-200 mb-3" />
-      <h1 className="text-sm text-black mb-6">Varukorg</h1>
-      <CartView products={products} />
+    <main className="px-4 md:pl-36 md:px-8 py-8 flex flex-col justify-end min-h-[calc(100svh-6rem)] md:block">
+      <div>
+        <hr className="border-t border-gray-200 mb-3" />
+        <h1 className="text-sm text-black mb-6">Varukorg</h1>
+        <CartView products={products} />
+      </div>
     </main>
   );
 }

@@ -66,7 +66,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-52 md:pb-0">
       <div className="divide-y divide-gray-100 border-t border-gray-200">
         {cartItems.map(({ slug, quantity, product }) => (
           <div key={slug} className="flex items-start gap-4 py-4">
@@ -132,28 +132,75 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
         ))}
       </div>
 
-      <div className="mt-4 flex justify-between text-sm font-medium border-t border-gray-200 pt-4">
-        <span>Totalt</span>
-        <span>{total.toLocaleString("sv-SE")} kr</span>
+      {/* Desktop: inline summary */}
+      <div className="hidden md:block mt-4 border-t border-gray-200 pt-4 space-y-2">
+        <div className="flex justify-between text-sm text-gray-500">
+          <span>Delsumma</span>
+          <span>{total.toLocaleString("sv-SE")} kr</span>
+        </div>
+        <div className="flex justify-between text-sm text-gray-500">
+          <span>
+            Frakt
+            <span className="ml-1 text-xs text-gray-400">
+              (3–7 arbetsdagar)
+            </span>
+          </span>
+          <span>49 kr</span>
+        </div>
+        <div className="flex justify-between text-sm font-medium border-t border-gray-200 pt-2">
+          <span>Totalt</span>
+          <span>{(total + 49).toLocaleString("sv-SE")} kr</span>
+        </div>
+
+        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className="mt-4 w-full bg-black text-white text-sm py-3 px-4 hover:opacity-70 transition-opacity disabled:opacity-40"
+        >
+          {loading ? "Laddar…" : "Gå till kassan"}
+        </button>
+
+        <div className="mt-4">
+          <Link
+            href="/shop"
+            className="text-sm text-gray-500 hover:text-black transition-colors"
+          >
+            ← Fortsätt handla
+          </Link>
+        </div>
       </div>
 
-      {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      {/* Mobile: sticky bottom panel */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200 px-4 pt-3 pb-6 space-y-2">
+        <div className="flex justify-between text-sm text-gray-500">
+          <span>Delsumma</span>
+          <span>{total.toLocaleString("sv-SE")} kr</span>
+        </div>
+        <div className="flex justify-between text-sm text-gray-500">
+          <span>
+            Frakt
+            <span className="ml-1 text-xs text-gray-400">
+              (3–7 arbetsdagar)
+            </span>
+          </span>
+          <span>49 kr</span>
+        </div>
+        <div className="flex justify-between text-sm font-medium border-t border-gray-100 pt-2">
+          <span>Totalt</span>
+          <span>{(total + 49).toLocaleString("sv-SE")} kr</span>
+        </div>
 
-      <button
-        onClick={handleCheckout}
-        disabled={loading}
-        className="mt-6 w-full bg-black text-white text-sm py-3 px-4 hover:opacity-70 transition-opacity disabled:opacity-40"
-      >
-        {loading ? "Laddar…" : "Gå till kassan"}
-      </button>
+        {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <div className="mt-4">
-        <Link
-          href="/shop"
-          className="text-sm text-gray-500 hover:text-black transition-colors"
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className="w-full bg-black text-white text-sm py-3 px-4 hover:opacity-70 transition-opacity disabled:opacity-40"
         >
-          ← Fortsätt handla
-        </Link>
+          {loading ? "Laddar…" : "Gå till kassan"}
+        </button>
       </div>
     </div>
   );
