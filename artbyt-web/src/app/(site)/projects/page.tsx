@@ -28,7 +28,7 @@ export default function Projects() {
           >
             {/* Inset image */}
             <div className="px-4 pt-4">
-              <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
                   src={(() => {
                     const first = assignment.images?.[0];

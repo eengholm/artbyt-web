@@ -16,10 +16,6 @@ const nextConfig = {
       },
     ],
   },
-  // Optimize CSS
-  experimental: {
-    optimizeCss: true,
-  },
   // Enable compression
   compress: true,
   // React strict mode for better development
