@@ -35,9 +35,14 @@
 
       var BASE = 'https://artbyt-web.vercel.app';
 
-      function absUrl(path) {
+      // Resolves an image field value to a usable URL for the preview iframe.
+      // getAsset handles blob: URLs (unsaved uploads) and maps stored paths
+      // through public_folder. Falls back to prepending BASE for plain paths.
+      function resolveImage(getAsset, path) {
         if (!path) return '';
-        return path.startsWith('http') ? path : BASE + path;
+        var asset = getAsset(path);
+        if (asset && asset.toString() !== path) return asset.toString();
+        return path.startsWith('http') || path.startsWith('blob:') ? path : BASE + path;
       }
 
       var hr   = h('hr', { style: { border: 'none', borderTop: '1px solid #e5e7eb', margin: '0 0 0.75rem' } });
@@ -54,14 +59,15 @@
           var excerpt     = entry.getIn(['data', 'excerpt'])       || '';
           var description = entry.getIn(['data', 'description'])   || '';
           var body        = this.props.widgetFor('body');
+          var coverSrc    = resolveImage(this.props.getAsset, coverImage);
 
           return h('div', { style: { background: '#fff', padding: '1rem' } },
             hr,
-            coverImage && h('div', {
+            coverSrc && h('div', {
               style: { width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', marginBottom: '0.75rem' }
             },
               h('img', {
-                src: absUrl(coverImage),
+                src: coverSrc,
                 alt: title,
                 style: {
                   width: '100%', height: '100%',
@@ -111,7 +117,7 @@
           },
             h('div', { style: { flex: 1, position: 'relative', overflow: 'hidden', margin: '2rem 0' } },
               h('img', {
-                src: absUrl(slide.url),
+                src: resolveImage(this.props.getAsset, slide.url),
                 alt: slide.title || '',
                 style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }
               })
@@ -129,16 +135,17 @@
         render: function () {
           var entry = this.props.entry;
           var title = entry.getIn(['data', 'title']) || 'Om Mig';
-          var image = entry.getIn(['data', 'image']) || '';
-          var body  = this.props.widgetFor('body');
+          var image    = entry.getIn(['data', 'image']) || '';
+          var body     = this.props.widgetFor('body');
+          var imageSrc = resolveImage(this.props.getAsset, image);
 
           return h('div', { style: { background: '#fff', padding: '1rem' } },
             hr,
-            image && h('div', {
+            imageSrc && h('div', {
               style: { width: '100%', aspectRatio: '3 / 1', overflow: 'hidden', marginBottom: '0.75rem' }
             },
               h('img', {
-                src: absUrl(image),
+                src: imageSrc,
                 alt: title,
                 style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }
               })

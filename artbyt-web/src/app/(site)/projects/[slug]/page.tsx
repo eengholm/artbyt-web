@@ -30,7 +30,7 @@ export default async function Project({
 
       {/* Cover image */}
       {assignment.coverImage && (
-        <div className="relative w-full aspect-[16/9] overflow-hidden">
+        <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>
           <Image
             src={assignment.coverImage}
             alt={assignment.title}

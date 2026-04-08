@@ -45,7 +45,7 @@ export default async function About() {
 
       {/* Full-width image */}
       {aboutData.image && (
-        <div className="relative w-full aspect-[3/1] overflow-hidden">
+        <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3/1' }}>
           <Image
             src={aboutData.image}
             alt={aboutData.title || "Om Mig"}
