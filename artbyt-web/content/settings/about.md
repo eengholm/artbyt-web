@@ -1,6 +1,8 @@
 ---
 title: "Om mig"
 image: "/assets/uploads/489372399_18459792754073373_772256678618014622_n.jpg"
+instagramUrl: "https://www.instagram.com/artbyt_official"
+linkedinUrl: "https://www.linkedin.com/in/your_linkedin_username"
 ---
 
 Hej! Jag heter Tim Bylander och är en designer med fokus på att skapa visuella upplevelser där estetik och funktion möts.

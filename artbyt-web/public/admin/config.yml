@@ -13,66 +13,15 @@ media_folder: "artbyt-web/public/assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
-  - name: "homepage"
-    label: "Startsida"
-    files:
-      - label: "Startsida"
-        name: "homepage"
-        file: "artbyt-web/content/settings/homepage.md"
-        fields:
-          - label: "Bildspel"
-            name: "slides"
-            widget: "list"
-            hint: "Bilder som visas i bildspelet på startsidan."
-            required: false
-            fields:
-              - { label: "Bild", name: "url", widget: "image" }
-              - { label: "Titel", name: "title", widget: "string", required: false }
-
-  - name: "footer"
-    label: "Sociala länkar"
-    files:
-      - label: "Sociala länkar"
-        name: "footer"
-        file: "artbyt-web/content/settings/footer.md"
-        fields:
-          - { label: "Instagram URL", name: "instagramUrl", widget: "string", required: false }
-          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", required: false }
-  
-  - name: "about"
-    label: "Om mig"
-    files:
-      - label: "Om mig"
-        name: "about"
-        file: "artbyt-web/content/settings/about.md"
-        fields:
-          - { label: "Titel", name: "title", widget: "string", default: "Om Mig" }
-          - { label: "Bild", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
-          - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
-          - { label: "Innehåll", name: "body", widget: "markdown" }
-  
-  - name: "portfolio"
-    label: "Portfolio"
-    files:
-      - label: "Galleri"
-        name: "portfolio"
-        file: "artbyt-web/content/settings/portfolio.md"
-        fields:
-          - label: "Bilder"
-            name: "images"
-            widget: "list"
-            fields:
-              - { label: "Bild", name: "url", widget: "image" }
-              - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
-              - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "projects", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
-              - { label: "Storlek", name: "size", widget: "select", options: ["small", "medium", "large"], default: "medium" }
-  
+  # ── Content ────────────────────────────────────────────────────────────────
   - name: "projects"
     label: "Uppdrag"
+    label_singular: "Uppdrag"
     folder: "artbyt-web/content/projects"
     create: true
     slug: "{{slug}}"
+    preview_path: "projects/{{slug}}"
+    sortable_fields: ["title", "date"]
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string", hint: "URL-identifierare, t.ex. 'jethwear-aw-24'. Ändra inte efter publicering.", required: false }
@@ -84,13 +33,55 @@ collections:
       - { label: "Bildpassning", name: "coverImageFit", widget: "select", options: ["cover", "contain"], default: "cover", required: false, hint: "cover beskär bilden, contain visar hela bilden" }
       - { label: "Innehåll", name: "body", widget: "markdown" }
       - label: "Galleribilder"
-        name: "gallery"
+        name: "images"
         widget: "list"
         fields:
           - { label: "Bild", name: "url", widget: "image" }
-          - { label: "Bildtext", name: "caption", widget: "string", required: false }
-          - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
 
+  # ── Pages ──────────────────────────────────────────────────────────────────
+  - name: "pages"
+    label: "Sidor"
+    files:
+      - label: "Startsida"
+        name: "homepage"
+        file: "artbyt-web/content/settings/homepage.md"
+        preview_path: "/"
+        fields:
+          - label: "Bildspel"
+            name: "slides"
+            widget: "list"
+            hint: "Bilder som visas i bildspelet på startsidan."
+            required: false
+            fields:
+              - { label: "Bild", name: "url", widget: "image" }
+              - { label: "Titel", name: "title", widget: "string", required: false }
+
+      - label: "Om mig"
+        name: "about"
+        file: "artbyt-web/content/settings/about.md"
+        preview_path: "/about"
+        fields:
+          - { label: "Titel", name: "title", widget: "string", default: "Om Mig" }
+          - { label: "Bild", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
+          - { label: "Instagram URL", name: "instagramUrl", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", required: false }
+          - { label: "Innehåll", name: "body", widget: "markdown" }
+
+      - label: "Portfolio"
+        name: "portfolio"
+        file: "artbyt-web/content/settings/portfolio.md"
+        preview_path: "/portfolio"
+        fields:
+          - label: "Bilder"
+            name: "images"
+            widget: "list"
+            fields:
+              - { label: "Bild", name: "url", widget: "image" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
+              - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "projects", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+
+  # ── Site settings ──────────────────────────────────────────────────────────
   - name: "settings"
     label: "Inställningar"
     files:

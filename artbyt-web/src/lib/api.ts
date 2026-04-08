@@ -68,19 +68,6 @@ export function getHomepageSettings() {
   return data;
 }
 
-// Footer settings
-export function getFooterSettings() {
-  const fullPath = join(settingsDirectory, "footer.md");
-  const fileContents = safeReadFile(fullPath, "footer settings");
-
-  if (!fileContents) {
-    return {};
-  }
-
-  const { data } = matter(fileContents);
-  return data;
-}
-
 // Portfolio settings
 export function getPortfolioSettings() {
   const fullPath = join(settingsDirectory, "portfolio.md");
@@ -113,7 +100,8 @@ export function getAboutSettings() {
     content,
     title: data.title,
     image: data.image,
-    imagePosition: data.imagePosition || "center",
+    instagramUrl: data.instagramUrl || "",
+    linkedinUrl: data.linkedinUrl || "",
   };
 }
 

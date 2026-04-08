@@ -1,9 +1,5 @@
 import { Metadata } from "next";
-import {
-  getAboutSettings,
-  getGeneralSettings,
-  getFooterSettings,
-} from "@/lib/api";
+import { getAboutSettings, getGeneralSettings } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import markdownStyles from "@/app/_components/shared/markdown-styles.module.css";
 import Image from "next/image";
@@ -39,7 +35,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function About() {
   const aboutData = getAboutSettings();
-  const footerData = getFooterSettings();
   const settings = getGeneralSettings();
   const content = await markdownToHtml(aboutData.content || "");
 
@@ -70,9 +65,9 @@ export default async function About() {
           </span>
         </div>
         <div className="flex-1 min-w-0 text-right flex flex-col gap-1 items-end">
-          {footerData.instagramUrl && (
+          {aboutData.instagramUrl && (
             <a
-              href={footerData.instagramUrl}
+              href={aboutData.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-black hover:opacity-50 transition-opacity flex items-center gap-1"
@@ -80,9 +75,9 @@ export default async function About() {
               Instagram <span aria-hidden="true">↗</span>
             </a>
           )}
-          {footerData.linkedinUrl && (
+          {aboutData.linkedinUrl && (
             <a
-              href={footerData.linkedinUrl}
+              href={aboutData.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-black hover:opacity-50 transition-opacity flex items-center gap-1"

@@ -5,590 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager</title>
-    
-    <!-- Custom styles for prose/markdown content -->
-    <style>
-      /* Prose styling for markdown content */
-      .prose {
-        color: #374151;
-        max-width: 65ch;
-      }
-      .prose h1 {
-        font-size: 2.25em;
-        font-weight: 800;
-        line-height: 1.1111111;
-        margin-top: 0;
-        margin-bottom: 0.8888889em;
-      }
-      .prose h2 {
-        font-size: 1.5em;
-        font-weight: 700;
-        line-height: 1.3333333;
-        margin-top: 2em;
-        margin-bottom: 1em;
-      }
-      .prose h3 {
-        font-size: 1.25em;
-        font-weight: 600;
-        line-height: 1.6;
-        margin-top: 1.6em;
-        margin-bottom: 0.6em;
-      }
-      .prose p {
-        margin-top: 1.25em;
-        margin-bottom: 1.25em;
-        line-height: 1.75;
-      }
-      .prose a {
-        color: #111827;
-        text-decoration: underline;
-        font-weight: 500;
-      }
-      .prose strong {
-        font-weight: 600;
-        color: #111827;
-      }
-      .prose ul, .prose ol {
-        margin-top: 1.25em;
-        margin-bottom: 1.25em;
-        padding-left: 1.625em;
-      }
-      .prose li {
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-      }
-      .prose blockquote {
-        font-weight: 500;
-        font-style: italic;
-        color: #111827;
-        border-left-width: 0.25rem;
-        border-left-color: #e5e7eb;
-        quotes: "\201C""\201D""\2018""\2019";
-        margin-top: 1.6em;
-        margin-bottom: 1.6em;
-        padding-left: 1em;
-      }
-      .prose code {
-        color: #111827;
-        font-weight: 600;
-        font-size: 0.875em;
-      }
-      .prose pre {
-        color: #e5e7eb;
-        background-color: #1f2937;
-        overflow-x: auto;
-        font-weight: 400;
-        font-size: 0.875em;
-        line-height: 1.7142857;
-        margin-top: 1.7142857em;
-        margin-bottom: 1.7142857em;
-        border-radius: 0.375rem;
-        padding: 0.8571429em 1.1428571em;
-      }
-      .prose img {
-        margin-top: 2em;
-        margin-bottom: 2em;
-      }
-      .prose-lg {
-        font-size: 1.125rem;
-        line-height: 1.7777778;
-      }
-      .prose-lg p {
-        margin-top: 1.3333333em;
-        margin-bottom: 1.3333333em;
-      }
-      .prose-lg h1 {
-        font-size: 2.6666667em;
-        margin-top: 0;
-        margin-bottom: 0.8333333em;
-        line-height: 1;
-      }
-      .prose-lg h2 {
-        font-size: 1.6666667em;
-        margin-top: 1.8666667em;
-        margin-bottom: 1.0666667em;
-        line-height: 1.3333333;
-      }
-      .prose-lg h3 {
-        font-size: 1.3333333em;
-        margin-top: 1.6666667em;
-        margin-bottom: 0.6666667em;
-        line-height: 1.5;
-      }
-    </style>
   </head>
   <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    
-    <!-- Custom preview templates -->
+
     <script>
-      // Register styles for preview iframe - using specific CSS chunks
-      CMS.registerPreviewStyle("/_next/static/chunks/5d7eabfae8fd2f82.css", { raw: false });
-      CMS.registerPreviewStyle("/_next/static/chunks/b9fc0b61b038f907.css", { raw: false });
-      
-      // Register inline prose styles for preview iframe
-      const proseStyles = `
-        .prose {
-          color: #374151;
-          max-width: 65ch;
+      // Base styles injected into every preview iframe
+      CMS.registerPreviewStyle(`
+        * { box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+          background: #fff;
+          color: #000;
+          margin: 0;
+          font-size: 14px;
         }
-        .prose h1 {
-          font-size: 2.25em;
-          font-weight: 800;
-          line-height: 1.1111111;
-          margin-top: 0;
-          margin-bottom: 0.8888889em;
-        }
-        .prose h2 {
-          font-size: 1.5em;
-          font-weight: 700;
-          line-height: 1.3333333;
-          margin-top: 2em;
-          margin-bottom: 1em;
-        }
-        .prose h3 {
-          font-size: 1.25em;
-          font-weight: 600;
-          line-height: 1.6;
-          margin-top: 1.6em;
-          margin-bottom: 0.6em;
-        }
-        .prose p {
-          margin-top: 1.25em;
-          margin-bottom: 1.25em;
-          line-height: 1.75;
-        }
-        .prose a {
-          color: #111827;
-          text-decoration: underline;
-          font-weight: 500;
-        }
-        .prose strong {
-          font-weight: 600;
-          color: #111827;
-        }
-        .prose ul, .prose ol {
-          margin-top: 1.25em;
-          margin-bottom: 1.25em;
-          padding-left: 1.625em;
-        }
-        .prose li {
-          margin-top: 0.5em;
-          margin-bottom: 0.5em;
-        }
-        .prose blockquote {
-          font-weight: 500;
-          font-style: italic;
-          color: #111827;
-          border-left-width: 0.25rem;
-          border-left-color: #e5e7eb;
-          quotes: "\\201C""\\201D""\\2018""\\2019";
-          margin-top: 1.6em;
-          margin-bottom: 1.6em;
-          padding-left: 1em;
-        }
-        .prose code {
-          color: #111827;
-          font-weight: 600;
-          font-size: 0.875em;
-        }
-        .prose pre {
-          color: #e5e7eb;
-          background-color: #1f2937;
-          overflow-x: auto;
-          font-weight: 400;
-          font-size: 0.875em;
-          line-height: 1.7142857;
-          margin-top: 1.7142857em;
-          margin-bottom: 1.7142857em;
-          border-radius: 0.375rem;
-          padding: 0.8571429em 1.1428571em;
-        }
-        .prose img {
-          margin-top: 2em;
-          margin-bottom: 2em;
-        }
-        .prose-lg {
-          font-size: 1.125rem;
-          line-height: 1.7777778;
-        }
-        .prose-lg p {
-          margin-top: 1.3333333em;
-          margin-bottom: 1.3333333em;
-        }
-        .prose-lg h1 {
-          font-size: 2.6666667em;
-          margin-top: 0;
-          margin-bottom: 0.8333333em;
-          line-height: 1;
-        }
-        .prose-lg h2 {
-          font-size: 1.6666667em;
-          margin-top: 1.8666667em;
-          margin-bottom: 1.0666667em;
-          line-height: 1.3333333;
-        }
-        .prose-lg h3 {
-          font-size: 1.3333333em;
-          margin-top: 1.6666667em;
-          margin-bottom: 0.6666667em;
-          line-height: 1.5;
-        }
-      `;
-      CMS.registerPreviewStyle(proseStyles, { raw: true });
-      
-      // Assignment Preview - matches live assignment page layout
-      const AssignmentPreview = createClass({
-        render: function() {
-          const entry = this.props.entry;
-          const title = entry.getIn(['data', 'title']) || 'Untitled';
-          const coverImage = entry.getIn(['data', 'coverImage']) || '';
-          const coverImagePosition = entry.getIn(['data', 'coverImagePosition']) || 'center';
-          const body = this.props.widgetFor('body');
+        .body-content h1 { font-size: 1.375rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+        .body-content h2 { font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+        .body-content h3 { font-size: 1rem;     font-weight: 600; margin: 1rem 0 0.25rem; }
+        .body-content p  { margin: 0.75rem 0; line-height: 1.6; }
+        .body-content ul, .body-content ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+        .body-content li { margin: 0.25rem 0; }
+        .body-content strong { font-weight: 600; }
+        .body-content em    { font-style: italic; }
+        .body-content a     { color: #000; text-decoration: underline; }
+      `, { raw: true });
 
-          // Convert relative paths to absolute URLs
-          const imageUrl = coverImage.startsWith('http') ? coverImage : `https://artbyt-web.vercel.app${coverImage}`;
+      // ─── Helpers ───────────────────────────────────────────────────────────
 
-          const positionMap = {
-            'top': 'top',
-            'bottom': 'bottom',
-            'left': 'left',
-            'right': 'right',
-            'center': 'center',
-            'top left': 'left top',
-            'top right': 'right top',
-            'bottom left': 'left bottom',
-            'bottom right': 'right bottom',
-          };
-          const objectPosition = positionMap[coverImagePosition] || 'center';
+      var BASE = 'https://artbyt-web.vercel.app';
 
-          return h('div', { className: 'max-w-4xl mx-auto px-6 py-8' },
-            h('article', {},
-              // Header section
-              h('div', { className: 'mb-8 md:mb-16' },
-                h('h1', { className: 'text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left' }, title),
-                coverImage && h('div', { className: 'mb-8 md:mb-16 relative w-full overflow-hidden rounded-lg', style: { aspectRatio: '16/9' } },
-                  h('img', {
-                    src: imageUrl,
-                    alt: title,
-                    className: 'w-full h-full object-cover rounded-lg',
-                    style: { objectPosition: objectPosition }
-                  })
-                )
-              ),
-              // Body section
-              h('div', { 
-                className: 'prose prose-lg prose-slate max-w-none',
+      function absUrl(path) {
+        if (!path) return '';
+        return path.startsWith('http') ? path : BASE + path;
+      }
+
+      var hr   = h('hr', { style: { border: 'none', borderTop: '1px solid #e5e7eb', margin: '0 0 0.75rem' } });
+      var hrLg = h('hr', { style: { border: 'none', borderTop: '1px solid #e5e7eb', margin: '0 0 1.5rem'  } });
+
+      // ─── Projekt-förhandsgranskning — matchar /projects/[slug] ─────────────
+
+      var ProjectPreview = createClass({
+        render: function () {
+          var entry       = this.props.entry;
+          var title       = entry.getIn(['data', 'title'])         || 'Titel';
+          var coverImage  = entry.getIn(['data', 'coverImage'])    || '';
+          var coverFit    = entry.getIn(['data', 'coverImageFit']) || 'cover';
+          var excerpt     = entry.getIn(['data', 'excerpt'])       || '';
+          var description = entry.getIn(['data', 'description'])   || '';
+          var body        = this.props.widgetFor('body');
+
+          return h('div', { style: { background: '#fff', padding: '1rem' } },
+            hr,
+            coverImage && h('div', {
+              style: { width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', marginBottom: '0.75rem' }
+            },
+              h('img', {
+                src: absUrl(coverImage),
+                alt: title,
                 style: {
-                  fontSize: '1.125rem',
-                  lineHeight: '1.75rem'
+                  width: '100%', height: '100%',
+                  objectFit: coverFit === 'contain' ? 'contain' : 'cover',
+                  objectPosition: 'center',
+                  display: 'block'
                 }
-              }, body)
-            )
-          );
-        }
-      });
-
-      // Homepage Preview - matches live homepage with all sections
-      const HomepagePreview = createClass({
-        getInitialState: function() {
-          return {
-            featuredData: null,
-            moreStoriesData: []
-          };
-        },
-        
-        componentDidMount: function() {
-          this.fetchAssignmentData();
-        },
-        
-        componentDidUpdate: function(prevProps) {
-          const prevFeatured = prevProps.entry.getIn(['data', 'featuredAssignment']);
-          const currFeatured = this.props.entry.getIn(['data', 'featuredAssignment']);
-          const prevStories = prevProps.entry.getIn(['data', 'moreStories']);
-          const currStories = this.props.entry.getIn(['data', 'moreStories']);
-          
-          if (prevFeatured !== currFeatured || prevStories !== currStories) {
-            this.fetchAssignmentData();
-          }
-        },
-        
-        fetchAssignmentData: function() {
-          const featuredSlug = this.props.entry.getIn(['data', 'featuredAssignment']);
-          const moreStories = this.props.entry.getIn(['data', 'moreStories']) || [];
-          
-          // Fetch featured assignment from GitHub
-          if (featuredSlug) {
-            fetch(`https://raw.githubusercontent.com/eengholm/artbyt-web/main/artbyt-web/content/assignments/${featuredSlug}.md`)
-              .then(res => res.ok ? res.text() : Promise.reject())
-              .then(text => {
-                const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
-                const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
-                const excerptMatch = text.match(/excerpt:\s*["']?([^"'\n]+)["']?/);
-                this.setState({
-                  featuredData: {
-                    coverImage: match ? match[1] : '',
-                    title: titleMatch ? titleMatch[1] : featuredSlug,
-                    excerpt: excerptMatch ? excerptMatch[1] : ''
-                  }
-                });
               })
-              .catch(() => this.setState({ featuredData: { coverImage: '', title: featuredSlug, excerpt: '' } }));
+            ),
+            h('div', { style: { display: 'flex', gap: '2rem', padding: '1rem 0' } },
+              h('div', { style: { width: '50%', flexShrink: 0 } },
+                h('span', { style: { fontSize: '0.875rem' } }, title)
+              ),
+              h('div', { style: { flex: 1, textAlign: 'right', fontSize: '0.875rem', lineHeight: '1.4' } },
+                description || excerpt
+              )
+            ),
+            hrLg,
+            h('div', { className: 'body-content', style: { columns: 2, columnGap: '3rem' } }, body)
+          );
+        }
+      });
+
+      // ─── Startsida-förhandsgranskning — bildspel ────────────────────────────
+
+      var HomepagePreview = createClass({
+        getInitialState: function () { return { index: 0 }; },
+        render: function () {
+          var entry  = this.props.entry;
+          var list   = entry.getIn(['data', 'slides']);
+          var slides = list ? list.toJS() : [];
+          var idx    = this.state.index;
+          var total  = slides.length;
+
+          if (total === 0) {
+            return h('div', {
+              style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', color: '#888' }
+            }, 'Inga bilder tillagda ännu.');
           }
-          
-          // Fetch more stories from GitHub
-          Promise.all(
-            moreStories.map(slug => 
-              fetch(`https://raw.githubusercontent.com/eengholm/artbyt-web/main/artbyt-web/content/assignments/${slug}.md`)
-                .then(res => res.ok ? res.text() : Promise.reject())
-                .then(text => {
-                  const match = text.match(/coverImage:\s*["']?([^"'\n]+)["']?/);
-                  const titleMatch = text.match(/title:\s*["']?([^"'\n]+)["']?/);
-                  const excerptMatch = text.match(/excerpt:\s*["']?([^"'\n]+)["']?/);
-                  return {
-                    slug,
-                    coverImage: match ? match[1] : '',
-                    title: titleMatch ? titleMatch[1] : slug,
-                    excerpt: excerptMatch ? excerptMatch[1] : ''
-                  };
-                })
-                .catch(() => ({ slug, coverImage: '', title: slug, excerpt: '' }))
-            ).toArray()
-          ).then(data => this.setState({ moreStoriesData: data }));
-        },
-        
-        render: function() {
-          const entry = this.props.entry;
-          const intro = entry.getIn(['data', 'intro']);
-          const title = intro?.get('title') || 'ArtByT';
-          const subtitle = intro?.get('subtitle') || 'Din lokala designstudio';
-          const description = intro?.get('description') || '';
-          const primaryButton = intro?.get('primaryButton');
-          const secondaryButton = intro?.get('secondaryButton');
-          const featuredAssignment = entry.getIn(['data', 'featuredAssignment']) || '';
-          const moreStories = entry.getIn(['data', 'moreStories']) || [];
-          
-          const { featuredData, moreStoriesData } = this.state;
 
-          return h('div', {},
-            // Intro Section
-            h('div', { className: 'relative isolate px-6 lg:px-8' },
-              h('div', { className: 'mx-auto max-w-4xl py-16 sm:py-24 lg:py-32' },
-                h('div', { className: 'text-center' },
-                  h('h1', { className: 'text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl' }, subtitle),
-                  h('p', { className: 'mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl' }, title),
-                  description && h('p', { className: 'mt-8 text-xl leading-relaxed text-gray-600 max-w-2xl mx-auto' }, description),
-                  h('div', { className: 'mt-12 flex flex-col sm:flex-row items-center justify-center gap-4' },
-                    primaryButton && h('div', { className: 'w-full sm:w-auto rounded-md bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-gray-800 transition-colors cursor-pointer' },
-                      primaryButton.get('text') || 'Primary Button'
-                    ),
-                    secondaryButton && h('div', { className: 'w-full sm:w-auto rounded-md border border-gray-900 px-8 py-3.5 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors cursor-pointer' },
-                      secondaryButton.get('text') || 'Secondary Button'
-                    )
-                  )
-                )
-              )
+          var slide   = slides[idx];
+          var counter = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+          return h('div', {
+            style: { background: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', cursor: 'crosshair' },
+            onClick: function () { this.setState({ index: (idx + 1) % total }); }.bind(this)
+          },
+            h('div', { style: { flex: 1, position: 'relative', overflow: 'hidden', margin: '2rem 0' } },
+              h('img', {
+                src: absUrl(slide.url),
+                alt: slide.title || '',
+                style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }
+              })
             ),
-            // Featured Assignment Section
-            featuredAssignment && h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
-              h('div', { className: 'mb-8' },
-                h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-2' }, 'Utvalt projekt'),
-                h('p', { className: 'text-lg text-gray-600' }, 'Ett urval av mitt senaste arbete')
-              ),
-              h('div', { className: 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow' },
-                featuredData && featuredData.coverImage ? h('div', { className: 'aspect-[16/9] overflow-hidden' },
-                  h('img', {
-                    src: `https://artbyt-web.vercel.app${featuredData.coverImage}`,
-                    alt: featuredData.title,
-                    className: 'w-full h-full object-cover'
-                  })
-                ) : h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
-                  h('p', { className: 'text-gray-500 text-sm' }, 'Laddar bild...')
-                ),
-                h('div', { className: 'p-6' },
-                  h('h3', { className: 'text-2xl font-bold mb-3' }, featuredData ? featuredData.title : featuredAssignment),
-                  h('p', { className: 'text-gray-600 mb-4' }, featuredData && featuredData.excerpt ? featuredData.excerpt : 'Projektbeskrivning visas här när sidan publiceras'),
-                  h('div', { className: 'inline-block text-gray-900 font-semibold hover:underline' }, 'Läs mer →')
-                )
-              )
-            ),
-            // More Assignments Section
-            moreStories.size > 0 && h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
-              h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Fler projekt'),
-              h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8' },
-                moreStories.map(function(slug, index) {
-                  const storyData = moreStoriesData[index];
-                  return h('div', { className: 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow', key: slug },
-                    storyData && storyData.coverImage ? h('div', { className: 'aspect-[16/9] overflow-hidden' },
-                      h('img', {
-                        src: `https://artbyt-web.vercel.app${storyData.coverImage}`,
-                        alt: storyData.title,
-                        className: 'w-full h-full object-cover'
-                      })
-                    ) : h('div', { className: 'aspect-[16/9] bg-gray-200 flex items-center justify-center' },
-                      h('p', { className: 'text-gray-500 text-sm' }, 'Laddar...')
-                    ),
-                    h('div', { className: 'p-6' },
-                      h('h3', { className: 'text-xl font-bold mb-2' }, storyData ? storyData.title : slug),
-                      h('p', { className: 'text-gray-600 text-sm' }, storyData && storyData.excerpt ? storyData.excerpt : 'Projektbeskrivning'),
-                      h('div', { className: 'mt-3 inline-block text-gray-900 font-semibold text-sm hover:underline' }, 'Läs mer →')
-                    )
-                  );
-                }).toArray()
-              )
-            ),
-            // Testimonials placeholder
-            h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
-              h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Kundrecensioner'),
-              h('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6' },
-                [1, 2, 3].map(function(i) {
-                  return h('div', { className: 'bg-white rounded-lg shadow-md p-6', key: i },
-                    h('div', { className: 'flex items-center mb-4' },
-                      h('div', { className: 'w-12 h-12 bg-gray-200 rounded-full mr-4' }),
-                      h('div', {},
-                        h('p', { className: 'font-semibold text-gray-900' }, 'Kundnamn'),
-                        h('p', { className: 'text-sm text-gray-600' }, 'Företag')
-                      )
-                    ),
-                    h('p', { className: 'text-gray-600 italic' }, '"Kundrecension från nöjda kunder visas här när sidan publiceras."')
-                  );
-                })
-              )
-            ),
-            // Portfolio Gallery placeholder
-            h('div', { className: 'max-w-4xl mx-auto px-6 mb-24 md:mb-32' },
-              h('h2', { className: 'text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center' }, 'Portfolio'),
-              h('div', { className: 'grid grid-cols-2 md:grid-cols-4 gap-4' },
-                [1, 2, 3, 4, 5, 6, 7, 8].map(function(i) {
-                  return h('div', { className: 'aspect-square bg-gray-200 rounded-lg overflow-hidden hover:opacity-80 transition-opacity', key: i },
-                    h('div', { className: 'w-full h-full flex items-center justify-center' },
-                      h('p', { className: 'text-gray-500 text-sm' }, 'Bild')
-                    )
-                  );
-                })
-              )
+            h('div', { style: { textAlign: 'center', paddingBottom: '1rem', flexShrink: 0 } },
+              h('span', { style: { fontSize: '1.875rem', letterSpacing: '0.1em' } }, counter)
             )
           );
         }
       });
 
-      // About Preview - matches live about page layout
-      const AboutPreview = createClass({
-        render: function() {
-          const entry = this.props.entry;
-          const title = entry.getIn(['data', 'title']) || 'Om Mig';
-          const image = entry.getIn(['data', 'image']) || '';
-          const imagePosition = entry.getIn(['data', 'imagePosition']) || 'center';
-          const body = this.props.widgetFor('body');
+      // ─── Om mig-förhandsgranskning — matchar /about ─────────────────────────
 
-          // Convert relative paths to absolute URLs
-          const imageUrl = image.startsWith('http') ? image : `https://artbyt-web.vercel.app${image}`;
+      var AboutPreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var title = entry.getIn(['data', 'title']) || 'Om Mig';
+          var image = entry.getIn(['data', 'image']) || '';
+          var body  = this.props.widgetFor('body');
 
-          const positionMap = {
-            'top': 'top',
-            'bottom': 'bottom',
-            'left': 'left',
-            'right': 'right',
-            'center': 'center',
-            'top left': 'left top',
-            'top right': 'right top',
-            'bottom left': 'left bottom',
-            'bottom right': 'right bottom',
-          };
-          const objectPosition = positionMap[imagePosition] || 'center';
-
-          return h('div', { className: 'mx-auto max-w-4xl px-6 py-8' },
-            h('h1', { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-12' }, title),
-            h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
-              image && h('div', { className: 'relative rounded-lg overflow-hidden', style: { aspectRatio: '1/1' } },
-                h('img', {
-                  src: imageUrl,
-                  alt: title,
-                  className: 'w-full h-full object-cover',
-                  style: { objectPosition: objectPosition }
-                })
+          return h('div', { style: { background: '#fff', padding: '1rem' } },
+            hr,
+            image && h('div', {
+              style: { width: '100%', aspectRatio: '3 / 1', overflow: 'hidden', marginBottom: '0.75rem' }
+            },
+              h('img', {
+                src: absUrl(image),
+                alt: title,
+                style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }
+              })
+            ),
+            h('div', { style: { display: 'flex', gap: '2rem', padding: '1rem 0' } },
+              h('div', { style: { width: '50%', flexShrink: 0 } },
+                h('span', { style: { fontSize: '0.875rem' } }, title)
               ),
-              h('div', { 
-                className: 'flex flex-col justify-center prose prose-lg prose-slate max-w-none',
-                style: {
-                  fontSize: '1.125rem',
-                  lineHeight: '1.75rem'
-                }
-              }, body)
-            )
-          );
-        }
-      });
-
-      // Footer Preview - matches live footer layout
-      const FooterPreview = createClass({
-        render: function() {
-          const entry = this.props.entry;
-          const authorName = entry.getIn(['data', 'authorName']) || 'Tim Bylander';
-          const authorPicture = entry.getIn(['data', 'authorPicture']) || '';
-          const tagline = entry.getIn(['data', 'tagline']) || 'Design by Tim Bylander. För alla dina designbehov.';
-          const copyright = entry.getIn(['data', 'copyright']) || 'Tim Bylander. All rights reserved.';
-          const instagramUrl = entry.getIn(['data', 'instagramUrl']) || '';
-          const linkedinUrl = entry.getIn(['data', 'linkedinUrl']) || '';
-
-          const authorImageUrl = authorPicture.startsWith('http') ? authorPicture : `https://artbyt-web.vercel.app${authorPicture}`;
-
-          return h('div', { className: 'bg-gray-50 border-t border-gray-200' },
-            h('div', { className: 'max-w-4xl mx-auto px-6 py-12' },
-              h('div', { className: 'flex flex-col md:flex-row items-center md:items-start gap-8 mb-8' },
-                // Author section
-                h('div', { className: 'flex items-center gap-4' },
-                  authorPicture && h('div', { className: 'relative w-16 h-16 rounded-full overflow-hidden bg-gray-200' },
-                    h('img', {
-                      src: authorImageUrl,
-                      alt: authorName,
-                      className: 'w-full h-full object-cover'
-                    })
-                  ),
-                  h('div', {},
-                    h('p', { className: 'text-lg font-semibold text-gray-900' }, authorName),
-                    h('p', { className: 'text-sm text-gray-600' }, tagline)
-                  )
-                ),
-                // Social links
-                h('div', { className: 'flex gap-4 md:ml-auto' },
-                  instagramUrl && h('a', { 
-                    href: instagramUrl,
-                    className: 'w-10 h-10 flex items-center justify-center rounded-full bg-gray-900 text-white hover:bg-gray-700 transition-colors',
-                    target: '_blank',
-                    rel: 'noopener noreferrer'
-                  },
-                    h('svg', { className: 'w-5 h-5', fill: 'currentColor', viewBox: '0 0 448 512' },
-                      h('path', { d: 'M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z' })
-                    )
-                  ),
-                  linkedinUrl && h('a', { 
-                    href: linkedinUrl,
-                    className: 'w-10 h-10 flex items-center justify-center rounded-full bg-gray-900 text-white hover:bg-gray-700 transition-colors',
-                    target: '_blank',
-                    rel: 'noopener noreferrer'
-                  },
-                    h('svg', { className: 'w-5 h-5', fill: 'currentColor', viewBox: '0 0 448 512' },
-                      h('path', { d: 'M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z' })
-                    )
-                  )
-                )
-              ),
-              // Copyright
-              h('div', { className: 'text-center pt-8 border-t border-gray-300' },
-                h('p', { className: 'text-sm text-gray-600' }, `© ${new Date().getFullYear()} ${copyright}`)
+              h('div', { style: { flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end', fontSize: '0.875rem' } },
+                h('span', {}, 'Instagram ↗'),
+                h('span', {}, 'LinkedIn ↗')
               )
-            )
+            ),
+            hrLg,
+            h('div', { className: 'body-content', style: { columns: 2, columnGap: '3rem' } }, body)
           );
         }
       });
 
-      // Register preview templates
-      CMS.registerPreviewTemplate('assignments', AssignmentPreview);
+      // ─── Registrera förhandsgranskningsmallar ─────────────────────────────
+
+      CMS.registerPreviewTemplate('projects', ProjectPreview);
       CMS.registerPreviewTemplate('homepage', HomepagePreview);
-      CMS.registerPreviewTemplate('about', AboutPreview);
-      CMS.registerPreviewTemplate('footer', FooterPreview);
+      CMS.registerPreviewTemplate('about',    AboutPreview);
     </script>
   </body>
 </html>
