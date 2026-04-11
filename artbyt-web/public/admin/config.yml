@@ -62,7 +62,7 @@ collections:
         preview_path: "/about"
         fields:
           - { label: "Titel", name: "title", widget: "string", default: "Om Mig" }
-          - { label: "Bild", name: "image", widget: "image", default: "/assets/portfolio/authors/tim.jpg" }
+          - { label: "Bild", name: "image", widget: "image", required: false }
           - { label: "Instagram URL", name: "instagramUrl", widget: "string", required: false }
           - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", required: false }
           - { label: "Innehåll", name: "body", widget: "markdown" }
