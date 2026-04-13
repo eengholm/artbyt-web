@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 html,
 body {
@@ -8,4 +6,3 @@ body {
   text-transform: uppercase;
   font-weight: 100;
 }
-

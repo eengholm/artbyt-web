@@ -23,7 +23,7 @@ A photography portfolio website for Tim Bylander built with Next.js.
 ## Development
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
