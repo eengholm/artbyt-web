@@ -15,9 +15,9 @@ A photography portfolio website for Tim Bylander built with Next.js.
 
 ## Tech Stack
 
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
+- Next.js 16 (App Router)
+- TypeScript 6
+- Tailwind CSS 4
 - Decap CMS for content management
 
 ## Development
