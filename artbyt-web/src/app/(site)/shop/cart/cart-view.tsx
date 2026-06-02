@@ -78,6 +78,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
                     src={product!.image}
                     alt={product!.title}
                     fill
+                    priority
                     className="object-cover"
                     sizes="64px"
                   />

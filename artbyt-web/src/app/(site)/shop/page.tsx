@@ -40,6 +40,7 @@ export default async function ShopPage() {
                     src={product.image}
                     alt={product.title}
                     fill
+                    priority
                     className="object-contain group-hover:opacity-90 transition-opacity"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />

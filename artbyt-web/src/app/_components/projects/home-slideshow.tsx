@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
 import { SiteTitle, SiteNav } from "@/app/_components/layout/site-nav";
 
@@ -17,6 +17,18 @@ type HomeSlideshowProps = {
 export function HomeSlideshow({ slides, siteName }: HomeSlideshowProps) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const preloadImage = (src: string) => {
+      const img = new window.Image();
+      img.src = src;
+    };
+
+    const nextIndex = (index + 1) % slides.length;
+    const prevIndex = (index - 1 + slides.length) % slides.length;
+    preloadImage(slides[nextIndex].url);
+    preloadImage(slides[prevIndex].url);
+  }, [index, slides]);
 
   const prev = useCallback(() => {
     setIndex((i) => (i - 1 + slides.length) % slides.length);
@@ -80,7 +92,7 @@ export function HomeSlideshow({ slides, siteName }: HomeSlideshowProps) {
           alt={current.title || ""}
           fill
           className="object-contain object-center"
-          priority
+          priority={index === 0}
           sizes="100vw"
         />
       </div>
