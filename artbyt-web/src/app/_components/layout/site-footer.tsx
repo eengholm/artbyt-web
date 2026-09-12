@@ -8,11 +8,11 @@ const legalLinks = [
   { href: "/angra-kop", label: "Ångra ditt köp" },
 ];
 
-export function SiteFooter() {
+export function SiteFooter({ className = "" }: { className?: string }) {
   const settings = getGeneralSettings();
 
   return (
-    <footer className="mt-16 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-3">
+    <footer className={`${className} mt-16 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-3`}>
       <div className="space-y-0.5">
         <p>{settings.businessName}</p>
         <p>{settings.orgNumber}</p>

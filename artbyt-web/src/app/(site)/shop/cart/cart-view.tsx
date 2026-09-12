@@ -73,7 +73,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
   }
 
   return (
-    <div className="w-full pb-52 md:pb-0">
+    <div className="w-full">
       <div className="divide-y divide-gray-100 border-t border-gray-200">
         {cartItems.map(({ slug, size, quantity, product, sizeConfig }) => (
           <div key={slug + "|" + size} className="flex items-start gap-4 py-4">
