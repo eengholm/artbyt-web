@@ -5,6 +5,7 @@ import { ProductSize } from "@/interfaces/product";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { SHIPPING_COST_SEK, SHIPPING_ESTIMATE_TEXT } from "@/lib/shipping";
 
 type ProductSummary = {
   slug: string;
@@ -150,17 +151,29 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
           <span>
             Frakt
             <span className="ml-1 text-xs text-gray-400">
-              (3–7 arbetsdagar)
+              ({SHIPPING_ESTIMATE_TEXT})
             </span>
           </span>
-          <span>49 kr</span>
+          <span>{SHIPPING_COST_SEK} kr</span>
         </div>
         <div className="flex justify-between text-sm font-medium border-t border-gray-200 pt-2">
-          <span>Totalt</span>
-          <span>{Math.round(total + 49).toLocaleString("sv-SE")} kr</span>
+          <span>Totalt (inkl. moms)</span>
+          <span>{Math.round(total + SHIPPING_COST_SEK).toLocaleString("sv-SE")} kr</span>
         </div>
 
         {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+
+        <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+          Genom att gå vidare till kassan godkänner du våra{" "}
+          <Link href="/villkor" className="underline hover:text-black">
+            köpvillkor
+          </Link>{" "}
+          och tar del av din{" "}
+          <Link href="/retur-angerratt" className="underline hover:text-black">
+            14 dagars ångerrätt
+          </Link>
+          .
+        </p>
 
         <button
           onClick={handleCheckout}
@@ -190,17 +203,29 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
           <span>
             Frakt
             <span className="ml-1 text-xs text-gray-400">
-              (3–7 arbetsdagar)
+              ({SHIPPING_ESTIMATE_TEXT})
             </span>
           </span>
-          <span>49 kr</span>
+          <span>{SHIPPING_COST_SEK} kr</span>
         </div>
         <div className="flex justify-between text-sm font-medium border-t border-gray-100 pt-2">
-          <span>Totalt</span>
-          <span>{Math.round(total + 49).toLocaleString("sv-SE")} kr</span>
+          <span>Totalt (inkl. moms)</span>
+          <span>{Math.round(total + SHIPPING_COST_SEK).toLocaleString("sv-SE")} kr</span>
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
+
+        <p className="text-xs text-gray-500 leading-relaxed">
+          Genom att gå vidare till kassan godkänner du våra{" "}
+          <Link href="/villkor" className="underline hover:text-black">
+            köpvillkor
+          </Link>{" "}
+          och tar del av din{" "}
+          <Link href="/retur-angerratt" className="underline hover:text-black">
+            14 dagars ångerrätt
+          </Link>
+          .
+        </p>
 
         <button
           onClick={handleCheckout}

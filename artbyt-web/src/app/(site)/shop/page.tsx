@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 import { Metadata } from "next";
 import CartLink from "@/app/_components/shop/cart-link";
+import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PRICE_VAT_NOTE, SHIPPING_SHORT_NOTE } from "@/lib/shipping";
 
 export const metadata: Metadata = {
   title: "Butik",
@@ -55,12 +57,15 @@ export default async function ShopPage() {
               <p className="text-sm text-gray-600 mt-0.5">
                 {product.sizes.length > 1
                   ? `Från ${Math.min(...product.sizes.map(s => s.price / 100)).toLocaleString("sv-SE")} kr`
-                  : `${product.price.toLocaleString("sv-SE")} kr`}
+                  : `${product.price.toLocaleString("sv-SE")} kr`}{" "}
+                <span className="text-gray-400">({PRICE_VAT_NOTE})</span>
               </p>
+              <p className="text-xs text-gray-400 mt-0.5">{SHIPPING_SHORT_NOTE}</p>
             </Link>
           ))}
         </div>
       )}
+      <SiteFooter />
     </main>
   );
 }

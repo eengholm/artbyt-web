@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProductBySlug } from "@/lib/api";
 import { getStripe } from "@/lib/stripe";
+import { SHIPPING_COST_ORE, SHIPPING_ESTIMATE_DAYS, SHIPPING_LABEL } from "@/lib/shipping";
 
 const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/;
 const SAFE_SIZE = /^[a-zA-Z0-9 _-]+$/;
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
       currency: string;
       product_data: { name: string };
       unit_amount: number;
+      tax_behavior: "inclusive";
     };
     quantity: number;
   }[] = [];
@@ -75,6 +77,9 @@ export async function POST(req: NextRequest) {
           name: `${product.title} — ${size}`,
         },
         unit_amount: sizeConfig.price,
+        // Swedish consumer prices are shown VAT-inclusive; tells Stripe Tax
+        // the unit_amount above already contains VAT rather than excluding it.
+        tax_behavior: "inclusive",
       },
       quantity,
     });
@@ -98,15 +103,34 @@ export async function POST(req: NextRequest) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 4900, currency: "sek" },
-            display_name: "Standardfrakt",
+            fixed_amount: { amount: SHIPPING_COST_ORE, currency: "sek" },
+            display_name: SHIPPING_LABEL,
+            tax_behavior: "inclusive",
             delivery_estimate: {
-              minimum: { unit: "business_day", value: 3 },
-              maximum: { unit: "business_day", value: 7 },
+              minimum: { unit: "business_day", value: SHIPPING_ESTIMATE_DAYS.min },
+              maximum: { unit: "business_day", value: SHIPPING_ESTIMATE_DAYS.max },
             },
           },
         },
       ],
+      // Requires Stripe Tax to be activated and an origin address set under
+      // https://dashboard.stripe.com/settings/tax before this has any effect.
+      automatic_tax: { enabled: true },
+      // Requires a terms-of-service URL under
+      // https://dashboard.stripe.com/settings/public (point it at /villkor).
+      consent_collection: { terms_of_service: "required" },
+      // Generates and emails a legally-adequate order confirmation (see
+      // invoice_data below) instead of relying on a custom mailer.
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          description: "Orderbekräftelse",
+          footer:
+            "Du har rätt att ångra ditt köp inom 14 dagar. Läs mer och ångra ditt köp på " +
+            `${siteUrl}/retur-angerratt och ${siteUrl}/angra-kop.`,
+        },
+      },
+      locale: "sv",
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/shop/cart`,
     });

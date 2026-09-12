@@ -1,6 +1,6 @@
 import { getStripe } from "@/lib/stripe";
 
-export async function createGelatoOrder(sessionId: string) {
+export async function createGelatoOrder(sessionId: string): Promise<{ gelatoOrderId: string }> {
   const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
   const itemsRaw = session.metadata?.items;
@@ -13,12 +13,9 @@ export async function createGelatoOrder(sessionId: string) {
   const shipping = collected?.shipping_details;
 
   if (!shipping?.address) {
-    console.error(
-      "[gelato] missing shipping address, session:",
-      sessionId,
-      collected,
-      session.customer_details,
-    );
+    // Never log the shipping/customer objects themselves — see the
+    // compliance audit's PII-in-logs finding.
+    console.error("[gelato] missing shipping address, session:", sessionId);
     throw new Error("No shipping address in session");
   }
 
@@ -129,5 +126,29 @@ export async function createGelatoOrder(sessionId: string) {
     throw new Error("Gelato order creation failed");
   }
 
-  return response.json();
+  const data = await response.json();
+  return { gelatoOrderId: data.id };
+}
+
+/**
+ * Best-effort cancellation for the withdrawal ("ångerknapp") flow. Gelato
+ * only accepts this while the order hasn't entered production yet — a
+ * rejection here is expected and shouldn't block the refund, which is the
+ * legally required part of a withdrawal.
+ */
+export async function cancelGelatoOrder(gelatoOrderId: string): Promise<boolean> {
+  const response = await fetch(
+    `https://order.gelatoapis.com/v4/orders/${gelatoOrderId}:cancel`,
+    {
+      method: "POST",
+      headers: { "X-API-KEY": process.env.GELATO_API_KEY! },
+    },
+  );
+
+  if (!response.ok) {
+    console.error("[gelato] order cancellation failed:", gelatoOrderId, response.status);
+    return false;
+  }
+
+  return true;
 }

@@ -38,6 +38,10 @@ export function getGeneralSettings() {
       fromEmail: "",
       logo: "",
       siteName: "",
+      businessName: "",
+      orgNumber: "",
+      address: "",
+      vatNumber: "",
     };
   }
 
@@ -51,6 +55,10 @@ export function getGeneralSettings() {
     fromEmail: data.fromEmail || "",
     logo: data.logo || "",
     siteName: data.siteName || data.title || "",
+    businessName: data.businessName || "",
+    orgNumber: data.orgNumber || "",
+    address: data.address || "",
+    vatNumber: data.vatNumber || "",
   };
 }
 
@@ -102,6 +110,31 @@ export function getAboutSettings() {
     instagramUrl: data.instagramUrl || "",
     linkedinUrl: data.linkedinUrl || "",
   };
+}
+
+// Legal pages (Terms, Privacy, Returns/Withdrawal) — same shape as About.
+function getLegalPage(fileName: string, defaultTitle: string) {
+  const fullPath = join(settingsDirectory, fileName);
+  const fileContents = safeReadFile(fullPath, fileName);
+
+  if (!fileContents) {
+    return { title: defaultTitle, content: "" };
+  }
+
+  const { data, content } = matter(fileContents);
+  return { title: data.title || defaultTitle, content };
+}
+
+export function getTermsSettings() {
+  return getLegalPage("terms.md", "Köpvillkor");
+}
+
+export function getPrivacySettings() {
+  return getLegalPage("privacy.md", "Integritetspolicy");
+}
+
+export function getReturnsSettings() {
+  return getLegalPage("returns.md", "Returer och ångerrätt");
 }
 
 // Project functions

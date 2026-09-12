@@ -81,6 +81,30 @@ collections:
               - { label: "Bildposition", name: "imagePosition", widget: "select", options: ["center", "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right"], default: "center", required: false, hint: "Styr bildens fokuspunkt" }
               - { label: "Uppdrag", name: "assignment", widget: "relation", collection: "projects", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
 
+      - label: "Köpvillkor"
+        name: "terms"
+        file: "artbyt-web/content/settings/terms.md"
+        preview_path: "/villkor"
+        fields:
+          - { label: "Titel", name: "title", widget: "string", default: "Köpvillkor" }
+          - { label: "Innehåll", name: "body", widget: "markdown" }
+
+      - label: "Integritetspolicy"
+        name: "privacy"
+        file: "artbyt-web/content/settings/privacy.md"
+        preview_path: "/integritetspolicy"
+        fields:
+          - { label: "Titel", name: "title", widget: "string", default: "Integritetspolicy" }
+          - { label: "Innehåll", name: "body", widget: "markdown" }
+
+      - label: "Returer och ångerrätt"
+        name: "returns"
+        file: "artbyt-web/content/settings/returns.md"
+        preview_path: "/retur-angerratt"
+        fields:
+          - { label: "Titel", name: "title", widget: "string", default: "Returer och ångerrätt" }
+          - { label: "Innehåll", name: "body", widget: "markdown" }
+
   # ── Site settings ──────────────────────────────────────────────────────────
   - name: "settings"
     label: "Inställningar"
@@ -94,3 +118,7 @@ collections:
           - { label: "Beskrivning", name: "description", widget: "text" }
           - { label: "Kontakt-e-post", name: "contactEmail", widget: "string", hint: "Visas på Om mig-sidan.", pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', 'Måste vara en giltig e-postadress'] }
           - { label: "Telefonnummer", name: "phoneNumber", widget: "string", required: false }
+          - { label: "Firmanamn", name: "businessName", widget: "string", hint: "Juridiskt namn på företaget/enskilda firman. Visas i sidfoten, i köpvillkoren och i orderbekräftelser." }
+          - { label: "Organisationsnummer / personnummer", name: "orgNumber", widget: "string" }
+          - { label: "Postadress", name: "address", widget: "text", hint: "Fullständig adress, en rad per fält är okej." }
+          - { label: "Momsregistreringsnummer (VAT)", name: "vatNumber", widget: "string", required: false, hint: "Lämna tomt om inte momsregistrerad." }

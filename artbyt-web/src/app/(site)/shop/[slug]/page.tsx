@@ -6,6 +6,8 @@ import { getProductBySlug, getAllProducts } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import AddToCartButton from "./add-to-cart";
 import CartLink from "@/app/_components/shop/cart-link";
+import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PRICE_VAT_NOTE, SHIPPING_SHORT_NOTE } from "@/lib/shipping";
 
 export const revalidate = 3600;
 
@@ -67,8 +69,10 @@ export default async function ProductPage({
           <p className="mt-1 text-sm">
             {product.sizes.length > 1
               ? `Från ${Math.min(...product.sizes.map(s => s.price / 100)).toLocaleString("sv-SE")} kr`
-              : `${product.price.toLocaleString("sv-SE")} kr`}
+              : `${product.price.toLocaleString("sv-SE")} kr`}{" "}
+            <span className="text-gray-400">({PRICE_VAT_NOTE})</span>
           </p>
+          <p className="text-xs text-gray-400 mt-0.5">{SHIPPING_SHORT_NOTE}</p>
 
           {descriptionHtml && (
             <div
@@ -89,6 +93,7 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
+      <SiteFooter />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getAllProducts } from "@/lib/api";
+import { SiteFooter } from "@/app/_components/layout/site-footer";
 import CartView from "./cart-view";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default async function CartPage() {
         <h1 className="text-sm text-black mb-6">Varukorg</h1>
         <CartView products={products} />
       </div>
+      <SiteFooter />
     </main>
   );
 }
