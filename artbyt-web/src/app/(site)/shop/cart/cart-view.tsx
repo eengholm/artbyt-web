@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/app/_components/shop/cart-context";
+import { ProductSize } from "@/interfaces/product";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,6 +11,7 @@ type ProductSummary = {
   title: string;
   price: number;
   image: string;
+  sizes: ProductSize[];
 };
 
 export default function CartView({ products }: { products: ProductSummary[] }) {
@@ -18,14 +20,16 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
   const [error, setError] = useState<string | null>(null);
 
   const cartItems = items
-    .map((item) => ({
-      ...item,
-      product: products.find((p) => p.slug === item.slug),
-    }))
-    .filter((item) => item.product != null);
+    .map((item) => {
+      const product = products.find((p) => p.slug === item.slug);
+      if (!product) return null;
+      const sizeConfig = product.sizes.find((s) => s.name === item.size);
+      return { ...item, product, sizeConfig };
+    })
+    .filter((item): item is NonNullable<typeof item> => item != null);
 
   const total = cartItems.reduce(
-    (sum, item) => sum + item.product!.price * item.quantity,
+    (sum, item) => sum + (item.sizeConfig?.price ?? item.product.price * 100) * item.quantity / 100,
     0,
   );
 
@@ -36,7 +40,9 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
+        body: JSON.stringify({
+          items: items.map((i) => ({ slug: i.slug, size: i.size, quantity: i.quantity })),
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -68,15 +74,15 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
   return (
     <div className="w-full pb-52 md:pb-0">
       <div className="divide-y divide-gray-100 border-t border-gray-200">
-        {cartItems.map(({ slug, quantity, product }) => (
-          <div key={slug} className="flex items-start gap-4 py-4">
+        {cartItems.map(({ slug, size, quantity, product, sizeConfig }) => (
+          <div key={slug + "|" + size} className="flex items-start gap-4 py-4">
             {/* Thumbnail */}
             <Link href={`/shop/${slug}`} className="shrink-0">
               <div className="relative w-16 h-16 bg-gray-100 overflow-hidden">
-                {product!.image ? (
+                {product.image ? (
                   <Image
-                    src={product!.image}
-                    alt={product!.title}
+                    src={product.image}
+                    alt={product.title}
                     fill
                     priority
                     className="object-cover"
@@ -91,11 +97,12 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
               </div>
             </Link>
 
-            {/* Title + price */}
+            {/* Title + size + price */}
             <div className="flex-1 min-w-0">
-              <p className="text-sm">{product!.title}</p>
+              <p className="text-sm">{product.title}</p>
+              <p className="text-xs text-gray-400 mt-0.5">{size}</p>
               <p className="text-sm text-gray-500 mt-0.5">
-                {product!.price.toLocaleString("sv-SE")} kr
+                {((sizeConfig?.price ?? product.price * 100) / 100).toLocaleString("sv-SE")} kr
               </p>
             </div>
 
@@ -103,7 +110,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
             <div className="flex flex-col items-end gap-2 shrink-0">
               <div className="inline-flex items-center gap-3">
                 <button
-                  onClick={() => updateQuantity(slug, quantity - 1)}
+                  onClick={() => updateQuantity(slug, size, quantity - 1)}
                   className="w-5 text-center text-sm hover:opacity-50 transition-opacity"
                   aria-label="Minska antal"
                 >
@@ -111,7 +118,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
                 </button>
                 <span className="text-sm">{quantity}</span>
                 <button
-                  onClick={() => updateQuantity(slug, quantity + 1)}
+                  onClick={() => updateQuantity(slug, size, quantity + 1)}
                   className="w-5 text-center text-sm hover:opacity-50 transition-opacity"
                   aria-label="Öka antal"
                 >
@@ -119,10 +126,10 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
                 </button>
               </div>
               <p className="text-sm font-medium">
-                {(product!.price * quantity).toLocaleString("sv-SE")} kr
+                {(((sizeConfig?.price ?? product.price * 100) / 100) * quantity).toLocaleString("sv-SE")} kr
               </p>
               <button
-                onClick={() => removeItem(slug)}
+                onClick={() => removeItem(slug, size)}
                 className="text-xs text-gray-400 hover:text-black transition-colors"
                 aria-label="Ta bort produkt"
               >
@@ -137,7 +144,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
       <div className="hidden md:block mt-4 border-t border-gray-200 pt-4 space-y-2">
         <div className="flex justify-between text-sm text-gray-500">
           <span>Delsumma</span>
-          <span>{total.toLocaleString("sv-SE")} kr</span>
+          <span>{Math.round(total).toLocaleString("sv-SE")} kr</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500">
           <span>
@@ -150,7 +157,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
         </div>
         <div className="flex justify-between text-sm font-medium border-t border-gray-200 pt-2">
           <span>Totalt</span>
-          <span>{(total + 49).toLocaleString("sv-SE")} kr</span>
+          <span>{Math.round(total + 49).toLocaleString("sv-SE")} kr</span>
         </div>
 
         {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
@@ -177,7 +184,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
       <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200 px-4 pt-3 pb-6 space-y-2">
         <div className="flex justify-between text-sm text-gray-500">
           <span>Delsumma</span>
-          <span>{total.toLocaleString("sv-SE")} kr</span>
+          <span>{Math.round(total).toLocaleString("sv-SE")} kr</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500">
           <span>
@@ -190,7 +197,7 @@ export default function CartView({ products }: { products: ProductSummary[] }) {
         </div>
         <div className="flex justify-between text-sm font-medium border-t border-gray-100 pt-2">
           <span>Totalt</span>
-          <span>{(total + 49).toLocaleString("sv-SE")} kr</span>
+          <span>{Math.round(total + 49).toLocaleString("sv-SE")} kr</span>
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}

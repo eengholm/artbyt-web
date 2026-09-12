@@ -65,7 +65,9 @@ export default async function ProductPage({
         <div className="flex-1">
           <h1 className="text-lg font-medium">{product.title}</h1>
           <p className="mt-1 text-sm">
-            {product.price.toLocaleString("sv-SE")} kr
+            {product.sizes.length > 1
+              ? `Från ${Math.min(...product.sizes.map(s => s.price / 100)).toLocaleString("sv-SE")} kr`
+              : `${product.price.toLocaleString("sv-SE")} kr`}
           </p>
 
           {descriptionHtml && (
@@ -75,7 +77,7 @@ export default async function ProductPage({
             />
           )}
 
-          <AddToCartButton slug={product.slug} />
+          <AddToCartButton slug={product.slug} sizes={product.sizes} />
 
           <div className="mt-6">
             <Link

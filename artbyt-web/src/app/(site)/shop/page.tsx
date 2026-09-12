@@ -53,7 +53,9 @@ export default async function ShopPage() {
               </div>
               <p className="text-sm font-medium">{product.title}</p>
               <p className="text-sm text-gray-600 mt-0.5">
-                {product.price.toLocaleString("sv-SE")} kr
+                {product.sizes.length > 1
+                  ? `Från ${Math.min(...product.sizes.map(s => s.price / 100)).toLocaleString("sv-SE")} kr`
+                  : `${product.price.toLocaleString("sv-SE")} kr`}
               </p>
             </Link>
           ))}

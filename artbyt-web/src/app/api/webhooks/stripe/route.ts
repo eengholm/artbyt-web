@@ -1,7 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { saveOrder } from "@/lib/orders";
+import { createGelatoOrder } from "@/lib/gelato";
 import { getStripe } from "@/lib/stripe";
+
+const processed = new Map<string, number>();
+const PRUNE_AFTER_MS = 60 * 60 * 1000; // 1 hour
+
+function isDuplicate(sessionId: string): boolean {
+  const now = Date.now();
+  if (processed.has(sessionId)) return true;
+
+  if (processed.size > 1000) {
+    for (const [id, ts] of processed) {
+      if (now - ts > PRUNE_AFTER_MS) processed.delete(id);
+    }
+  }
+
+  processed.set(sessionId, now);
+  return false;
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.text(); // raw body needed for signature verification
@@ -36,7 +53,12 @@ export async function POST(req: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    await saveOrder(session);
+
+    if (session.id && isDuplicate(session.id)) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
+    await createGelatoOrder(session.id);
   }
 
   return NextResponse.json({ received: true });

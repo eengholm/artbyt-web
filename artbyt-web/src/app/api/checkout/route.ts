@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProductBySlug } from "@/lib/api";
 import { getStripe } from "@/lib/stripe";
 
-// Only allow slug characters to prevent path traversal
 const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/;
+const SAFE_SIZE = /^[a-zA-Z0-9 _-]+$/;
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -13,7 +13,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { items } = body as { items?: { slug: string; quantity: number }[] };
+  const { items } = body as {
+    items?: { slug: string; size: string; quantity: number }[];
+  };
 
   if (!Array.isArray(items) || items.length === 0) {
     return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
@@ -23,10 +25,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Too many items" }, { status: 400 });
   }
 
-  // Validate each item before touching the filesystem
   for (const item of items) {
     if (typeof item.slug !== "string" || !SAFE_SLUG.test(item.slug)) {
       return NextResponse.json({ error: "Invalid item" }, { status: 400 });
+    }
+    if (typeof item.size !== "string" || !SAFE_SIZE.test(item.size)) {
+      return NextResponse.json({ error: "Invalid size" }, { status: 400 });
     }
     if (
       typeof item.quantity !== "number" ||
@@ -38,9 +42,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Build Stripe line_items using server-side content (never trust client price IDs)
-  const lineItems: { price: string; quantity: number }[] = [];
-  for (const { slug, quantity } of items) {
+  const lineItems: {
+    price_data: {
+      currency: string;
+      product_data: { name: string };
+      unit_amount: number;
+    };
+    quantity: number;
+  }[] = [];
+
+  for (const { slug, size, quantity } of items) {
     const product = await getProductBySlug(slug);
     if (!product || !product.active) {
       return NextResponse.json(
@@ -48,13 +59,25 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
-    if (!product.stripePriceId) {
+
+    const sizeConfig = product.sizes.find((s) => s.name === size);
+    if (!sizeConfig) {
       return NextResponse.json(
-        { error: `Product not configured: ${slug}` },
+        { error: `Invalid size "${size}" for ${slug}` },
         { status: 400 },
       );
     }
-    lineItems.push({ price: product.stripePriceId, quantity });
+
+    lineItems.push({
+      price_data: {
+        currency: "sek",
+        product_data: {
+          name: `${product.title} — ${size}`,
+        },
+        unit_amount: sizeConfig.price,
+      },
+      quantity,
+    });
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -63,6 +86,11 @@ export async function POST(req: NextRequest) {
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
+      metadata: {
+        items: JSON.stringify(
+          items.map((i) => ({ slug: i.slug, size: i.size, quantity: i.quantity })),
+        ),
+      },
       shipping_address_collection: {
         allowed_countries: ["SE", "NO", "DK", "FI", "DE", "NL", "GB", "US"],
       },

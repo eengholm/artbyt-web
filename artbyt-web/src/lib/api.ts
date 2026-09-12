@@ -1,10 +1,9 @@
 import { Assignment } from "@/interfaces/assignment";
-import { Product } from "@/interfaces/product";
+import { Product, ProductSize } from "@/interfaces/product";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
 import type Stripe from "stripe";
-import { unstable_cache } from "next/cache";
 import { getStripe } from "@/lib/stripe";
 
 const contentDirectory = join(process.cwd(), "content");
@@ -175,36 +174,45 @@ export function getAllProjects(): Assignment[] {
 
 // ─── Products (fetched from Stripe) ──────────────────────────────────────────
 
-const fetchStripeProducts = unstable_cache(
-  async (): Promise<Product[]> => {
-    if (!process.env.STRIPE_SECRET_KEY) return [];
-    const stripe = getStripe();
-    const { data } = await stripe.products.list({
-      active: true,
-      expand: ["data.default_price"],
-      limit: 100,
-    });
-    return data
-      .filter(
-        (p): p is Stripe.Product & { default_price: Stripe.Price } =>
-          typeof p.default_price === "object" && p.default_price !== null,
-      )
-      .map((p) => ({
+async function fetchStripeProducts(): Promise<Product[]> {
+  if (!process.env.STRIPE_SECRET_KEY) return [];
+  const stripe = getStripe();
+  const { data } = await stripe.products.list({
+    active: true,
+    expand: ["data.default_price"],
+    limit: 100,
+  });
+  return data
+    .filter(
+      (p): p is Stripe.Product & { default_price: Stripe.Price } =>
+        typeof p.default_price === "object" && p.default_price !== null,
+    )
+    .map((p) => {
+      let sizes: ProductSize[] = [];
+      try {
+        const raw = p.metadata?.sizes;
+        if (raw) sizes = JSON.parse(raw);
+      } catch {
+        // invalid sizes metadata — ignore
+      }
+
+      const defaultPrice = p.default_price as Stripe.Price;
+
+      return {
         slug: p.id,
         title: p.name,
         description: p.description ?? "",
         excerpt: p.description ?? "",
         image: p.images[0] || "",
-        price: (p.default_price as Stripe.Price).unit_amount
-          ? Math.round((p.default_price as Stripe.Price).unit_amount! / 100)
-          : 0,
-        stripePriceId: (p.default_price as Stripe.Price).id,
+        price: defaultPrice.unit_amount
+          ? Math.round(defaultPrice.unit_amount / 100)
+          : (sizes[0]?.price ? Math.round(sizes[0].price / 100) : 0),
+        stripePriceId: defaultPrice.id,
         active: true,
-      }));
-  },
-  ["stripe-products"],
-  { revalidate: 3600 },
-);
+        sizes,
+      };
+    });
+}
 
 export async function getAllProducts(): Promise<Product[]> {
   return fetchStripeProducts();

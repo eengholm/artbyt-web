@@ -6,15 +6,16 @@ import {
   useEffect,
   useState,
   ReactNode,
+  useCallback,
 } from "react";
 
-export type CartItem = { slug: string; quantity: number };
+export type CartItem = { slug: string; size: string; quantity: number };
 
 type CartContextType = {
   items: CartItem[];
-  addItem: (slug: string) => void;
-  removeItem: (slug: string) => void;
-  updateQuantity: (slug: string, quantity: number) => void;
+  addItem: (slug: string, size: string) => void;
+  removeItem: (slug: string, size: string) => void;
+  updateQuantity: (slug: string, size: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
 };
@@ -22,17 +23,19 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 const STORAGE_KEY = "artbyt_cart";
-const CART_VERSION = "2"; // bump this when product ID format changes
+const CART_VERSION = "3";
+
+function key(slug: string, size: string) {
+  return slug + "|" + size;
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  // Hydrate from localStorage after mount
   useEffect(() => {
     try {
       const version = localStorage.getItem(STORAGE_KEY + "_v");
       if (version !== CART_VERSION) {
-        // Stale cart from a previous product system — discard it
         localStorage.removeItem(STORAGE_KEY);
         localStorage.setItem(STORAGE_KEY + "_v", CART_VERSION);
         return;
@@ -44,40 +47,48 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Persist on every change
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
-  function addItem(slug: string) {
+  const addItem = useCallback((slug: string, size: string) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.slug === slug);
+      const existing = prev.find((i) => i.slug === slug && i.size === size);
       if (existing) {
         return prev.map((i) =>
-          i.slug === slug ? { ...i, quantity: i.quantity + 1 } : i,
+          i.slug === slug && i.size === size
+            ? { ...i, quantity: i.quantity + 1 }
+            : i,
         );
       }
-      return [...prev, { slug, quantity: 1 }];
+      return [...prev, { slug, size, quantity: 1 }];
     });
-  }
+  }, []);
 
-  function removeItem(slug: string) {
-    setItems((prev) => prev.filter((i) => i.slug !== slug));
-  }
-
-  function updateQuantity(slug: string, quantity: number) {
-    if (quantity <= 0) {
-      removeItem(slug);
-      return;
-    }
+  const removeItem = useCallback((slug: string, size: string) => {
     setItems((prev) =>
-      prev.map((i) => (i.slug === slug ? { ...i, quantity } : i)),
+      prev.filter((i) => !(i.slug === slug && i.size === size)),
     );
-  }
+  }, []);
 
-  function clearCart() {
+  const updateQuantity = useCallback(
+    (slug: string, size: string, quantity: number) => {
+      if (quantity <= 0) {
+        removeItem(slug, size);
+        return;
+      }
+      setItems((prev) =>
+        prev.map((i) =>
+          i.slug === slug && i.size === size ? { ...i, quantity } : i,
+        ),
+      );
+    },
+    [removeItem],
+  );
+
+  const clearCart = useCallback(() => {
     setItems([]);
-  }
+  }, []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 

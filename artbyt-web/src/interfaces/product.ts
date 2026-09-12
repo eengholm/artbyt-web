@@ -1,12 +1,18 @@
+export interface ProductSize {
+  name: string;
+  price: number;
+  gelato: string;
+  shipping?: string;
+}
+
 export interface Product {
   slug: string;
   title: string;
-  /** Markdown body content */
   description: string;
   excerpt: string;
   image: string;
-  /** Price in SEK (display only — Stripe controls actual charge via stripePriceId) */
   price: number;
   stripePriceId: string;
   active: boolean;
+  sizes: ProductSize[];
 }

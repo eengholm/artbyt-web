@@ -10,11 +10,12 @@ export default async function CartPage() {
   // Pass a lean product summary to the client component so it can
   // display titles and compute totals without a client-side API call.
   const products = (await getAllProducts()).map(
-    ({ slug, title, price, image }) => ({
+    ({ slug, title, price, image, sizes }) => ({
       slug,
       title,
-      price,
+      price: sizes.length > 0 ? Math.round(sizes[0].price / 100) : price,
       image,
+      sizes,
     }),
   );
 
