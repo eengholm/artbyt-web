@@ -6,7 +6,7 @@ import { getProductBySlug, getAllProducts } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import AddToCartButton from "./add-to-cart";
 import CartLink from "@/app/_components/shop/cart-link";
-import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PageShell } from "@/app/_components/layout/page-shell";
 import { PRICE_VAT_NOTE, SHIPPING_SHORT_NOTE } from "@/lib/shipping";
 
 export const revalidate = 3600;
@@ -40,7 +40,7 @@ export default async function ProductPage({
   const descriptionHtml = await markdownToHtml(product.description || "");
 
   return (
-    <main>
+    <PageShell>
       <div className="relative mb-6">
         <hr className="border-t border-gray-200" />
         <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white pl-3">
@@ -93,7 +93,6 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
-      <SiteFooter />
-    </main>
+    </PageShell>
   );
 }

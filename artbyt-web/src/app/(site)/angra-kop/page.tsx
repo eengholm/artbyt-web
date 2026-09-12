@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PageShell } from "@/app/_components/layout/page-shell";
 import WithdrawalForm from "./withdrawal-form";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function WithdrawalPage() {
   return (
-    <main className="max-w-md">
+    <PageShell mainClassName="max-w-md md:pl-36">
       <hr className="border-t border-gray-200 mb-6" />
       <h1 className="text-lg font-medium mb-2">Ångra ditt köp</h1>
       <p className="text-sm text-gray-600 mb-6 leading-relaxed">
@@ -24,7 +24,6 @@ export default function WithdrawalPage() {
         .
       </p>
       <WithdrawalForm />
-      <SiteFooter />
-    </main>
+    </PageShell>
   );
 }

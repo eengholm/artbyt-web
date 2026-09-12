@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 import { Metadata } from "next";
 import CartLink from "@/app/_components/shop/cart-link";
-import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PageShell } from "@/app/_components/layout/page-shell";
 import { PRICE_VAT_NOTE, SHIPPING_SHORT_NOTE } from "@/lib/shipping";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default async function ShopPage() {
   const products = await getAllProducts();
 
   return (
-    <main>
+    <PageShell>
       <div className="relative mb-6">
         <hr className="border-t border-gray-200" />
         <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white pl-3">
@@ -65,7 +65,6 @@ export default async function ShopPage() {
           ))}
         </div>
       )}
-      <SiteFooter />
-    </main>
+    </PageShell>
   );
 }

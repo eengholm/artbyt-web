@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getStripe } from "@/lib/stripe";
-import { SiteFooter } from "@/app/_components/layout/site-footer";
+import { PageShell } from "@/app/_components/layout/page-shell";
 import SuccessView from "./success-view";
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export default async function SuccessPage({
   const order = await getOrderSummary(session_id);
 
   return (
-    <main className="flex flex-col items-center text-center pt-16">
+    <PageShell mainClassName="flex flex-col items-center text-center pt-16">
       <hr className="border-t border-gray-200 mb-6" />
       <SuccessView />
       <h1 className="text-sm text-black mb-3">Tack för din beställning!</h1>
@@ -96,9 +96,6 @@ export default async function SuccessPage({
       >
         Fortsätt handla
       </Link>
-      <div className="w-full max-w-sm">
-        <SiteFooter />
-      </div>
-    </main>
+    </PageShell>
   );
 }
